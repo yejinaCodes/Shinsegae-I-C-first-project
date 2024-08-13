@@ -3,7 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 db.properties
-test/
+
 
 ### Eclipse ###
 .apt_generated
@@ -29,3 +29,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/test/
