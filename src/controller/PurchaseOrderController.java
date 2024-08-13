@@ -17,6 +17,7 @@ public class PurchaseOrderController {
       try{
         PurchaseOrderDto order = new PurchaseOrderDto();
 
+        //String builder 사용으로 변경하기
         System.out.println("------------------------------------------------------");
         System.out.println("PurchaseOrder (주문서 작성)");
         order.setPurchaseOrderNo();

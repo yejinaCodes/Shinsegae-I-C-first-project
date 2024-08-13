@@ -11,6 +11,5 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   public void create(PurchaseOrderDto purchaseOrder) throws IOException, SQLException {
     PurchaseOrderDaoImpl po = new PurchaseOrderDaoImpl();
     po.create(purchaseOrder);
-
   }
 }
