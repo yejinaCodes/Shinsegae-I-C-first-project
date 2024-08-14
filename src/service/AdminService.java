@@ -18,4 +18,6 @@ public interface AdminService {
     void updatePwd(AdminRequestDto request);
 
     void updateRole(int targetEmployeeId, AdminRequestDto request);
+
+    void delete(int targetEmployeeId);
 }

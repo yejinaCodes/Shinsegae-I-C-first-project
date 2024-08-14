@@ -212,4 +212,24 @@ public class AdminDaoImpl implements AdminDao {
             ConnectionFactory.getInstance().close();
         }
     }
+
+    @Override
+    public void delete(int targetEmployeeId) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("DELETE FROM Admin ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, targetEmployeeId);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
 }

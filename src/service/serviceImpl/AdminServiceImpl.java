@@ -45,4 +45,9 @@ public class AdminServiceImpl implements AdminService {
         adminDao.updateRole(targetEmployeeId, request);
 
     }
+
+    @Override
+    public void delete(int targetEmployeeId) {
+        adminDao.delete(targetEmployeeId);
+    }
 }

@@ -45,7 +45,7 @@ public class AuthController {
                 case "2":
                     switch (menu) {
                         case "1":
-//                            registerAdmin();
+                            registerAdmin();
                             break;
                         case "2":
                             break;

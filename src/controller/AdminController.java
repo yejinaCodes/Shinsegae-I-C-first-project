@@ -248,7 +248,8 @@ public class AdminController {
     /**
      * '회원 관리 > 삭제'
      */
-    private void deleteMember() {
-
+    private void deleteMember() throws IOException {
+        int targetEmployeeId = memberInputHandler.getUserIdInput();
+        adminService.delete(targetEmployeeId);
     }
 }

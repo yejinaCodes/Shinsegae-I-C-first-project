@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
-import javax.print.DocFlavor.BYTE_ARRAY;
 
 public class Encrypt {
     public String getSalt() {
