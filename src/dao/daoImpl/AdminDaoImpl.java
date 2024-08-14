@@ -3,15 +3,13 @@ package dao.daoImpl;
 import config.ConnectionFactory;
 import dao.AdminDao;
 import dto.AdminDto;
+import dto.AdminResponseDto;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminDaoImpl implements AdminDao {
 
@@ -43,13 +41,95 @@ public class AdminDaoImpl implements AdminDao {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    System.err.println(e.getMessage());
-                }
-            }
+            ConnectionFactory.getInstance().close();
         }
+    }
+
+    @Override
+    public AdminResponseDto findById(int id) {
+        AdminResponseDto response = null;
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT * ")
+            .append("FROM Admin ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                response = new AdminResponseDto(rs);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+
+        return response;
+    }
+
+    @Override
+    public List<AdminResponseDto> findAll() {
+        List <AdminResponseDto> response = new ArrayList<>();
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT * ")
+            .append("FROM Admin").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                response.add(new AdminResponseDto(rs));
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+
+        return response;
+    }
+
+    @Override
+    public List<AdminResponseDto> findByRole(String role) {
+        List <AdminResponseDto> response = new ArrayList<>();
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT * ")
+            .append("FROM Admin ")
+            .append("WHERE role = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, role);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                response.add(new AdminResponseDto(rs));
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+
+        return response;
     }
 }

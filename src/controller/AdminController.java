@@ -1,13 +1,11 @@
 package controller;
 
-import common.Menu;
+import common.Role;
+import dto.AdminResponseDto;
+import java.util.List;
 import library.Script;
 import security.Encrypt;
-import common.ErrorCode;
-import common.Register;
 import common.ValidCheck;
-import dto.AdminDto;
-import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,54 +22,7 @@ public class AdminController {
 
 
     /**
-     * 메뉴 선택
-     * 1. 회원 가입 | 2. 로그인
-     */
-    public void selectLoginOrRegister() throws IOException {
-        script.selectLoginOrRegister();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
-
-        switch (menu) {
-            case "1":
-                register();
-        }
-    }
-
-
-    /**
-     * 회원 가입
-     */
-    private void register() throws IOException {
-        try {
-            System.out.print(Register.NAME.getText());
-            String name = validCheck.validateStringLength30(br.readLine());
-            System.out.print(Register.ID.getText());
-            String id = validCheck.validateId(br.readLine());
-            System.out.print(Register.PW.getText());
-            String pw = validCheck.validatePw(br.readLine());
-            pw = encrypt.getEncrypt(pw);
-            System.out.print(Register.EMAIL.getText());
-            String email = validCheck.validateEmail(br.readLine());
-            System.out.print(Register.PHONE.getText());
-            String phone = validCheck.validatePhone(br.readLine());
-            System.out.print(Register.ZIP_CODE.getText());
-            String zipCode = validCheck.validateStringLength10(br.readLine());
-            System.out.print(Register.ADDRESS.getText());
-            String address = br.readLine();
-
-            AdminDto admin = new AdminDto(name, id, pw, email, phone, zipCode, address);
-
-            adminService.createAdmin(admin);
-        } catch (NullPointerException e) {
-            System.out.println(ErrorCode.NULL_VALUE.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * 회원 관리 메뉴 선택
+     * '회원 관리' 메뉴 선택
      * 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제
      */
     public void manageMember() throws IOException {
@@ -95,7 +46,7 @@ public class AdminController {
     }
 
     /**
-     * 회원 관리 > 조회 메뉴 선택
+     * '회원 관리 > 조회' 메뉴 선택
      * 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회
      */
     private void viewMember() throws IOException{
@@ -115,7 +66,7 @@ public class AdminController {
     }
 
     /**
-     * 회원 관리 > 조회 > 직원 조회 메뉴 선택
+     * '회원 관리 > 조회 > 직원 조회' 메뉴 선택
      * 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회
      */
     private void viewAdmin() throws IOException{
@@ -131,30 +82,58 @@ public class AdminController {
                 viewAllAdmin();
                 break;
             case "3":
-                viewAdminByPermission();
+                viewAdminByRole();
                 break;
         }
     }
 
+    /**
+     * '회원 관리 > 조회 > 직원 조회 > 직원 상세 조회'
+     */
     private void viewAdminDetail() throws IOException {
-        System.out.println(Menu.BORDER_LINE.getText());
-        System.out.print(Menu.ADMIN_ID.getText());
+        script.viewAdminDetail();
         int id = validCheck.isNumber(br.readLine());
-
-
+        AdminResponseDto response = adminService.findById(id);
+        script.adminInfo(response);
     }
 
+    /**
+     * '회원 관리 > 조회 > 직원 조회 > 직원 전체 조회'
+     */
     private void viewAllAdmin() {
-
+        List<AdminResponseDto> list = adminService.findAll();
+        list.forEach(l -> script.adminInfo(l));
     }
 
-    private void viewAdminByPermission() {
+    /**
+     * '회원 관리 > 조회 > 직원 조회 > 권한별 직원 조회' 메뉴 선택
+     * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
+     */
+    private void viewAdminByRole() throws IOException {
+        script.viewAdminByRole();
+        String menu = br.readLine().trim();
+        validCheck.validateMenuNumber1To3(menu);
+        String role = "";
 
+        switch (menu) {
+            case "1":
+                role = Role.SUPER_ADMIN.toString();
+                break;
+            case "2":
+                role = Role.ADMIN.toString();
+                break;
+            case "3":
+                role = Role.EMPLOYEE.toString();
+                break;
+        }
+
+        List<AdminResponseDto> list = adminService.findByRole(role);
+        list.forEach(l -> script.adminInfo(l));
     }
 
 
     /**
-     * 회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회 메뉴 선택
+     * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택
      * 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회
      */
     private void viewUser() throws IOException {
@@ -188,7 +167,7 @@ public class AdminController {
     }
 
     /**
-     * 회원 관리 > 수정 메뉴 선택
+     * '회원 관리 > 수정' 메뉴 선택
      * 1. 회원 정보 수정 | 2. 쇼핑몰 사업자 정보 수정
      */
     private void editMember() throws IOException {
@@ -215,7 +194,7 @@ public class AdminController {
     }
 
     /**
-     * 회원 관리 > 권한 설정 메뉴 선택
+     * '회원 관리 > 권한 설정' 메뉴 선택
      * 1. 회원 권한 | 2. 쇼핑몰 사업자 권한 승인
      */
     private void setMemberPermission() throws IOException {
@@ -242,7 +221,7 @@ public class AdminController {
     }
 
     /**
-     * 회원 관리 > 삭제
+     * '회원 관리 > 삭제'
      */
     private void deleteMember() {
 

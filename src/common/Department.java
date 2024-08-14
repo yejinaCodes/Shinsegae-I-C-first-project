@@ -6,4 +6,9 @@ public enum Department {
     DELIVERY,
     DEVELOPMENT,
     ACCOUNTING;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

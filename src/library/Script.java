@@ -1,7 +1,9 @@
 package library;
 
+import common.Member;
 import common.Menu;
-import java.io.IOException;
+import dto.AdminDto;
+import dto.AdminResponseDto;
 
 public class Script {
 
@@ -84,6 +86,25 @@ public class Script {
     }
 
     /**
+     * '회원 관리 > 조회 > 직원 조회 > 1. 직원 상세 조회'
+     */
+    public void viewAdminDetail() {
+        script.append(Menu.BORDER_LINE.getText())
+            .append(Menu.ADMIN_ID.getText());
+        print();
+    }
+
+    /**
+     * '회원 관리 > 조회 > 직원 조회 > 3. 권한별 직원 조회'
+     */
+    public void viewAdminByRole() {
+        script.append(Menu.BORDER_LINE.getText())
+            .append(Menu.ADMIN_ROLE_MENU.getText())
+            .append(Menu.ROLE_SELECT.getText());
+        print();
+    }
+
+    /**
      * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회
      */
     public void viewUser() {
@@ -94,7 +115,7 @@ public class Script {
     }
 
     /**
-     * 회원 관리 > 수정 메뉴 선택 1. 회원 정보 수정 | 2. 쇼핑몰 사업자 정보 수정
+     * '회원 관리 > 수정' 메뉴 선택 1. 회원 정보 수정 | 2. 쇼핑몰 사업자 정보 수정
      */
     public void editMember() {
         script.append(Menu.BORDER_LINE.getText())
@@ -104,12 +125,35 @@ public class Script {
     }
 
     /**
-     * 회원 관리 > 권한 설정 메뉴 선택 1. 회원 권한 | 2. 쇼핑몰 사업자 권한 승인
+     * '회원 관리 > 권한 설정' 메뉴 선택 1. 회원 권한 | 2. 쇼핑몰 사업자 권한 승인
      */
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getText())
             .append(Menu.ADMIN_MEMBER_VIEW_MENU.getText())
             .append(Menu.MENU_SELECT.getText());
+        print();
+    }
+
+    /**
+     * 직원 상세 내역 조회
+     */
+    public void adminInfo(AdminResponseDto response) {
+        script.append(Menu.BORDER_LINE.getText()).append("\n")
+            .append(Member.ADMIN_ID.getText()).append(response.getId()).append("\n")
+            .append(Member.NAME.getText()).append(response.getName()).append("\n")
+            .append(Member.ID.getText()).append(response.getAdminId()).append("\n")
+            .append(Member.PW.getText()).append(response.getPassword()).append("\n")
+            .append(Member.EMAIL.getText()).append(response.getEmail()).append("\n")
+            .append(Member.ADMIN_COMPANY_EMAIL.getText()).append(response.getCompanyEmail()).append("\n")
+            .append(Member.DEPARTMENT.getText()).append(response.getDepartment()).append("\n")
+            .append(Member.POSITION.getText()).append(response.getPosition()).append("\n")
+            .append(Member.ROLE.getText()).append(response.getRole()).append("\n")
+            .append(Member.PHONE.getText()).append(response.getPhone()).append("\n")
+            .append(Member.ZIP_CODE.getText()).append(response.getZipCode()).append("\n")
+            .append(Member.ADDRESS.getText()).append(response.getAddress()).append("\n")
+            .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
+            .append(Member.AUTHORIZER_ID.getText()).append(response.getAuthorizerId()).append("\n")
+            .append(Member.UPDATED_AT.getText()).append(response.getUpdatedAt()).append("\n");
         print();
     }
 }

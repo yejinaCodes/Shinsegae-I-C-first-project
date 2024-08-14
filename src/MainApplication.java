@@ -1,6 +1,7 @@
+import common.ErrorCode;
 import common.ValidCheck;
 import controller.AdminController;
-import exception.Exception;
+import controller.AuthController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +11,7 @@ public class MainApplication {
     private static boolean isQuit = false;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static ValidCheck validCheck = new ValidCheck();
+    private static AuthController authController = new AuthController();
     private static AdminController adminController = new AdminController();
     private static Script script = new Script();
     private static String userType;
@@ -19,10 +21,8 @@ public class MainApplication {
             while (!isQuit) {
                 selectMainMenu();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ErrorCode.INVALID_VALUE.getMessage());
         }
     }
 
@@ -31,15 +31,15 @@ public class MainApplication {
      * 1. 쇼핑몰 | 2. 어드민
      */
     private static void selectUserType() throws IOException {
-        script.selectUserType();
-        userType = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(userType);
+        try {
+            script.selectUserType();
+            userType = br.readLine().trim();
+            validCheck.validateMenuNumber1To2(userType);
 
-        switch (userType) {
-            case "1":
-//                userController.selectLoginOrRegister();
-            case "2":
-                adminController.selectLoginOrRegister();
+//            authController.handleAuth(userType);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            selectUserType();
         }
     }
 
