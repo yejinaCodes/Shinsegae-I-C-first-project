@@ -161,7 +161,8 @@ public class AdminDaoImpl implements AdminDao {
             System.err.println(e.getMessage());
         } finally {
             ConnectionFactory.getInstance().close();
-        }}
+        }
+    }
 
     @Override
     public void updatePwd(AdminRequestDto request) {
@@ -177,6 +178,31 @@ public class AdminDaoImpl implements AdminDao {
             pstmt.setString(1, request.getPassword());
             pstmt.setString(2, request.getUpdatedAt());
             pstmt.setInt(3, request.getId());
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
+
+    @Override
+    public void updateRole(int targetEmployeeId, AdminRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE Admin ")
+            .append("SET ")
+            .append("role = ?, updated_at = ? , authorizer_id = ? ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getRole().toString());
+            pstmt.setString(2, request.getUpdatedAt());
+            pstmt.setInt(3, request.getId());
+            pstmt.setInt(4, targetEmployeeId);
 
             pstmt.executeUpdate();
             pstmt.close();

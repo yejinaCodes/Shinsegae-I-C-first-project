@@ -1,5 +1,6 @@
 package controller;
 
+import dto.AdminRequestDto;
 import handler.MemberInputHandler;
 import common.Role;
 import dto.AdminResponseDto;
@@ -40,7 +41,7 @@ public class AdminController {
                 editMember();
                 break;
             case "3":
-                setMemberPermission();
+                setMemberRole();
                 break;
             case "4":
                 deleteMember();
@@ -112,7 +113,7 @@ public class AdminController {
      * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
      */
     private void viewAdminByRole() throws IOException {
-        script.viewAdminByRole();
+        script.viewMemberRole();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To3(menu);
         String role = "";
@@ -215,26 +216,32 @@ public class AdminController {
      * '회원 관리 > 권한 설정' 메뉴 선택
      * 1. 회원 권한 | 2. 쇼핑몰 사업자 권한 승인
      */
-    private void setMemberPermission() throws IOException {
+    private void setMemberRole() throws IOException {
         script.setMemberPermission();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To2(menu);
 
         switch (menu) {
             case "1":
-                setAdminPermission();
+                setAdminRole();
                 break;
             case "2":
-                setUserPermission();
+                setUserRole();
                 break;
         }
     }
 
-    private void setAdminPermission() {
-
+    /**
+     * '회원 관리 > 권한 설정' 권한 선택
+     * 입력값: 사원 번호, 권한
+     * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
+     */
+    private void setAdminRole() throws IOException {
+        int targetEmployeeId = memberInputHandler.getUserIdInput();
+        adminService.updateRole(targetEmployeeId, memberInputHandler.updateAdminRole());
     }
 
-    private void setUserPermission() {
+    private void setUserRole() {
 
     }
 

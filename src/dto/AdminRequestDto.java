@@ -60,6 +60,13 @@ public class AdminRequestDto {
         this.updatedAt = getTime();
     }
 
+    public AdminRequestDto(Role role) {
+        // 🚨 로그인 유저 id로 변경 예정
+        this.id = 1;
+        this.role = role;
+        this.updatedAt = getTime();
+    }
+
     private String getTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.now().format(formatter);

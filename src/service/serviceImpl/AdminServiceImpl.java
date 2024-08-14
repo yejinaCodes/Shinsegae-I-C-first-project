@@ -39,4 +39,10 @@ public class AdminServiceImpl implements AdminService {
     public void updatePwd(AdminRequestDto request) {
         adminDao.updatePwd(request);
     }
+
+    @Override
+    public void updateRole(int targetEmployeeId, AdminRequestDto request) {
+        adminDao.updateRole(targetEmployeeId, request);
+
+    }
 }

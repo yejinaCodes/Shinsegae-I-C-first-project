@@ -1,17 +1,20 @@
 package handler;
 
 import common.Member;
+import common.Role;
 import common.ValidCheck;
 import dto.AdminRequestDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import library.Script;
 import security.Encrypt;
 
 public class MemberInputHandler {
 
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static Script script = new Script();
     private static ValidCheck validCheck = new ValidCheck();
     private static Encrypt encrypt = new Encrypt();
 
@@ -32,6 +35,23 @@ public class MemberInputHandler {
     public AdminRequestDto updateAdminPwd() throws IOException {
         AdminRequestDto admin = new AdminRequestDto(getPwdInput());
         return admin;
+    }
+
+    public AdminRequestDto updateAdminRole() throws IOException {
+        AdminRequestDto admin = new AdminRequestDto(getRoleInput());
+        return admin;
+    }
+
+    public int getUserIdInput() throws IOException {
+        int id = 0;
+        try {
+            script.viewAdminDetail();
+            id = validCheck.isNumber(br.readLine());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            getNameInput();
+        }
+        return id;
     }
 
     public String getNameInput() throws IOException {
@@ -81,6 +101,31 @@ public class MemberInputHandler {
             getEmailInput();
         }
         return email;
+    }
+
+    public Role getRoleInput() throws IOException {
+        Role role = null;
+        try {
+            script.getRole();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1":
+                    role = Role.valueOf("SUPER_ADMIN");
+                    break;
+                case "2":
+                    role = Role.valueOf("ADMIN");
+                    break;
+                case "3":
+                    role = Role.valueOf("EMPLOYEE");
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            getPhoneInput();
+        }
+        return role;
     }
 
     public String getPhoneInput() throws IOException {
