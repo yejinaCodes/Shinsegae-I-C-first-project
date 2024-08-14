@@ -2,7 +2,7 @@ package dao.daoImpl;
 
 import config.ConnectionFactory;
 import dao.AdminDao;
-import dto.AdminDto;
+import dto.AdminRequestDto;
 import dto.AdminResponseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ public class AdminDaoImpl implements AdminDao {
     private static ResultSet rs = null;
 
     @Override
-    public void createAdmin(AdminDto admin) {
+    public void createAdmin(AdminRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("INSERT INTO Admin ")
@@ -26,15 +26,15 @@ public class AdminDaoImpl implements AdminDao {
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, admin.getName());
-            pstmt.setString(2, admin.getAdminId());
-            pstmt.setString(3, admin.getPassword());
-            pstmt.setString(4, admin.getEmail());
-            pstmt.setString(5, admin.getCompanyEmail());
-            pstmt.setString(6, admin.getPhone());
-            pstmt.setString(7, admin.getZipCode());
-            pstmt.setString(8, admin.getAddress());
-            pstmt.setString(9, admin.getCreatedAt());
+            pstmt.setString(1, request.getName());
+            pstmt.setString(2, request.getAdminId());
+            pstmt.setString(3, request.getPassword());
+            pstmt.setString(4, request.getEmail());
+            pstmt.setString(5, request.getCompanyEmail());
+            pstmt.setString(6, request.getPhone());
+            pstmt.setString(7, request.getZipCode());
+            pstmt.setString(8, request.getAddress());
+            pstmt.setString(9, request.getCreatedAt());
 
             pstmt.executeUpdate();
             pstmt.close();
@@ -131,5 +131,59 @@ public class AdminDaoImpl implements AdminDao {
         }
 
         return response;
+    }
+
+    @Override
+    public void updateAdmin(AdminRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE Admin ")
+            .append("SET ")
+            .append("name = ?, admin_id = ?, email = ?, company_email = ?, ")
+            .append("phone = ?, zip_code = ?, address = ?, updated_at = ? ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getName());
+            pstmt.setString(2, request.getAdminId());
+            pstmt.setString(3, request.getEmail());
+            pstmt.setString(4, request.getCompanyEmail());
+            pstmt.setString(5, request.getPhone());
+            pstmt.setString(6, request.getZipCode());
+            pstmt.setString(7, request.getAddress());
+            pstmt.setString(8, request.getUpdatedAt());
+            pstmt.setInt(9, request.getId());
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }}
+
+    @Override
+    public void updatePwd(AdminRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE Admin ")
+            .append("SET ")
+            .append("password = ?, updated_at = ? ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getPassword());
+            pstmt.setString(2, request.getUpdatedAt());
+            pstmt.setInt(3, request.getId());
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
     }
 }

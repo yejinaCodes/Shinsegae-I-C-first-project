@@ -1,5 +1,6 @@
 package controller;
 
+import handler.MemberInputHandler;
 import common.Role;
 import dto.AdminResponseDto;
 import java.util.List;
@@ -15,6 +16,7 @@ import service.serviceImpl.AdminServiceImpl;
 public class AdminController {
 
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static MemberInputHandler memberInputHandler = new MemberInputHandler();
     private static ValidCheck validCheck = new ValidCheck();
     private static Script script = new Script();
     private static AdminService adminService = new AdminServiceImpl();
@@ -168,27 +170,43 @@ public class AdminController {
 
     /**
      * '회원 관리 > 수정' 메뉴 선택
-     * 1. 회원 정보 수정 | 2. 쇼핑몰 사업자 정보 수정
+     * 1. 회원 정보 수정 | 2. 비밀번호 수정  3. 쇼핑몰 사업자 정보 수정
      */
     private void editMember() throws IOException {
         script.editMember();
         String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+        validCheck.validateMenuNumber1To3(menu);
 
         switch (menu) {
             case "1":
                 editAdmin();
                 break;
             case "2":
+                editPwd();
+                break;
+            case "3":
                 editUser();
                 break;
         }
     }
 
-    private void editAdmin() {
-
+    /**
+     * '회원 관리 > 수정 > 회원 정보 수정'
+     */
+    private void editAdmin() throws IOException {
+        adminService.updateAdmin(memberInputHandler.updateAdmin());
     }
 
+    /**
+     * '회원 관리 > 수정 > 비밀번호 수정'
+     */
+    private void editPwd() throws IOException {
+        adminService.updatePwd(memberInputHandler.updateAdminPwd());
+    }
+
+    /**
+     * '회원 관리 > 수정 > 쇼핑몰 사업자 정보 수정'
+     */
     private void editUser() {
 
     }

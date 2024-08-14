@@ -2,7 +2,6 @@ package library;
 
 import common.Member;
 import common.Menu;
-import dto.AdminDto;
 import dto.AdminResponseDto;
 
 public class Script {
@@ -119,7 +118,7 @@ public class Script {
      */
     public void editMember() {
         script.append(Menu.BORDER_LINE.getText())
-            .append(Menu.ADMIN_MEMBER_VIEW_MENU.getText())
+            .append(Menu.ADMIN_MEMBER_EDIT_MENU.getText())
             .append(Menu.MENU_SELECT.getText());
         print();
     }
@@ -129,7 +128,7 @@ public class Script {
      */
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getText())
-            .append(Menu.ADMIN_MEMBER_VIEW_MENU.getText())
+            .append(Menu.ADMIN_MEMBER_PERMISSION_MENU.getText())
             .append(Menu.MENU_SELECT.getText());
         print();
     }
