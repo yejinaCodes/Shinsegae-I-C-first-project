@@ -16,8 +16,8 @@ public class Script {
     print();
   }
   public void readStockRequest(){
-
-
+    script.append(Menu.FINDCONDITION.getDescription());
+    print();
   }
   public void updateStockRequest(){
 

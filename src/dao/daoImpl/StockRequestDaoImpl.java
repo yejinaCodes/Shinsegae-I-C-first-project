@@ -5,12 +5,17 @@ import dao.StockRequestDao;
 import dto.StockRequestDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class StockRequestDaoImpl implements StockRequestDao {
+  ArrayList<StockRequestDto> stockRequestDb = new ArrayList<StockRequestDto>();
+  private static ResultSet rs = null;
 
   @Override
-  public void create(StockRequestDto stockRequest) throws SQLException {
+  public void create(StockRequestDto stockRequest) {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
@@ -33,13 +38,48 @@ public class StockRequestDaoImpl implements StockRequestDao {
 
       pstmt.executeUpdate();
       pstmt.close();
-      connection.close();
+      ConnectionFactory.getInstance().close();
 
     }catch(Exception e){
       System.out.println("입고 요청서 DB 전송 실패");
     }
-    connection.close();
+    ConnectionFactory.getInstance().close();
   }
 
+  @Override
+  public ArrayList<StockRequestDto> findByAll() throws SQLException {
+    stockRequestDb.clear();
+    Connection connection = ConnectionFactory.getInstance().open();
 
+    String query = new StringBuilder()
+        .append("SELECT * from stockRequest")
+        .toString();
+
+    try{
+      PreparedStatement pstmt = connection.prepareStatement(query);
+      rs = pstmt.executeQuery();
+      while(rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
+        stockRequest.setId(rs.getInt("ID"));
+        stockRequest.setProduct_id(rs.getString("productID"));
+        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
+        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
+        stockRequest.setCell_id(rs.getInt("cellID"));
+        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setRemarks(rs.getString("remarks"));
+        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
+        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+
+        stockRequestDb.add(stockRequest);
+      }
+
+      pstmt.close();
+      ConnectionFactory.getInstance().close();
+
+    }catch(Exception e){
+      System.out.println("입고 요청서 DB list 받기 실패");
+    }
+    connection.close();
+    return stockRequestDb;
+  }
 }

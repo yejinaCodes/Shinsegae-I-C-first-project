@@ -1,14 +1,15 @@
 package controller;
 
 import common.Form;
+import common.Menu;
 import dto.StockRequestDto;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import library.Script;
 import service.serviceImpl.StockRequestServiceImpl;
-
 
 public class StockRequestController {
   public static int supplier_id = 1; //나중에 userDto.getID하기
@@ -16,6 +17,7 @@ public class StockRequestController {
   Script script = new Script();
   StockRequestServiceImpl stockRequestService = new StockRequestServiceImpl();
   public static boolean q = false;
+  ArrayList<StockRequestDto> StockRequestList = new ArrayList<StockRequestDto>();
 
   public void menu(){
     try {
@@ -29,6 +31,7 @@ public class StockRequestController {
             break;
           case "2":
             script.readStockRequest();
+            readByCondition();
             break;
           case "3":
             script.updateStockRequest();
@@ -65,5 +68,28 @@ public class StockRequestController {
         boxSize, incomingDate, cellID, supplier_id, remarks);
 
     stockRequestService.create(stockRequest);
+  }
+
+  public void readByCondition() throws IOException, SQLException {
+    String condition = br.readLine();
+
+    switch (condition){
+      case "1": //findAll
+        StockRequestList.clear();
+        StockRequestList = stockRequestService.findByAll();
+        //System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
+
+        //이 부분 깔끔하게 쓰는 방법?
+        StockRequestList.forEach(stockrequest -> System.out.println(
+            stockrequest.getId() + "\t" + stockrequest.getProduct_id() + "\t"
+            + stockrequest.getBox_quantity() + "\t" + stockrequest.getBox_size() + "\t"
+            + stockrequest.getStatus() + "\t" + stockrequest.getIncoming_date() + "\t"
+            + stockrequest.getCreated_at() + "\t" + stockrequest.getRemarks()));
+      case "2": //findById
+      case "3": //findByStatus
+      case "4": //findByCreatedDate
+      case "5": //findByProductId
+      case "6": //findByIncomingDate
+    }
   }
 }

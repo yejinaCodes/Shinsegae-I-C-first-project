@@ -17,6 +17,9 @@ public class StockRequestDto {
   private String status;
   private String remarks;
 
+  public StockRequestDto() {
+  }
+
   public StockRequestDto(String product_id, int box_quantity, char box_size,
       String incoming_date, int cell_id, int supplier_id, String remarks) {
     this.product_id = product_id;
@@ -33,8 +36,12 @@ public class StockRequestDto {
   public void setIncoming_date(String date){ //오전, 오후 추가
     LocalDate time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
     this.incoming_date = time;
-
   }
+  public void setIncoming_date(LocalDate date){
+    this.incoming_date = date;
+  }
+
+
   public void setCreated_at(){
     this.created_at = LocalDate.now();
   }
