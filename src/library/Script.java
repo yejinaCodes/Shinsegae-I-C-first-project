@@ -117,7 +117,7 @@ public class Script {
 
     /**
      * '회원 관리 > 수정' 메뉴 선택
-     * 1. 회원 정보 수정 | 2. 비밀번호 수정  3. 쇼핑몰 사업자 정보 수정
+     * 1. 회원 정보 수정 | 2. 비밀번호 수정
      */
     public void editMember() {
         script.append(Menu.BORDER_LINE.getDescription())

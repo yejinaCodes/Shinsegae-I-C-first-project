@@ -14,7 +14,7 @@ public enum Menu {
     ADMIN_MEMBER_VIEW_ADMIN_MENU("[회원 관리 > 조회 > 직원 조회]\n1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회\n"),
     ADMIN_ROLE_MENU("[직원 권한]\n1. 총 관리자 | 2. 창고 관리자 | 3. 일반\n"),
     ADMIN_MEMBER_VIEW_USER_MENU("[회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회]\n1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회\n"),
-    ADMIN_MEMBER_EDIT_MENU("[회원 관리 > 수정]\n1. 회원 정보 수정 | 2. 비밀번호 수정  3. 쇼핑몰 사업자 정보 수정\n"),
+    ADMIN_MEMBER_EDIT_MENU("[회원 관리 > 수정]\n1. 회원 정보 수정 | 2. 비밀번호 수정\n"),
     ADMIN_MEMBER_PERMISSION_MENU("[회원 관리 > 권한 설정]\n1. 직원 권한 | 2. 쇼핑몰 사업자 권한 승인\n"),
     ADMIN_DELETE_MENU("[회원 관리 > 삭제]\n1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제\n"),
     USER_MENU("[메뉴]\n1. 회원 관리 | 2. 창고 관리 | 3. 재고 관리\n4. 입고 관리 | 5. 출고 관리 | 6. 고객 센터\n7. 로그아웃\n"),

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
@@ -42,6 +44,34 @@ public class UserDaoImpl implements UserDao {
         } finally {
             ConnectionFactory.getInstance().close();
         }
+    }
+
+    @Override
+    public List<UserResponseDto> findAll() {
+        List<UserResponseDto> response = new ArrayList<>();
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT * ")
+            .append("FROM User ").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                response.add(new UserResponseDto(rs));
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+
+        return response;
     }
 
     @Override

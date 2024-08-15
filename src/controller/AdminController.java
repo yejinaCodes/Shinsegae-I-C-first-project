@@ -1,5 +1,6 @@
 package controller;
 
+import dto.response.UserResponseDto;
 import handler.MemberInputHandler;
 import common.Role;
 import dto.response.AdminResponseDto;
@@ -10,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import service.AdminService;
+import service.UserService;
 import service.serviceImpl.AdminServiceImpl;
+import service.serviceImpl.UserServiceImpl;
 
 public class AdminController {
 
@@ -19,6 +22,7 @@ public class AdminController {
     private static ValidCheck validCheck = new ValidCheck();
     private static Script script = new Script();
     private static AdminService adminService = new AdminServiceImpl();
+    private static UserService userService = new UserServiceImpl();
 
 
     /**
@@ -159,7 +163,8 @@ public class AdminController {
     }
 
     private void viewAllUser() {
-
+        List<UserResponseDto> list = userService.findAll();
+        list.forEach(l -> script.userInfo(l));
     }
 
     private void viewPendingApproval() {
@@ -168,12 +173,12 @@ public class AdminController {
 
     /**
      * '회원 관리 > 수정' 메뉴 선택
-     * 1. 회원 정보 수정 | 2. 비밀번호 수정  3. 쇼핑몰 사업자 정보 수정
+     * 1. 회원 정보 수정 | 2. 비밀번호 수정
      */
     private void editMember() throws IOException {
         script.editMember();
         String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
+        validCheck.validateMenuNumber1To2(menu);
 
         switch (menu) {
             case "1":
@@ -181,9 +186,6 @@ public class AdminController {
                 break;
             case "2":
                 editPwd();
-                break;
-            case "3":
-                editUser();
                 break;
         }
     }
@@ -200,13 +202,6 @@ public class AdminController {
      */
     private void editPwd() throws IOException {
         adminService.updatePwd(memberInputHandler.updateAdminPwd());
-    }
-
-    /**
-     * '회원 관리 > 수정 > 쇼핑몰 사업자 정보 수정'
-     */
-    private void editUser() {
-
     }
 
     /**

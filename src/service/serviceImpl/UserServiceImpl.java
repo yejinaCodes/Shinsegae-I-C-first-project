@@ -4,6 +4,7 @@ import dao.UserDao;
 import dao.daoImpl.UserDaoImpl;
 import dto.request.UserRequestDto;
 import dto.response.UserResponseDto;
+import java.util.List;
 import service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -12,6 +13,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(UserRequestDto request) {
         userDao.createUser(request);
+    }
+
+    @Override
+    public List<UserResponseDto> findAll() {
+        return userDao.findAll();
     }
 
     @Override
