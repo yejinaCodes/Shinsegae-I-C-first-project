@@ -1,7 +1,6 @@
-package dto;
+package dto.request;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import library.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserRequestDto {
 
     private int id;
     private String name;
@@ -32,7 +31,7 @@ public class UserDto {
     private String updatedAdminAt;
     private String unregisteredAt;
 
-    public UserDto(String name, String businessNumber, String companyName, String representative,
+    public UserRequestDto(String name, String businessNumber, String companyName, String representative,
         String userId, String password, String email, String companyEmail, String phone,
         String companyPhone, String fax, String zipCode,
         String address) {
@@ -49,11 +48,6 @@ public class UserDto {
         this.fax = fax;
         this.zipCode = zipCode;
         this.address = address;
-        this.createdAt = getTime();
-    }
-
-    private String getTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.now().format(formatter);
+        this.createdAt = LocalDateTime.getTime();
     }
 }

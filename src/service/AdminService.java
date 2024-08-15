@@ -1,7 +1,7 @@
 package service;
 
-import dto.AdminRequestDto;
-import dto.AdminResponseDto;
+import dto.request.AdminRequestDto;
+import dto.response.AdminResponseDto;
 import java.util.List;
 
 public interface AdminService {
@@ -19,5 +19,5 @@ public interface AdminService {
 
     void updateRole(int targetEmployeeId, AdminRequestDto request);
 
-    void delete(int targetEmployeeId);
+    void deleteAdmin(int targetEmployeeId);
 }

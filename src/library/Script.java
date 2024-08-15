@@ -2,7 +2,7 @@ package library;
 
 import common.Member;
 import common.Menu;
-import dto.AdminResponseDto;
+import dto.response.AdminResponseDto;
 
 public class Script {
 
@@ -132,6 +132,17 @@ public class Script {
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getText())
             .append(Menu.ADMIN_MEMBER_PERMISSION_MENU.getText())
+            .append(Menu.MENU_SELECT.getText());
+        print();
+    }
+
+    /**
+     * '회원 관리 > 삭제' 메뉴 선택
+     * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제
+     */
+    public void deleteMember() {
+        script.append(Menu.BORDER_LINE.getText())
+            .append(Menu.ADMIN_DELETE_MENU.getText())
             .append(Menu.MENU_SELECT.getText());
         print();
     }

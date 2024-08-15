@@ -1,12 +1,10 @@
-package dto;
+package dto.response;
 
 import common.Department;
 import common.Position;
 import common.Role;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

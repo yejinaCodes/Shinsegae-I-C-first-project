@@ -1,9 +1,8 @@
 package controller;
 
-import dto.AdminRequestDto;
 import handler.MemberInputHandler;
 import common.Role;
-import dto.AdminResponseDto;
+import dto.response.AdminResponseDto;
 import java.util.List;
 import library.Script;
 import security.Encrypt;
@@ -44,7 +43,7 @@ public class AdminController {
                 setMemberRole();
                 break;
             case "4":
-                deleteMember();
+                delete();
         }
     }
 
@@ -246,10 +245,30 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 삭제'
+     * '회원 관리 > 삭제' 메뉴 선택
+     * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제
      */
-    private void deleteMember() throws IOException {
+
+    private void delete() throws IOException {
+        script.deleteMember();
+        String menu = br.readLine().trim();
+        validCheck.validateMenuNumber1To2(menu);
+
+        switch (menu) {
+            case "1":
+                deleteAdmin();
+                break;
+            case "2":
+                deleteUser();
+                break;
+        }
+    }
+    private void deleteAdmin() throws IOException {
         int targetEmployeeId = memberInputHandler.getUserIdInput();
-        adminService.delete(targetEmployeeId);
+        adminService.deleteAdmin(targetEmployeeId);
+    }
+
+    private void deleteUser() throws IOException {
+
     }
 }

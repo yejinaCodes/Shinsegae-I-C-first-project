@@ -2,8 +2,8 @@ package dao.daoImpl;
 
 import config.ConnectionFactory;
 import dao.AdminDao;
-import dto.AdminRequestDto;
-import dto.AdminResponseDto;
+import dto.request.AdminRequestDto;
+import dto.response.AdminResponseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -214,7 +214,7 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public void delete(int targetEmployeeId) {
+    public void deleteAdmin(int targetEmployeeId) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("DELETE FROM Admin ")

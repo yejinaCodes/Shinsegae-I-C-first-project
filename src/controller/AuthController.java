@@ -3,7 +3,7 @@ package controller;
 import common.ErrorCode;
 import handler.MemberInputHandler;
 import common.ValidCheck;
-import dto.AdminRequestDto;
+import dto.request.AdminRequestDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class AuthController {
     private static AdminService adminService = new AdminServiceImpl();
 
     /**
-     * [유저] 메뉴 선택 1. 회원 가입 | 2. 로그인
+     * 메뉴 선택 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 찾기
      *
      * @param userType (1. 쇼핑몰, 2. 어드민)
      */
@@ -30,7 +30,7 @@ public class AuthController {
         try {
             script.selectLoginOrRegister();
             String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To2(menu);
+            validCheck.validateMenuNumber1To4(menu);
 
             switch (userType) {
                 case "1":
@@ -40,6 +40,12 @@ public class AuthController {
                             break;
                         case "2":
                             break;
+                        case "3":
+//                          findUserId();
+                            break;
+                        case "4":
+//                            findUserPwd();
+                            break;
                     }
                     break;
                 case "2":
@@ -48,6 +54,12 @@ public class AuthController {
                             registerAdmin();
                             break;
                         case "2":
+                            break;
+                        case "3":
+//                          findAdminId();
+                            break;
+                        case "4":
+//                            findAdminPwd();
                             break;
                     }
                     break;
@@ -71,6 +83,20 @@ public class AuthController {
         }
     }*/
 
+    /**
+     * 쇼핑몰 사업자 회원 아이디 찾기
+     */
+    private void findUserId() {
+
+    }
+
+    /**
+     * 쇼핑몰 사업자 회원 비밀번호 찾기
+     */
+    private void findUserPwd() {
+
+    }
+
 
     /**
      * 어드민 회원 가입
@@ -84,6 +110,20 @@ public class AuthController {
         } catch (IOException e) {
             System.out.println(ErrorCode.INVALID_VALUE.getMessage());
         }
+    }
+
+    /**
+     * 어드민 아이디 찾기
+     */
+    private void findAdminId() {
+
+    }
+
+    /**
+     * 어드민 비밀번호 찾기
+     */
+    private void findAdminPwd() {
+
     }
 
 

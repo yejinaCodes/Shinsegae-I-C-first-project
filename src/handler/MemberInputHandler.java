@@ -3,7 +3,7 @@ package handler;
 import common.Member;
 import common.Role;
 import common.ValidCheck;
-import dto.AdminRequestDto;
+import dto.request.AdminRequestDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;

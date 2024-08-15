@@ -2,8 +2,8 @@ package service.serviceImpl;
 
 import dao.AdminDao;
 import dao.daoImpl.AdminDaoImpl;
-import dto.AdminRequestDto;
-import dto.AdminResponseDto;
+import dto.request.AdminRequestDto;
+import dto.response.AdminResponseDto;
 import java.util.List;
 import service.AdminService;
 
@@ -47,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void delete(int targetEmployeeId) {
-        adminDao.delete(targetEmployeeId);
+    public void deleteAdmin(int targetEmployeeId) {
+        adminDao.deleteAdmin(targetEmployeeId);
     }
 }

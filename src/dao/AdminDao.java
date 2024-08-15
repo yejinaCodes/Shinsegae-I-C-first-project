@@ -1,7 +1,7 @@
 package dao;
 
-import dto.AdminRequestDto;
-import dto.AdminResponseDto;
+import dto.request.AdminRequestDto;
+import dto.response.AdminResponseDto;
 import java.util.List;
 
 public interface AdminDao {
@@ -19,5 +19,5 @@ public interface AdminDao {
 
     void updateRole(int targetEmployeeId, AdminRequestDto request);
 
-    void delete(int targetEmployeeId);
+    void deleteAdmin(int targetEmployeeId);
 }
