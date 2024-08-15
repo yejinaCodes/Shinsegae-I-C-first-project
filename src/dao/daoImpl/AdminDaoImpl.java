@@ -21,20 +21,17 @@ public class AdminDaoImpl implements AdminDao {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("INSERT INTO Admin ")
-            .append("(name, admin_id, password, email, company_email, phone, zip_code, address, created_at)")
-            .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)").toString();
+            .append("(name, admin_id, password, company_email, phone, created_at)")
+            .append("VALUES (?, ?, ?, ?, ?, ?)").toString();
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, request.getName());
             pstmt.setString(2, request.getAdminId());
             pstmt.setString(3, request.getPassword());
-            pstmt.setString(4, request.getEmail());
-            pstmt.setString(5, request.getCompanyEmail());
-            pstmt.setString(6, request.getPhone());
-            pstmt.setString(7, request.getZipCode());
-            pstmt.setString(8, request.getAddress());
-            pstmt.setString(9, request.getCreatedAt());
+            pstmt.setString(4, request.getCompanyEmail());
+            pstmt.setString(5, request.getPhone());
+            pstmt.setString(6, request.getCreatedAt());
 
             pstmt.executeUpdate();
             pstmt.close();
@@ -139,21 +136,18 @@ public class AdminDaoImpl implements AdminDao {
         String query = new StringBuilder()
             .append("UPDATE Admin ")
             .append("SET ")
-            .append("name = ?, admin_id = ?, email = ?, company_email = ?, ")
-            .append("phone = ?, zip_code = ?, address = ?, updated_at = ? ")
+            .append("name = ?, admin_id = ?, company_email = ?, ")
+            .append("phone = ?, updated_at = ? ")
             .append("WHERE id = ?").toString();
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, request.getName());
             pstmt.setString(2, request.getAdminId());
-            pstmt.setString(3, request.getEmail());
-            pstmt.setString(4, request.getCompanyEmail());
-            pstmt.setString(5, request.getPhone());
-            pstmt.setString(6, request.getZipCode());
-            pstmt.setString(7, request.getAddress());
-            pstmt.setString(8, request.getUpdatedAt());
-            pstmt.setInt(9, request.getId());
+            pstmt.setString(3, request.getCompanyEmail());
+            pstmt.setString(4, request.getPhone());
+            pstmt.setString(5, request.getUpdatedAt());
+            pstmt.setInt(6, request.getId());
 
             pstmt.executeUpdate();
             pstmt.close();

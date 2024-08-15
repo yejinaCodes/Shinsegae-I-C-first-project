@@ -122,6 +122,19 @@ public class ValidCheck {
     }
 
     /**
+     * 입력값 길이 유효성 검사
+     * @param input 입력값 (최대 길이: 50)
+     */
+    public String validateStringLength50(String input) {
+        isNull(input);
+
+        if (input.length() >50) {
+            throw new Exception(ErrorCode.INVALID_LENGTH_50);
+        }
+        return input;
+    }
+
+    /**
      * ID 유효성 검사
      * @param id 입력값
      */

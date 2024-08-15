@@ -36,7 +36,7 @@ public class MainApplication {
             userType = br.readLine().trim();
             validCheck.validateMenuNumber1To2(userType);
 
-//            authController.handleAuth(userType);
+            authController.handleAuth(userType);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             selectUserType();

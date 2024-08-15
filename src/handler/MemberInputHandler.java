@@ -4,6 +4,7 @@ import common.Member;
 import common.Role;
 import common.ValidCheck;
 import dto.request.AdminRequestDto;
+import dto.request.UserRequestDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,16 +20,12 @@ public class MemberInputHandler {
     private static Encrypt encrypt = new Encrypt();
 
     public AdminRequestDto createAdmin() throws IOException {
-        AdminRequestDto admin = new AdminRequestDto(getNameInput(), getIdInput(),
-            getPwdInput(), getEmailInput(),
-            getPhoneInput(), getZipCodeInput(),
-            getAddressInput());
+        AdminRequestDto admin = new AdminRequestDto(getNameInput(), getIdInput(), getPwdInput(), getPhoneInput());
         return admin;
     }
 
     public AdminRequestDto updateAdmin() throws IOException {
-        AdminRequestDto admin = new AdminRequestDto(getNameInput(), getIdInput(),
-            getEmailInput(), getPhoneInput(), getZipCodeInput(), getAddressInput());
+        AdminRequestDto admin = new AdminRequestDto(getNameInput(), getIdInput(), getPhoneInput());
         return admin;
     }
 
@@ -40,6 +37,12 @@ public class MemberInputHandler {
     public AdminRequestDto updateAdminRole() throws IOException {
         AdminRequestDto admin = new AdminRequestDto(getRoleInput());
         return admin;
+    }
+
+    public UserRequestDto createUser() throws IOException {
+        UserRequestDto user = new UserRequestDto(getNameInput(), getBusinessNumberInput(), getCompanyNameInput(),
+            getIdInput(), getPwdInput(), getEmailInput(), getPhoneInput(), getZipCodeInput(), getAddressInput());
+        return user;
     }
 
     public int getUserIdInput() throws IOException {
@@ -64,6 +67,30 @@ public class MemberInputHandler {
             getNameInput();
         }
         return name;
+    }
+
+    public String getBusinessNumberInput() throws IOException {
+        String bn = "";
+        try {
+            System.out.print(Member.BUSINESS_NUMBER.getText());
+            bn = validCheck.validateStringLength30(br.readLine());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            getBusinessNumberInput();
+        }
+        return bn;
+    }
+
+    public String getCompanyNameInput() throws IOException {
+        String cn = "";
+        try {
+            System.out.print(Member.COMPANY_NAME.getText());
+            cn = validCheck.validateStringLength50(br.readLine());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            getCompanyNameInput();
+        }
+        return cn;
     }
 
     public String getIdInput() throws IOException {

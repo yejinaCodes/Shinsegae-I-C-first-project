@@ -1,6 +1,7 @@
 package controller;
 
 import common.ErrorCode;
+import dto.request.UserRequestDto;
 import handler.MemberInputHandler;
 import common.ValidCheck;
 import dto.request.AdminRequestDto;
@@ -10,7 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import library.Script;
 import service.AdminService;
+import service.UserService;
 import service.serviceImpl.AdminServiceImpl;
+import service.serviceImpl.UserServiceImpl;
 
 public class AuthController {
 
@@ -20,6 +23,7 @@ public class AuthController {
     private static Script script = new Script();
     private static MemberInputHandler memberInputHandler = new MemberInputHandler();
     private static AdminService adminService = new AdminServiceImpl();
+    private static UserService userService = new UserServiceImpl();
 
     /**
      * 메뉴 선택 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 찾기
@@ -36,7 +40,7 @@ public class AuthController {
                 case "1":
                     switch (menu) {
                         case "1":
-//                          registerUser();
+                            registerUser();
                             break;
                         case "2":
                             break;
@@ -73,15 +77,16 @@ public class AuthController {
     /**
      * 유저 회원 가입
      */
-    /*private void registerUser() throws IOException {
+    private void registerUser() throws IOException {
         try {
 
-        } catch (NullPointerException e) {
-            System.out.println(ErrorCode.NULL_VALUE.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            UserRequestDto user = memberInputHandler.createUser();
+
+            userService.createUser(user);
+        } catch (IOException e) {
+            System.out.println(ErrorCode.INVALID_VALUE.getMessage());
         }
-    }*/
+    }
 
     /**
      * 쇼핑몰 사업자 회원 아이디 찾기
