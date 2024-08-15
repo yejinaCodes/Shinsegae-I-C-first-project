@@ -32,7 +32,7 @@ public enum Menu {
         this.description = description;
     }
 
-    public String getText() {
+    public String getDescription() {
         return description;
     }
 }
