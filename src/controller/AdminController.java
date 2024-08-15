@@ -158,8 +158,10 @@ public class AdminController {
         }
     }
 
-    private void viewUserDetail() {
-
+    private void viewUserDetail() throws IOException {
+        int targetUserId = memberInputHandler.getUserIdInput();
+        UserResponseDto response = userService.findById(targetUserId);
+        script.userInfo(response);
     }
 
     private void viewAllUser() {
