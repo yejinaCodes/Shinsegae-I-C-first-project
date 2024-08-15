@@ -3,6 +3,7 @@ package library;
 import common.Member;
 import common.Menu;
 import dto.response.AdminResponseDto;
+import dto.response.UserResponseDto;
 
 public class Script {
 
@@ -148,6 +149,17 @@ public class Script {
     }
 
     /**
+     * '회원 관리' 메뉴 선택
+     * 1. 정보 조회 | 2. 정보 수정 | 3. 비밀번호 변경 | 4. 탈퇴
+     */
+    public void manageUser() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.USER_MEMBER_MENU.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
      * 사원 번호 입력 받기
      */
     public void viewAdminDetail() {
@@ -183,7 +195,6 @@ public class Script {
             .append(Member.ADMIN_ID.getText()).append(response.getId()).append("\n")
             .append(Member.NAME.getText()).append(response.getName()).append("\n")
             .append(Member.ID.getText()).append(response.getAdminId()).append("\n")
-            .append(Member.PW.getText()).append(response.getPassword()).append("\n")
             .append(Member.ADMIN_COMPANY_EMAIL.getText()).append(response.getCompanyEmail()).append("\n")
             .append(Member.DEPARTMENT.getText()).append(response.getDepartment()).append("\n")
             .append(Member.POSITION.getText()).append(response.getPosition()).append("\n")
@@ -192,6 +203,29 @@ public class Script {
             .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
             .append(Member.AUTHORIZER_ID.getText()).append(response.getAuthorizerId()).append("\n")
             .append(Member.UPDATED_AT.getText()).append(response.getUpdatedAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 상세 내역 조회
+     */
+    public void userInfo(UserResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.USER_ID.getText()).append(response.getId()).append("\n")
+            .append(Member.NAME.getText()).append(response.getName()).append("\n")
+            .append(Member.BUSINESS_NUMBER.getText()).append(response.getBusinessNumber()).append("\n")
+            .append(Member.COMPANY_NAME.getText()).append(response.getCompanyName()).append("\n")
+            .append(Member.ID.getText()).append(response.getUserId()).append("\n")
+            .append(Member.EMAIL.getText()).append(response.getEmail()).append("\n")
+            .append(Member.PHONE.getText()).append(response.getPhone()).append("\n")
+            .append(Member.ZIP_CODE.getText()).append(response.getZipCode()).append("\n")
+            .append(Member.ADDRESS.getText()).append(response.getAddress()).append("\n")
+            .append(Member.IS_UNREGISTER.getText()).append(response.getIsUnregister()).append("\n")
+            .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
+            .append(Member.UPDATED_AT.getText()).append(response.getUpdatedAt()).append("\n")
+            .append(Member.UPDATED_ADMIN_ID.getText()).append(response.getUpdatedAdminId()).append("\n")
+            .append(Member.UPDATED_ADMIN_AT.getText()).append(response.getUpdatedAdminAt()).append("\n")
+            .append(Member.UNREGISTERED_AT.getText()).append(response.getUnregisteredAt()).append("\n");
         print();
     }
 }

@@ -3,6 +3,8 @@ package dao.daoImpl;
 import config.ConnectionFactory;
 import dao.UserDao;
 import dto.request.UserRequestDto;
+import dto.response.AdminResponseDto;
+import dto.response.UserResponseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,5 +43,35 @@ public class UserDaoImpl implements UserDao {
         } finally {
             ConnectionFactory.getInstance().close();
         }
+    }
+
+    @Override
+    public UserResponseDto findById(int id) {
+        UserResponseDto response = null;
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT * ")
+            .append("FROM User ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                response = new UserResponseDto(rs);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+
+        return response;
     }
 }

@@ -20,7 +20,6 @@ public class AdminController {
     private static ValidCheck validCheck = new ValidCheck();
     private static Script script = new Script();
     private static AdminService adminService = new AdminServiceImpl();
-    private static Encrypt encrypt = new Encrypt();
 
 
     /**
