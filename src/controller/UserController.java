@@ -35,7 +35,7 @@ public class UserController {
                 editUser();
                 break;
             case "3":
-//                editPwd();
+                editPwd();
                 break;
             case "4":
 //                unregister();
@@ -56,5 +56,12 @@ public class UserController {
      */
     private void editUser() throws IOException {
         userService.updateUser(id, memberInputHandler.updateUser());
+    }
+
+    /**
+     * '회원 관리 > 비밀번호 수정'
+     */
+    private void editPwd() throws IOException {
+        userService.updateUserPwd(id, memberInputHandler.updateUserPwd());
     }
 }

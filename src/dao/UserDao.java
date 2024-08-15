@@ -9,4 +9,6 @@ public interface UserDao {
     UserResponseDto findById(int id);
 
     void updateUser(int id, UserRequestDto request);
+
+    void updateUserPwd(int id, UserRequestDto request);
 }

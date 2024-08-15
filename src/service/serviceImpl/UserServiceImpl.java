@@ -24,5 +24,10 @@ public class UserServiceImpl implements UserService {
         userDao.updateUser(id, request);
     }
 
+    @Override
+    public void updateUserPwd(int id, UserRequestDto request) {
+        userDao.updateUserPwd(id, request);
+    }
+
     ;
 }

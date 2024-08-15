@@ -58,4 +58,12 @@ public class UserRequestDto {
         this.address = address;
         this.updatedAt = LocalDateTime.getTime();;
     }
+
+    /**
+     * 비밀번호 수정
+     */
+    public UserRequestDto(String password) {
+        this.password = password;
+        this.updatedAt = LocalDateTime.getTime();;
+    }
 }

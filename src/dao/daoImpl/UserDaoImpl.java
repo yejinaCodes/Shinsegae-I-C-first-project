@@ -3,7 +3,6 @@ package dao.daoImpl;
 import config.ConnectionFactory;
 import dao.UserDao;
 import dto.request.UserRequestDto;
-import dto.response.AdminResponseDto;
 import dto.response.UserResponseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,6 +96,30 @@ public class UserDaoImpl implements UserDao {
             pstmt.setString(8, request.getAddress());
             pstmt.setString(9, request.getUpdatedAt());
             pstmt.setInt(10, id);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
+
+    @Override
+    public void updateUserPwd(int id, UserRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE User ")
+            .append("SET ")
+            .append("password = ? , updated_at = ?")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getPassword());
+            pstmt.setString(2, request.getUpdatedAt());
+            pstmt.setInt(3, id);
 
             pstmt.executeUpdate();
             pstmt.close();

@@ -51,6 +51,11 @@ public class MemberInputHandler {
         return user;
     }
 
+    public UserRequestDto updateUserPwd() throws IOException {
+        UserRequestDto user = new UserRequestDto(getPwdInput());
+        return user;
+    }
+
     public int getUserIdInput() throws IOException {
         try {
             script.viewAdminDetail();
