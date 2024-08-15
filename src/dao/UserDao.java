@@ -11,4 +11,6 @@ public interface UserDao {
     void updateUser(int id, UserRequestDto request);
 
     void updateUserPwd(int id, UserRequestDto request);
+
+    void delete(int id, UserRequestDto request);
 }

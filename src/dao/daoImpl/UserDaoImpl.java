@@ -129,4 +129,29 @@ public class UserDaoImpl implements UserDao {
             ConnectionFactory.getInstance().close();
         }
     }
+
+    @Override
+    public void delete(int id, UserRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE User ")
+            .append("SET ")
+            .append("is_unregister = ? , updated_at = ?, unregistered_at = ?")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, request.getIsUnregister());
+            pstmt.setString(2, request.getUpdatedAt());
+            pstmt.setString(3, request.getUnregisteredAt());
+            pstmt.setInt(4, 5);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
 }

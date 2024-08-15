@@ -5,7 +5,6 @@ import common.Role;
 import dto.response.AdminResponseDto;
 import java.util.List;
 import library.Script;
-import security.Encrypt;
 import common.ValidCheck;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -247,7 +246,6 @@ public class AdminController {
      * '회원 관리 > 삭제' 메뉴 선택
      * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제
      */
-
     private void delete() throws IOException {
         script.deleteMember();
         String menu = br.readLine().trim();
@@ -262,9 +260,24 @@ public class AdminController {
                 break;
         }
     }
+
+
+    /**
+     * '회원 관리 > 삭제 > 직원 삭제'
+     */
     private void deleteAdmin() throws IOException {
         int targetEmployeeId = memberInputHandler.getUserIdInput();
-        adminService.deleteAdmin(targetEmployeeId);
+        script.confirm();
+        String menu = br.readLine().trim();
+        validCheck.validateMenuNumber1To2(menu);
+
+        switch (menu) {
+            case "1":
+                adminService.deleteAdmin(targetEmployeeId);
+                break;
+            case "2":
+                break;
+        }
     }
 
     private void deleteUser() throws IOException {

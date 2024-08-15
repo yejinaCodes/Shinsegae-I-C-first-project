@@ -2,11 +2,11 @@ package dto.request;
 
 import library.LocalDateTime;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class UserRequestDto {
+    private static final int TRUE = 1;
+    private static final int FALSE = 0;
 
     private int id;
     private String name;
@@ -56,7 +56,7 @@ public class UserRequestDto {
         this.phone = phone;
         this.zipCode = zipCode;
         this.address = address;
-        this.updatedAt = LocalDateTime.getTime();;
+        this.updatedAt = LocalDateTime.getTime();
     }
 
     /**
@@ -64,6 +64,15 @@ public class UserRequestDto {
      */
     public UserRequestDto(String password) {
         this.password = password;
-        this.updatedAt = LocalDateTime.getTime();;
+        this.updatedAt = LocalDateTime.getTime();
+    }
+
+    /**
+     * 탈퇴 수정
+     */
+    public UserRequestDto() {
+        this.isUnregister = TRUE;
+        this.updatedAt = LocalDateTime.getTime();
+        this.unregisteredAt = LocalDateTime.getTime();
     }
 }

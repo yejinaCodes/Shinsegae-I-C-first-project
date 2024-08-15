@@ -1,6 +1,7 @@
 package controller;
 
 import common.ValidCheck;
+import dto.request.UserRequestDto;
 import dto.response.UserResponseDto;
 import handler.MemberInputHandler;
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ public class UserController {
                 editPwd();
                 break;
             case "4":
-//                unregister();
+                unregister();
                 break;
         }
     }
@@ -63,5 +64,25 @@ public class UserController {
      */
     private void editPwd() throws IOException {
         userService.updateUserPwd(id, memberInputHandler.updateUserPwd());
+    }
+
+    /**
+     * '회원 관리 > 탈퇴'
+     * '계속 진행하시겠습니까?'
+     * 1. 예 | 2. 아니요
+     */
+    private void unregister() throws IOException{
+        UserRequestDto request = new UserRequestDto();
+        script.confirm();
+        String menu = br.readLine().trim();
+        validCheck.validateMenuNumber1To2(menu);
+
+        switch (menu) {
+            case "1":
+                userService.delete(id, request);
+                break;
+            case "2":
+                break;
+        }
     }
 }

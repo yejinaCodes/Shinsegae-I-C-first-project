@@ -160,6 +160,15 @@ public class Script {
     }
 
     /**
+     * 진행 확인
+     */
+    public void confirm() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.CONFIRM.getDescription());
+        print();
+    }
+
+    /**
      * 사원 번호 입력 받기
      */
     public void viewAdminDetail() {
