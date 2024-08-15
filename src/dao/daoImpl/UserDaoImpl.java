@@ -161,7 +161,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(int id, UserRequestDto request) {
+    public void unregister(int id, UserRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("UPDATE User ")
@@ -175,6 +175,26 @@ public class UserDaoImpl implements UserDao {
             pstmt.setString(2, request.getUpdatedAt());
             pstmt.setString(3, request.getUnregisteredAt());
             pstmt.setInt(4, 5);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("DELETE FROM User ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, id);
 
             pstmt.executeUpdate();
             pstmt.close();

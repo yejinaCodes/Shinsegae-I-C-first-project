@@ -1,5 +1,6 @@
 package controller;
 
+import dto.request.UserRequestDto;
 import dto.response.UserResponseDto;
 import handler.MemberInputHandler;
 import common.Role;
@@ -278,6 +279,19 @@ public class AdminController {
     }
 
     private void deleteUser() throws IOException {
+        int targetUserId = memberInputHandler.getUserIdInput();
 
+        script.confirm();
+        String menu = br.readLine().trim();
+        validCheck.validateMenuNumber1To2(menu);
+
+        switch (menu) {
+            case "1":
+                UserRequestDto request = new UserRequestDto();
+                userService.delete(targetUserId);
+                break;
+            case "2":
+                break;
+        }
     }
 }

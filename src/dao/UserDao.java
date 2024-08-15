@@ -15,5 +15,7 @@ public interface UserDao {
 
     void updateUserPwd(int id, UserRequestDto request);
 
-    void delete(int id, UserRequestDto request);
+    void unregister(int id, UserRequestDto request);
+
+    void delete(int id);
 }

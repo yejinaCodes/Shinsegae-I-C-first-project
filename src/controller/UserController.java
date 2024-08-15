@@ -72,14 +72,14 @@ public class UserController {
      * 1. 예 | 2. 아니요
      */
     private void unregister() throws IOException{
-        UserRequestDto request = new UserRequestDto();
         script.confirm();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To2(menu);
 
         switch (menu) {
             case "1":
-                userService.delete(id, request);
+                UserRequestDto request = new UserRequestDto();
+                userService.unregister(id, request);
                 break;
             case "2":
                 break;
