@@ -16,6 +16,8 @@ public class UserController {
     private static ValidCheck validCheck = new ValidCheck();
     private static Script script = new Script();
     private static UserService userService = new UserServiceImpl();
+    private static int id = 1;// 🚨 로그인 유저 id로 변경 예정
+
     /**
      * '회원 관리' 메뉴 선택
      * 1. 정보 조회 | 2. 정보 수정 | 3. 비밀번호 변경 | 4. 탈퇴
@@ -30,13 +32,14 @@ public class UserController {
                 viewInfo();
                 break;
             case "2":
-//                editUser();
+                editUser();
                 break;
             case "3":
 //                editPwd();
                 break;
             case "4":
 //                unregister();
+                break;
         }
     }
 
@@ -44,9 +47,14 @@ public class UserController {
      * '회원 관리 > 정보 조회'
      */
     private void viewInfo() {
-        // 🚨 로그인 유저 id로 변경 예정
-        int id = 1;
         UserResponseDto response = userService.findById(id);
         script.userInfo(response);
+    }
+
+    /**
+     * '회원 관리 > 정보 수정'
+     */
+    private void editUser() throws IOException {
+        userService.updateUser(id, memberInputHandler.updateUser());
     }
 }

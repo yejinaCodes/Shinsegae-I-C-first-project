@@ -74,4 +74,36 @@ public class UserDaoImpl implements UserDao {
 
         return response;
     }
+
+    @Override
+    public void updateUser(int id, UserRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE User ")
+            .append("SET ")
+            .append("name = ?, business_number = ?, company_name = ?, user_id = ?, ")
+            .append("email = ?, phone = ?, zip_code = ?, address = ?, updated_at = ? ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getName());
+            pstmt.setString(2, request.getBusinessNumber());
+            pstmt.setString(3, request.getCompanyName());
+            pstmt.setString(4, request.getUserId());
+            pstmt.setString(5, request.getEmail());
+            pstmt.setString(6, request.getPhone());
+            pstmt.setString(7, request.getZipCode());
+            pstmt.setString(8, request.getAddress());
+            pstmt.setString(9, request.getUpdatedAt());
+            pstmt.setInt(10, id);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
 }

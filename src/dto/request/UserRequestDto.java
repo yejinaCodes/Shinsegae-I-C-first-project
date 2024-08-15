@@ -42,4 +42,20 @@ public class UserRequestDto {
         this.address = address;
         this.createdAt = LocalDateTime.getTime();
     }
+
+    /**
+     * 정보 수정
+     */
+    public UserRequestDto(String name, String businessNumber, String companyName, String userId,
+        String email, String phone, String zipCode, String address) {
+        this.name = name;
+        this.businessNumber = businessNumber;
+        this.companyName = companyName;
+        this.userId = userId;
+        this.email = email;
+        this.phone = phone;
+        this.zipCode = zipCode;
+        this.address = address;
+        this.updatedAt = LocalDateTime.getTime();;
+    }
 }

@@ -23,6 +23,9 @@ public class AdminRequestDto {
     private int authorizerId;
     private String updatedAt;
 
+    /**
+     * 회원 가입
+     */
     public AdminRequestDto(String name, String adminId, String password, String phone) {
         this.name = name;
         this.adminId = adminId;
@@ -32,6 +35,9 @@ public class AdminRequestDto {
         this.createdAt = LocalDateTime.getTime();
     }
 
+    /**
+     * 정보 수정
+     */
     public AdminRequestDto(String name, String adminId, String phone) {
         // 🚨 로그인 유저 id로 변경 예정
         this.id = 1;
@@ -42,6 +48,9 @@ public class AdminRequestDto {
         this.updatedAt = LocalDateTime.getTime();
     }
 
+    /**
+     * 비밀번호 수정
+     */
     public AdminRequestDto(String password) {
         // 🚨 로그인 유저 id로 변경 예정
         this.id = 1;
@@ -49,6 +58,9 @@ public class AdminRequestDto {
         this.updatedAt = LocalDateTime.getTime();
     }
 
+    /**
+     * 권한 수정
+     */
     public AdminRequestDto(Role role) {
         // 🚨 로그인 유저 id로 변경 예정
         this.id = 1;

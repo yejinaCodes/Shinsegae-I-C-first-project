@@ -45,94 +45,86 @@ public class MemberInputHandler {
         return user;
     }
 
+    public UserRequestDto updateUser() throws IOException {
+        UserRequestDto user = new UserRequestDto(getNameInput(), getBusinessNumberInput(), getCompanyNameInput(),
+            getIdInput(), getEmailInput(), getPhoneInput(), getZipCodeInput(), getAddressInput());
+        return user;
+    }
+
     public int getUserIdInput() throws IOException {
-        int id = 0;
         try {
             script.viewAdminDetail();
-            id = validCheck.isNumber(br.readLine());
+            return validCheck.isNumber(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getNameInput();
+            return getUserIdInput();
         }
-        return id;
     }
 
     public String getNameInput() throws IOException {
-        String name = "";
         try {
             System.out.print(Member.NAME.getText());
-            name = validCheck.validateStringLength30(br.readLine());
+            return validCheck.validateStringLength30(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getNameInput();
+            return getNameInput();
         }
-        return name;
     }
 
     public String getBusinessNumberInput() throws IOException {
-        String bn = "";
         try {
             System.out.print(Member.BUSINESS_NUMBER.getText());
-            bn = validCheck.validateStringLength30(br.readLine());
+            return validCheck.validateStringLength30(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getBusinessNumberInput();
+            return getBusinessNumberInput();
         }
-        return bn;
     }
 
     public String getCompanyNameInput() throws IOException {
-        String cn = "";
         try {
             System.out.print(Member.COMPANY_NAME.getText());
-            cn = validCheck.validateStringLength50(br.readLine());
+            return validCheck.validateStringLength50(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getCompanyNameInput();
+            return getCompanyNameInput();
         }
-        return cn;
     }
 
     public String getIdInput() throws IOException {
-        String id = "";
         try {
             System.out.print(Member.ID.getText());
-            id = validCheck.validateId(br.readLine());
+            return validCheck.validateId(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getIdInput();
+            return getIdInput();
         }
-        return id;
     }
 
     public String getPwdInput() throws IOException {
-        String pw = "";
         try {
             System.out.print(Member.PW.getText());
-            pw = validCheck.validatePw(br.readLine());
-            pw = encrypt.getEncrypt(pw);
+            return encrypt.getEncrypt(validCheck.validatePw(br.readLine()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getPwdInput();
+            return getPwdInput();
         }
-        return pw;
     }
 
     public String getEmailInput() throws IOException {
-        String email = "";
         try {
             System.out.print(Member.EMAIL.getText());
-            email = validCheck.validateEmail(br.readLine());
+            return validCheck.validateEmail(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getEmailInput();
+            return getEmailInput();
         }
-        return email;
     }
 
     public Role getRoleInput() throws IOException {
-        Role role = null;
         try {
+            Role role = null;
+
             script.getRole();
             String menu = br.readLine().trim();
             validCheck.validateMenuNumber1To3(menu);
@@ -148,46 +140,40 @@ public class MemberInputHandler {
                     role = Role.valueOf("EMPLOYEE");
                     break;
             }
+            return role;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getPhoneInput();
+            return getRoleInput();
         }
-        return role;
     }
 
     public String getPhoneInput() throws IOException {
-        String phone = "";
         try {
             System.out.print(Member.PHONE.getText());
-            phone = validCheck.validatePhone(br.readLine());
+            return validCheck.validatePhone(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getPhoneInput();
+            return getPhoneInput();
         }
-        return phone;
     }
 
     public String getZipCodeInput() throws IOException {
-        String zipCode = "";
         try {
             System.out.print(Member.ZIP_CODE.getText());
-            zipCode = validCheck.validateStringLength10(br.readLine());
+            return validCheck.validateStringLength10(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getZipCodeInput();
+            return getZipCodeInput();
         }
-        return zipCode;
     }
 
     public String getAddressInput() throws IOException {
-        String address = "";
         try {
             System.out.print(Member.ADDRESS.getText());
-            address = br.readLine();
+            return br.readLine();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            getAddressInput();
+            return getAddressInput();
         }
-        return address;
     }
 }

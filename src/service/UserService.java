@@ -7,4 +7,6 @@ public interface UserService {
     void createUser(UserRequestDto request);
 
     UserResponseDto findById(int id);
+
+    void updateUser(int id, UserRequestDto request);
 }
