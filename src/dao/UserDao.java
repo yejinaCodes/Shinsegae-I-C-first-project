@@ -1,6 +1,7 @@
 package dao;
 
 import dto.request.UserRequestDto;
+import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public interface UserDao {
     List<UserResponseDto> findAll();
 
     UserResponseDto findById(int id);
+    List<UserApprovalResponseDto> findByApproval();
 
     void updateUser(int id, UserRequestDto request);
 

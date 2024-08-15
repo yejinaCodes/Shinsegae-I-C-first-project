@@ -3,6 +3,7 @@ package service.serviceImpl;
 import dao.UserDao;
 import dao.daoImpl.UserDaoImpl;
 import dto.request.UserRequestDto;
+import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 import java.util.List;
 import service.UserService;
@@ -23,6 +24,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto findById(int id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public List<UserApprovalResponseDto> findByApproval() {
+        return userDao.findByApproval();
     }
 
     @Override

@@ -3,6 +3,7 @@ package library;
 import common.Member;
 import common.Menu;
 import dto.response.AdminResponseDto;
+import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 
 public class Script {
@@ -235,6 +236,19 @@ public class Script {
             .append(Member.UPDATED_ADMIN_ID.getText()).append(response.getUpdatedAdminId()).append("\n")
             .append(Member.UPDATED_ADMIN_AT.getText()).append(response.getUpdatedAdminAt()).append("\n")
             .append(Member.UNREGISTERED_AT.getText()).append(response.getUnregisteredAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 상세 내역 조회
+     */
+    public void approvalUser(UserApprovalResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.USER_ID.getText()).append(response.getUserId()).append("\n")
+            .append(Member.BUSINESS_NUMBER.getText()).append(response.getBusinessNumber()).append("\n")
+            .append(Member.COMPANY_NAME.getText()).append(response.getCompanyName()).append("\n")
+            .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
+            .append(Member.APPROVAL_STATUS.getText()).append(response.getApprovalStatus()).append("\n");
         print();
     }
 }

@@ -22,7 +22,8 @@ public enum Member {
     UPDATED_AT("최종 수정 시각: "),
     UPDATED_ADMIN_ID("최종 수정자(직원) ID: "),
     UPDATED_ADMIN_AT("최종 수정(직원) 시각: "),
-    UNREGISTERED_AT("탈퇴 시각: ");
+    UNREGISTERED_AT("탈퇴 시각: "),
+    APPROVAL_STATUS("승인 상태: ");
 
 
     private final String description;

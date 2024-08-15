@@ -1,6 +1,7 @@
 package controller;
 
 import dto.request.UserRequestDto;
+import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 import handler.MemberInputHandler;
 import common.Role;
@@ -171,7 +172,8 @@ public class AdminController {
     }
 
     private void viewPendingApproval() {
-
+        List<UserApprovalResponseDto> list = userService.findByApproval();
+        list.forEach(l -> script.approvalUser(l));
     }
 
     /**
