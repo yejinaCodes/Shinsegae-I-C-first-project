@@ -208,6 +208,32 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
+    public void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE Admin ")
+            .append("SET ")
+            .append("department = ?, position = ?, updated_at = ? , authorizer_id = ? ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getDepartment().toString());
+            pstmt.setString(2, request.getPosition().toString());
+            pstmt.setString(3, request.getUpdatedAt());
+            pstmt.setInt(4, request.getId());
+            pstmt.setInt(5, targetEmployeeId);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
+
+    @Override
     public void deleteAdmin(int targetEmployeeId) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()

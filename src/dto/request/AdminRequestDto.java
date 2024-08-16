@@ -67,5 +67,16 @@ public class AdminRequestDto {
         this.role = role;
         this.updatedAt = LocalDateTime.getTime();
     }
+
+    /**
+     * 부서 및 직급 수정
+     */
+    public AdminRequestDto(Department department, Position position) {
+        // 🚨 로그인 유저 id로 변경 예정
+        this.id = 1;
+        this.department = department;
+        this.position = position;
+        this.updatedAt = LocalDateTime.getTime();
+    }
 }
 

@@ -47,6 +47,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request) {
+        adminDao.updateAdminDeptPos(targetEmployeeId, request);
+    }
+
+    @Override
     public void deleteAdmin(int targetEmployeeId) {
         adminDao.deleteAdmin(targetEmployeeId);
     }

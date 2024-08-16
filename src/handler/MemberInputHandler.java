@@ -1,6 +1,8 @@
 package handler;
 
+import common.Department;
 import common.Member;
+import common.Position;
 import common.Role;
 import common.ValidCheck;
 import dto.request.AdminRequestDto;
@@ -39,6 +41,11 @@ public class MemberInputHandler {
         return admin;
     }
 
+    public AdminRequestDto updateAdminDeptPos() throws IOException {
+        AdminRequestDto admin = new AdminRequestDto(getDepartmentInput(), getPositionInput());
+        return admin;
+    }
+
     public UserRequestDto createUser() throws IOException {
         UserRequestDto user = new UserRequestDto(getNameInput(), getBusinessNumberInput(), getCompanyNameInput(),
             getIdInput(), getPwdInput(), getEmailInput(), getPhoneInput(), getZipCodeInput(), getAddressInput());
@@ -56,9 +63,19 @@ public class MemberInputHandler {
         return user;
     }
 
+    public int getAdminIdInput() throws IOException {
+        try {
+            script.getAdminId();
+            return validCheck.isNumber(br.readLine());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getAdminIdInput();
+        }
+    }
+
     public int getUserIdInput() throws IOException {
         try {
-            script.viewAdminDetail();
+            script.getUserId();
             return validCheck.isNumber(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -123,6 +140,64 @@ public class MemberInputHandler {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getEmailInput();
+        }
+    }
+
+    public Department getDepartmentInput() throws IOException {
+        try {
+            Department department = null;
+
+            script.getDepartment();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To5(menu);
+
+            switch (menu) {
+                case "1":
+                    department = Department.valueOf("HR");
+                    break;
+                case "2":
+                    department = Department.valueOf("WAREHOUSE");
+                    break;
+                case "3":
+                    department = Department.valueOf("DELIVERY");
+                    break;
+                case "4":
+                    department = Department.valueOf("DEVELOPMENT");
+                    break;
+                case "5":
+                    department = Department.valueOf("ACCOUNTING");
+                    break;
+            }
+            return department;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getDepartmentInput();
+        }
+    }
+
+    public Position getPositionInput() throws IOException {
+        try {
+            Position position = null;
+
+            script.getPosition();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1":
+                    position = Position.valueOf("SUPER_ADMIN");
+                    break;
+                case "2":
+                    position = Position.valueOf("ADMIN");
+                    break;
+                case "3":
+                    position = Position.valueOf("EMPLOYEE");
+                    break;
+            }
+            return position;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getPositionInput();
         }
     }
 

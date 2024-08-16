@@ -11,6 +11,7 @@ public class ValidCheck {
     private static final String MENU_RANGE_1_TO_2 = "^[1-2]";
     private static final String MENU_RANGE_1_TO_3 = "^[1-3]";
     private static final String MENU_RANGE_1_TO_4 = "^[1-4]";
+    private static final String MENU_RANGE_1_TO_5 = "^[1-5]";
     private static final String MENU_RANGE_1_TO_7 = "^[1-7]";
     private static final String MENU_RANGE_1_TO_8 = "^[1-8]";
 
@@ -67,6 +68,18 @@ public class ValidCheck {
         isNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_4))) {
+            throw new Exception(ErrorCode.INVALID_MENU_OPTION);
+        }
+    }
+
+    /**
+     * 메뉴 번호 유효성 검사
+     * @param menu 메뉴 번호 (1 ~ 5)
+     */
+    public void validateMenuNumber1To5(String menu) {
+        isNumber(menu);
+
+        if (!(menu.matches(MENU_RANGE_1_TO_5))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
         }
     }

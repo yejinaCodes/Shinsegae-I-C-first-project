@@ -97,7 +97,7 @@ public class AdminController {
      * '회원 관리 > 조회 > 직원 조회 > 직원 상세 조회'
      */
     private void viewAdminDetail() throws IOException {
-        script.viewAdminDetail();
+        script.getAdminId();
         int id = validCheck.isNumber(br.readLine());
         AdminResponseDto response = adminService.findById(id);
         script.adminInfo(response);
@@ -211,7 +211,7 @@ public class AdminController {
 
     /**
      * '회원 관리 > 권한 설정' 메뉴 선택
-     * 1. 회원 권한 | 2. 쇼핑몰 사업자 권한 승인
+     * 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 권한 승인
      */
     private void setMemberRole() throws IOException {
         script.setMemberPermission();
@@ -223,23 +223,37 @@ public class AdminController {
                 setAdminRole();
                 break;
             case "2":
-                setUserRole();
+                setDeptAndPosition();
+                break;
+            case "3":
+                approveUser();
                 break;
         }
     }
 
     /**
-     * '회원 관리 > 권한 설정' 권한 선택
+     * '회원 관리 > 권한 설정 > 직원 권한' 권한 선택
      * 입력값: 사원 번호, 권한
      * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
      */
     private void setAdminRole() throws IOException {
-        int targetEmployeeId = memberInputHandler.getUserIdInput();
+        int targetEmployeeId = memberInputHandler.getAdminIdInput();
         adminService.updateRole(targetEmployeeId, memberInputHandler.updateAdminRole());
     }
 
-    private void setUserRole() {
+    /**
+     * '회원 관리 > 권한 설정 > 직원 부서 및 직급' 권한 선택
+     */
+    private void setDeptAndPosition() throws IOException {
+        int targetEmployeeId = memberInputHandler.getAdminIdInput();
+        adminService.updateAdminDeptPos(targetEmployeeId, memberInputHandler.updateAdminDeptPos());
+    }
 
+    /**
+     * '회원 관리 > 권한 설정 > 쇼핑몰 사업자 권한 승인' 권한 선택
+     */
+    private void approveUser() throws IOException {
+        int targetUserId = memberInputHandler.getUserIdInput();
     }
 
     /**
@@ -266,7 +280,7 @@ public class AdminController {
      * '회원 관리 > 삭제 > 직원 삭제'
      */
     private void deleteAdmin() throws IOException {
-        int targetEmployeeId = memberInputHandler.getUserIdInput();
+        int targetEmployeeId = memberInputHandler.getAdminIdInput();
         script.confirm();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To2(menu);

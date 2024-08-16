@@ -129,7 +129,7 @@ public class Script {
 
     /**
      * '회원 관리 > 권한 설정' 메뉴 선택
-     * 1. 회원 권한 | 2. 쇼핑몰 사업자 권한 승인
+     * 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 권한 승인
      */
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -172,7 +172,7 @@ public class Script {
     /**
      * 사원 번호 입력 받기
      */
-    public void viewAdminDetail() {
+    public void getAdminId() {
         script.append(Menu.BORDER_LINE.getDescription())
             .append(Menu.ADMIN_ID_INPUT.getDescription());
         print();
@@ -184,6 +184,26 @@ public class Script {
     public void getUserId() {
         script.append(Menu.BORDER_LINE.getDescription())
             .append(Menu.USER_ID_INPUT.getDescription());
+        print();
+    }
+
+    /**
+     * 부서 입력 받기
+     */
+    public void getDepartment() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.ADMIN_DEPARTMENT_MENU.getDescription())
+            .append(Menu.ROLE_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 직급 입력 받기
+     */
+    public void getPosition() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.ADMIN_POSITION_MENU.getDescription())
+            .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
 

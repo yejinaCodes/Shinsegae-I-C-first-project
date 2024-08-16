@@ -19,5 +19,7 @@ public interface AdminDao {
 
     void updateRole(int targetEmployeeId, AdminRequestDto request);
 
+    void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request);
+
     void deleteAdmin(int targetEmployeeId);
 }

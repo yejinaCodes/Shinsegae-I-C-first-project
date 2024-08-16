@@ -18,6 +18,7 @@ public interface AdminService {
     void updatePwd(AdminRequestDto request);
 
     void updateRole(int targetEmployeeId, AdminRequestDto request);
+    void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request);
 
     void deleteAdmin(int targetEmployeeId);
 }
