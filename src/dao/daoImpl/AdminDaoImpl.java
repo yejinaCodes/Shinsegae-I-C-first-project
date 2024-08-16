@@ -131,6 +131,35 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
+    public String findAdminId(int id) {
+        String response = "";
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT CONCAT(LEFT(admin_id, 3), REPEAT('*', LENGTH(admin_id) - 3)) AS admin_id ")
+            .append("FROM Admin ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, id);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                response = rs.getString("admin_id");
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+        return response;
+    }
+
+    @Override
     public void updateAdmin(AdminRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()

@@ -13,6 +13,8 @@ public interface AdminDao {
 
     List<AdminResponseDto> findByRole(String role);
 
+    String findAdminId(int id);
+
     void updateAdmin(AdminRequestDto request);
 
     void updatePwd(AdminRequestDto request);

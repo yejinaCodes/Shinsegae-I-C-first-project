@@ -301,9 +301,9 @@ public class Script {
     }
 
     /**
-     * 쇼핑몰 유저 아이디 찾기 조회
+     * 아이디 찾기 조회
      */
-    public void userId(String response) {
+    public void accountId(String response) {
         script.append(Menu.BORDER_LINE.getDescription()).append("\n")
             .append(Member.ID.getText()).append(response).append("\n");
         print();

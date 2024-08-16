@@ -60,7 +60,7 @@ public class AuthController {
                         case "2":
                             break;
                         case "3":
-//                          findAdminId();
+                            findAdminId();
                             break;
                         case "4":
 //                            findAdminPwd();
@@ -94,7 +94,7 @@ public class AuthController {
     private void findUserId() throws IOException {
         script.getBizNo();
         String userId = userService.findUserId(memberInputHandler.getBusinessNumberInput());
-        script.userId(userId);
+        script.accountId(userId);
     }
 
     /**
@@ -122,8 +122,9 @@ public class AuthController {
     /**
      * 어드민 아이디 찾기
      */
-    private void findAdminId() {
-
+    private void findAdminId() throws IOException {
+        String adminId = adminService.findAdminId(memberInputHandler.getAdminIdInput());
+        script.accountId(adminId);
     }
 
     /**

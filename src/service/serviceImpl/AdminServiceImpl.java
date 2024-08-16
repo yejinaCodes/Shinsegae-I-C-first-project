@@ -31,6 +31,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public String findAdminId(int id) {
+        return adminDao.findAdminId(id);
+    }
+
+    @Override
     public void updateAdmin(AdminRequestDto request) {
         adminDao.updateAdmin(request);
     }
