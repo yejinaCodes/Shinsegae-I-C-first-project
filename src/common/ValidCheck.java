@@ -7,6 +7,7 @@ public class ValidCheck {
     private static final String PASSWORD = "^[a-zA-Z0-9.!@#$%^]{8,20}$";
     private static final String EMAIL = "^(?=.{1,100}$)[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String PHONE = "^\\d{10,11}$";
+    private static final String BIZ_NO = "^\\d{3}-\\d{2}-\\d{5}$";
     private static final String NUMBER = "^\\d+$";
     private static final String MENU_RANGE_1_TO_2 = "^[1-2]";
     private static final String MENU_RANGE_1_TO_3 = "^[1-3]";
@@ -189,6 +190,16 @@ public class ValidCheck {
             throw new Exception(ErrorCode.INVALID_PHONE);
         }
         return phone;
+    }
+
+    /**
+     * 사업자 번호 유효성 검사
+     */
+    public String validateBizNo(String bNumber) {
+        if (!(bNumber.matches(BIZ_NO))) {
+            throw new Exception(ErrorCode.INVALID_BIZ_NO);
+        }
+        return bNumber;
     }
 
 }

@@ -107,7 +107,7 @@ public class MemberInputHandler {
     public String getBusinessNumberInput() throws IOException {
         try {
             System.out.print(Member.BUSINESS_NUMBER.getText());
-            return validCheck.validateStringLength30(br.readLine());
+            return validCheck.validateBizNo(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getBusinessNumberInput();
