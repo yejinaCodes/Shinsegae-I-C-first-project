@@ -2,6 +2,7 @@ package library;
 
 import common.Member;
 import common.Menu;
+import common.ResponseMessage;
 import dto.response.AdminResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
@@ -242,6 +243,31 @@ public class Script {
     public void getRejectionReason() {
         script.append(Menu.BORDER_LINE.getDescription())
             .append(Menu.REJECTION_REASON_INPUT.getDescription());
+        print();
+    }
+
+    /**
+     * 로그인
+     */
+    public void login() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.LOGIN.getDescription());
+        print();
+    }
+
+    /**
+     * 로그인 성공
+     */
+    public void loginSuccess() {
+        script.append(ResponseMessage.LOGIN_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 로그인 실패
+     */
+    public void loginFailure() {
+        script.append(ResponseMessage.LOGIN_FAILURE.getMessage());
         print();
     }
 

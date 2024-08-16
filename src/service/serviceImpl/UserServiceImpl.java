@@ -7,13 +7,17 @@ import dto.request.UserRequestDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 import java.util.List;
+import security.Encrypt;
 import service.UserService;
 
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao = new UserDaoImpl();
+    private Encrypt encrypt = new Encrypt();
     @Override
     public void createUser(UserRequestDto request) {
+//        encrypt.getEncrypt(request.getPassword());
+        request.getPassword();
         userDao.createUser(request);
     }
 

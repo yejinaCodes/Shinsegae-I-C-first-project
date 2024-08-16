@@ -7,6 +7,7 @@ import common.Role;
 import common.Status;
 import common.ValidCheck;
 import dto.request.AdminRequestDto;
+import dto.request.AuthRequestDto;
 import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
 import exception.Exception;
@@ -24,7 +25,8 @@ public class MemberInputHandler {
     private static Encrypt encrypt = new Encrypt();
 
     public AdminRequestDto createAdmin() throws IOException {
-        AdminRequestDto admin = new AdminRequestDto(getNameInput(), getIdInput(), getPwdInput(), getPhoneInput());
+        String salt = getsalt();
+        AdminRequestDto admin = new AdminRequestDto(getNameInput(), getIdInput(), salt, getPwdInput(salt), getPhoneInput());
         return admin;
     }
 
@@ -58,9 +60,16 @@ public class MemberInputHandler {
     }
 
     public UserRequestDto createUser() throws IOException {
+        String salt = getsalt();
+
         UserRequestDto user = new UserRequestDto(getNameInput(), getBusinessNumberInput(), getCompanyNameInput(),
-            getIdInput(), getPwdInput(), getEmailInput(), getPhoneInput(), getZipCodeInput(), getAddressInput());
+            getIdInput(), salt, getPwdInput(salt), getEmailInput(), getPhoneInput(), getZipCodeInput(), getAddressInput());
         return user;
+    }
+
+    public AuthRequestDto login() throws IOException {
+        AuthRequestDto auth = new AuthRequestDto(getIdInput(), getPwdInput());
+        return auth;
     }
 
     public UserRequestDto updateUser() throws IOException {
@@ -70,8 +79,9 @@ public class MemberInputHandler {
     }
 
     public UserRequestDto updateUserPwd() throws IOException {
-        UserRequestDto user = new UserRequestDto(getPwdInput());
-        return user;
+//        UserRequestDto user = new UserRequestDto(getPwdInput());
+//        return user;
+        return null;
     }
 
     public int getAdminIdInput() throws IOException {
@@ -134,10 +144,24 @@ public class MemberInputHandler {
         }
     }
 
+    public String getsalt() throws IOException {
+        return encrypt.getSalt();
+    }
+
+    public String getPwdInput(String salt) throws IOException {
+        try {
+            System.out.print(Member.PW.getText());
+            return encrypt.getEncrypt(validCheck.validatePw(br.readLine()), salt);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getPwdInput(salt);
+        }
+    }
+
     public String getPwdInput() throws IOException {
         try {
             System.out.print(Member.PW.getText());
-            return encrypt.getEncrypt(validCheck.validatePw(br.readLine()));
+            return validCheck.validatePw(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getPwdInput();

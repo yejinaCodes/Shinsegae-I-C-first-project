@@ -2,6 +2,7 @@ package dao;
 
 import dto.request.AdminRequestDto;
 import dto.response.AdminResponseDto;
+import dto.response.AuthResponseDto;
 import java.util.List;
 
 public interface AdminDao {
@@ -14,6 +15,8 @@ public interface AdminDao {
     List<AdminResponseDto> findByRole(String role);
 
     String findAdminId(int id);
+
+    AuthResponseDto findAuth(String userId);
 
     void updateAdmin(AdminRequestDto request);
 

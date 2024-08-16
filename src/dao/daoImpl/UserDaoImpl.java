@@ -4,6 +4,7 @@ import config.ConnectionFactory;
 import dao.UserDao;
 import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
+import dto.response.AuthResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 import java.sql.Connection;
@@ -23,8 +24,9 @@ public class UserDaoImpl implements UserDao {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("INSERT INTO User ")
-            .append("(name, business_number, company_name, user_id, password, email, phone, zip_code, address, created_at)")
-            .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").toString();
+            .append(
+                "(name, business_number, company_name, user_id, password, salt, email, phone, zip_code, address, created_at)")
+            .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").toString();
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -33,11 +35,12 @@ public class UserDaoImpl implements UserDao {
             pstmt.setString(3, request.getCompanyName());
             pstmt.setString(4, request.getUserId());
             pstmt.setString(5, request.getPassword());
-            pstmt.setString(6, request.getEmail());
-            pstmt.setString(7, request.getPhone());
-            pstmt.setString(8, request.getZipCode());
-            pstmt.setString(9, request.getAddress());
-            pstmt.setString(10, request.getCreatedAt());
+            pstmt.setString(6, request.getSalt());
+            pstmt.setString(7, request.getEmail());
+            pstmt.setString(8, request.getPhone());
+            pstmt.setString(9, request.getZipCode());
+            pstmt.setString(10, request.getAddress());
+            pstmt.setString(11, request.getCreatedAt());
 
             pstmt.executeUpdate();
             pstmt.close();
@@ -111,7 +114,8 @@ public class UserDaoImpl implements UserDao {
         List<UserApprovalResponseDto> response = new ArrayList<>();
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT u.id AS user_id, u.business_number, u.company_name, u.created_at, ua.approval_status ")
+            .append(
+                "SELECT u.id AS user_id, u.business_number, u.company_name, u.created_at, ua.approval_status ")
             .append("FROM User u ")
             .append("LEFT JOIN UserApproval ua ON u.id = ua.user_id ")
             .append("WHERE ua.approval_status = 'PENDING'").toString();
@@ -165,6 +169,36 @@ public class UserDaoImpl implements UserDao {
 
         return response;
     }
+
+    @Override
+    public AuthResponseDto findAuth(String userId) {
+        AuthResponseDto response = null;
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT id, password, salt ")
+            .append("FROM User ")
+            .append("WHERE user_id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, userId);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                response = new AuthResponseDto(rs);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+        return response;
+    }
+
 
     @Override
     public void updateUser(int id, UserRequestDto request) {

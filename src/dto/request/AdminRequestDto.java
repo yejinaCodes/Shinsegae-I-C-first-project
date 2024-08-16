@@ -14,6 +14,7 @@ public class AdminRequestDto {
     private String name;
     private String adminId;
     private String password;
+    private String salt;
     private String companyEmail;
     private Department department;
     private Position position;
@@ -26,9 +27,10 @@ public class AdminRequestDto {
     /**
      * 회원 가입
      */
-    public AdminRequestDto(String name, String adminId, String password, String phone) {
+    public AdminRequestDto(String name, String adminId, String salt, String password, String phone) {
         this.name = name;
         this.adminId = adminId;
+        this.salt = salt;
         this.password = password;
         this.companyEmail = adminId + "@clap.co.kr";
         this.phone = phone;

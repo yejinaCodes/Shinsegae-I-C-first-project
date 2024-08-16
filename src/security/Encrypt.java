@@ -6,17 +6,23 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 public class Encrypt {
+
+    /**
+     * 무작위 문자열 Salt 생성
+     */
     public String getSalt() {
         SecureRandom sr = new SecureRandom();
-
         byte[] salt = new byte[16];
+
         sr.nextBytes(salt);
 
         return Base64.getEncoder().encodeToString(salt);
     }
 
-    public String getEncrypt(String pwd) {
-        String salt = getSalt();
+    /**
+     * SHA-256 알고리즘 적용
+     */
+    public String getEncrypt(String pwd, String salt) {
         String result= "";
 
         try {

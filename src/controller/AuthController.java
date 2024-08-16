@@ -1,7 +1,9 @@
 package controller;
 
 import common.ErrorCode;
+import dto.request.AuthRequestDto;
 import dto.request.UserRequestDto;
+import dto.response.AuthResponseDto;
 import handler.MemberInputHandler;
 import common.ValidCheck;
 import dto.request.AdminRequestDto;
@@ -9,10 +11,13 @@ import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import javax.naming.AuthenticationException;
 import library.Script;
 import service.AdminService;
+import service.AuthService;
 import service.UserService;
 import service.serviceImpl.AdminServiceImpl;
+import service.serviceImpl.AuthServiceImpl;
 import service.serviceImpl.UserServiceImpl;
 
 public class AuthController {
@@ -22,6 +27,7 @@ public class AuthController {
     private static ValidCheck validCheck = new ValidCheck();
     private static Script script = new Script();
     private static MemberInputHandler memberInputHandler = new MemberInputHandler();
+    private static AuthService authService = new AuthServiceImpl();
     private static AdminService adminService = new AdminServiceImpl();
     private static UserService userService = new UserServiceImpl();
 
@@ -41,14 +47,18 @@ public class AuthController {
                     switch (menu) {
                         case "1":
                             registerUser();
+                            loginUser();
                             break;
                         case "2":
+                            loginUser();
                             break;
                         case "3":
                             findUserId();
+                            handleAuth(userType);
                             break;
                         case "4":
 //                            findUserPwd();
+                            handleAuth(userType);
                             break;
                     }
                     break;
@@ -56,14 +66,18 @@ public class AuthController {
                     switch (menu) {
                         case "1":
                             registerAdmin();
+                            loginAdmin();
                             break;
                         case "2":
+                            loginAdmin();
                             break;
                         case "3":
                             findAdminId();
+                            handleAuth(userType);
                             break;
                         case "4":
 //                            findAdminPwd();
+                            handleAuth(userType);
                             break;
                     }
                     break;
@@ -85,6 +99,36 @@ public class AuthController {
             userService.createUser(user);
         } catch (IOException e) {
             System.out.println(ErrorCode.INVALID_VALUE.getMessage());
+        }
+    }
+
+    /**
+     * 유저 로그인
+     */
+    private void loginUser() throws IOException {
+
+        boolean loginSuccessful = false;
+        int maxAttempts = 3;
+        int attempts = 0;
+        AuthResponseDto auth = null;
+        while (!loginSuccessful && attempts < maxAttempts) {
+            try {
+                script.login();
+                AuthRequestDto user = memberInputHandler.login();
+                auth = authService.loginUser(user);
+                loginSuccessful = true;
+            } catch (IOException e) {
+                System.out.println(ErrorCode.INVALID_VALUE.getMessage());
+                attempts++;
+            } catch (AuthenticationException e) {
+                System.out.println(e.getMessage());
+                attempts++;
+            }
+        }
+
+        if (!loginSuccessful) {
+            System.out.println(ErrorCode.FAILURE_LOGIN.getMessage());
+            handleAuth("2");
         }
     }
 
@@ -117,6 +161,37 @@ public class AuthController {
         } catch (IOException e) {
             System.out.println(ErrorCode.INVALID_VALUE.getMessage());
         }
+    }
+
+    /**
+     * 직원 로그인
+     */
+    private AuthResponseDto loginAdmin() throws IOException {
+        boolean loginSuccessful = false;
+        int maxAttempts = 3;
+        int attempts = 0;
+        AuthResponseDto auth = null;
+
+        while (!loginSuccessful && attempts < maxAttempts) {
+            try {
+                script.login();
+                AuthRequestDto user = memberInputHandler.login();
+                auth = authService.loginAdmin(user);
+                loginSuccessful = true;
+            } catch (IOException e) {
+                System.out.println(ErrorCode.INVALID_VALUE.getMessage());
+                attempts++;
+            } catch (AuthenticationException e) {
+                System.out.println(e.getMessage());
+                attempts++;
+            }
+        }
+
+        if (!loginSuccessful) {
+            System.out.println(ErrorCode.FAILURE_LOGIN.getMessage());
+            handleAuth("2");
+        }
+        return auth;
     }
 
     /**

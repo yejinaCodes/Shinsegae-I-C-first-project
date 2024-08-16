@@ -18,6 +18,7 @@ public class UserRequestDto {
     private String companyName;
     private String userId;
     private String password;
+    private String salt;
     private String email;
     private String phone;
     private String zipCode;
@@ -33,12 +34,13 @@ public class UserRequestDto {
      * 회원 가입
      */
     public UserRequestDto(String name, String businessNumber, String companyName,
-        String userId, String password, String email, String phone, String zipCode,
-        String address) {
+        String userId, String salt, String password, String email, String phone,
+        String zipCode, String address) {
         this.name = name;
         this.businessNumber = businessNumber;
         this.companyName = companyName;
         this.userId = userId;
+        this.salt = salt;
         this.password = password;
         this.email = email;
         this.phone = phone;

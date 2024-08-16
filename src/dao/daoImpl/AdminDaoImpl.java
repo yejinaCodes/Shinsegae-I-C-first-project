@@ -4,6 +4,7 @@ import config.ConnectionFactory;
 import dao.AdminDao;
 import dto.request.AdminRequestDto;
 import dto.response.AdminResponseDto;
+import dto.response.AuthResponseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,17 +22,18 @@ public class AdminDaoImpl implements AdminDao {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("INSERT INTO Admin ")
-            .append("(name, admin_id, password, company_email, phone, created_at)")
-            .append("VALUES (?, ?, ?, ?, ?, ?)").toString();
+            .append("(name, admin_id, password, salt, company_email, phone, created_at)")
+            .append("VALUES (?, ?, ?, ?, ?, ?, ?)").toString();
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, request.getName());
             pstmt.setString(2, request.getAdminId());
             pstmt.setString(3, request.getPassword());
-            pstmt.setString(4, request.getCompanyEmail());
-            pstmt.setString(5, request.getPhone());
-            pstmt.setString(6, request.getCreatedAt());
+            pstmt.setString(4, request.getSalt());
+            pstmt.setString(5, request.getCompanyEmail());
+            pstmt.setString(6, request.getPhone());
+            pstmt.setString(7, request.getCreatedAt());
 
             pstmt.executeUpdate();
             pstmt.close();
@@ -147,6 +149,35 @@ public class AdminDaoImpl implements AdminDao {
 
             if (rs.next()) {
                 response = rs.getString("admin_id");
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+        return response;
+    }
+
+    @Override
+    public AuthResponseDto findAuth(String adminId) {
+        AuthResponseDto response = null;
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT id, password, salt ")
+            .append("FROM Admin ")
+            .append("WHERE admin_id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, adminId);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                response = new AuthResponseDto(rs);
             }
 
             rs.close();
