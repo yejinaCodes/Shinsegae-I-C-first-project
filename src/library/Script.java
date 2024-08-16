@@ -29,7 +29,7 @@ public class Script {
 
     /**
      * 메뉴 선택
-     * 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 찾기
+     * 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 재설정
      */
     public void selectLoginOrRegister() {
         script.append(Menu.BORDER_LINE.getDescription())

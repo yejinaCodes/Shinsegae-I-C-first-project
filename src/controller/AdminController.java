@@ -205,8 +205,9 @@ public class AdminController {
     /**
      * '회원 관리 > 수정 > 비밀번호 수정'
      */
-    private void editPwd() throws IOException {
-        adminService.updatePwd(memberInputHandler.updateAdminPwd());
+    public void editPwd() throws IOException {
+        String adminId = memberInputHandler.getIdInput();
+        adminService.updatePwd(adminId, memberInputHandler.updateAdminPwd());
     }
 
     /**

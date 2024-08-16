@@ -6,10 +6,13 @@ import common.Position;
 import common.Role;
 import common.Status;
 import common.ValidCheck;
+import dao.UserDao;
+import dao.daoImpl.UserDaoImpl;
 import dto.request.AdminRequestDto;
 import dto.request.AuthRequestDto;
 import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
+import dto.response.AuthResponseDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +26,7 @@ public class MemberInputHandler {
     private static Script script = new Script();
     private static ValidCheck validCheck = new ValidCheck();
     private static Encrypt encrypt = new Encrypt();
+    private static UserDao userDao = new UserDaoImpl();
 
     public AdminRequestDto createAdmin() throws IOException {
         String salt = getsalt();
@@ -36,7 +40,8 @@ public class MemberInputHandler {
     }
 
     public AdminRequestDto updateAdminPwd() throws IOException {
-        AdminRequestDto admin = new AdminRequestDto(getPwdInput());
+        String salt = getsalt();
+        AdminRequestDto admin = new AdminRequestDto(salt, getPwdInput(salt));
         return admin;
     }
 
@@ -79,9 +84,9 @@ public class MemberInputHandler {
     }
 
     public UserRequestDto updateUserPwd() throws IOException {
-//        UserRequestDto user = new UserRequestDto(getPwdInput());
-//        return user;
-        return null;
+        String salt = getsalt();
+        UserRequestDto user = new UserRequestDto(salt, getPwdInput(salt));
+        return user;
     }
 
     public int getAdminIdInput() throws IOException {

@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserPwd(int id, UserRequestDto request) {
-        userDao.updateUserPwd(id, request);
+    public void updateUserPwd(String bizNo, UserRequestDto request) {
+        userDao.updateUserPwd(bizNo, request);
     }
 
     @Override

@@ -68,7 +68,8 @@ public class UserRequestDto {
     /**
      * 비밀번호 수정
      */
-    public UserRequestDto(String password) {
+    public UserRequestDto(String salt, String password) {
+        this.salt = salt;
         this.password = password;
         this.updatedAt = LocalDateTime.getTime();
     }

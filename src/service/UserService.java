@@ -19,7 +19,7 @@ public interface UserService {
 
     void updateUser(int id, UserRequestDto request);
 
-    void updateUserPwd(int id, UserRequestDto request);
+    void updateUserPwd(String bizNo, UserRequestDto request);
 
     void updateApprovalStatus(int id, UserApprovalRequestDto request);
 

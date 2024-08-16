@@ -219,19 +219,20 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public void updatePwd(AdminRequestDto request) {
+    public void updatePwd(String adminId, AdminRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("UPDATE Admin ")
             .append("SET ")
-            .append("password = ?, updated_at = ? ")
-            .append("WHERE id = ?").toString();
+            .append("password = ?, salt = ?, updated_at = ? ")
+            .append("WHERE admin_id = ?").toString();
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, request.getPassword());
-            pstmt.setString(2, request.getUpdatedAt());
-            pstmt.setInt(3, request.getId());
+            pstmt.setString(2, request.getSalt());
+            pstmt.setString(3, request.getUpdatedAt());
+            pstmt.setString(4, adminId);
 
             pstmt.executeUpdate();
             pstmt.close();

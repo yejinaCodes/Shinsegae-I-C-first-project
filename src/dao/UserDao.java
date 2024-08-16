@@ -18,11 +18,11 @@ public interface UserDao {
 
     String findUserId(String bizNo);
 
-    AuthResponseDto findAuth(String userId);
+    AuthResponseDto findAuth(String id);
 
     void updateUser(int id, UserRequestDto request);
 
-    void updateUserPwd(int id, UserRequestDto request);
+    void updateUserPwd(String bizNo, UserRequestDto request);
 
     void updateApprovalStatus(int id, UserApprovalRequestDto request);
 

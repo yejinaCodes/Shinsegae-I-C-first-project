@@ -32,7 +32,7 @@ public class AuthController {
     private static UserService userService = new UserServiceImpl();
 
     /**
-     * 메뉴 선택 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 찾기
+     * 메뉴 선택 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 재설정
      *
      * @param userType (1. 쇼핑몰, 2. 어드민)
      */
@@ -57,7 +57,7 @@ public class AuthController {
                             handleAuth(userType);
                             break;
                         case "4":
-//                            findUserPwd();
+                            resetUserPassword();
                             handleAuth(userType);
                             break;
                     }
@@ -76,7 +76,7 @@ public class AuthController {
                             handleAuth(userType);
                             break;
                         case "4":
-//                            findAdminPwd();
+                            resetAdminPassword();
                             handleAuth(userType);
                             break;
                     }
@@ -128,7 +128,7 @@ public class AuthController {
 
         if (!loginSuccessful) {
             System.out.println(ErrorCode.FAILURE_LOGIN.getMessage());
-            handleAuth("2");
+            handleAuth("1");
         }
     }
 
@@ -142,10 +142,11 @@ public class AuthController {
     }
 
     /**
-     * 쇼핑몰 사업자 회원 비밀번호 찾기
+     * 쇼핑몰 사업자 회원 비밀번호 재설정
      */
-    private void findUserPwd() {
-
+    private void resetUserPassword() throws IOException {
+        UserController userController = new UserController();
+        userController.editPwd();
     }
 
 
@@ -203,10 +204,11 @@ public class AuthController {
     }
 
     /**
-     * 어드민 비밀번호 찾기
+     * 어드민 비밀번호 재설정
      */
-    private void findAdminPwd() {
-
+    private void resetAdminPassword() throws IOException {
+        AdminController adminController = new AdminController();
+        adminController.editPwd();
     }
 
 

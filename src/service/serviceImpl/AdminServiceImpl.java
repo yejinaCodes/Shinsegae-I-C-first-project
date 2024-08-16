@@ -41,8 +41,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updatePwd(AdminRequestDto request) {
-        adminDao.updatePwd(request);
+    public void updatePwd(String adminId, AdminRequestDto request) {
+        adminDao.updatePwd(adminId, request);
     }
 
     @Override

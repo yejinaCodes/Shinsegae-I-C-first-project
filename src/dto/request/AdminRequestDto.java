@@ -53,9 +53,8 @@ public class AdminRequestDto {
     /**
      * 비밀번호 수정
      */
-    public AdminRequestDto(String password) {
-        // 🚨 로그인 유저 id로 변경 예정
-        this.id = 1;
+    public AdminRequestDto(String salt, String password) {
+        this.salt = salt;
         this.password = password;
         this.updatedAt = LocalDateTime.getTime();
     }

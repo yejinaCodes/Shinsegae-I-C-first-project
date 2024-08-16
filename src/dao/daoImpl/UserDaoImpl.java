@@ -233,19 +233,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUserPwd(int id, UserRequestDto request) {
+    public void updateUserPwd(String bizNo, UserRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("UPDATE User ")
             .append("SET ")
-            .append("password = ? , updated_at = ?")
-            .append("WHERE id = ?").toString();
+            .append("password = ? , salt = ?, updated_at = ?")
+            .append("WHERE business_number = ?").toString();
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, request.getPassword());
-            pstmt.setString(2, request.getUpdatedAt());
-            pstmt.setInt(3, id);
+            pstmt.setString(2, request.getSalt());
+            pstmt.setString(3, request.getUpdatedAt());
+            pstmt.setString(4, bizNo);
 
             pstmt.executeUpdate();
             pstmt.close();

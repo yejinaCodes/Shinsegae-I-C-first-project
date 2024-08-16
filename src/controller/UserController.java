@@ -62,8 +62,9 @@ public class UserController {
     /**
      * '회원 관리 > 비밀번호 수정'
      */
-    private void editPwd() throws IOException {
-        userService.updateUserPwd(id, memberInputHandler.updateUserPwd());
+    public void editPwd() throws IOException {
+        String bizNo = memberInputHandler.getBusinessNumberInput();
+        userService.updateUserPwd(bizNo, memberInputHandler.updateUserPwd());
     }
 
     /**
