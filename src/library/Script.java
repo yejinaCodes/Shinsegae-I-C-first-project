@@ -218,6 +218,25 @@ public class Script {
     }
 
     /**
+     * 승인 상태 입력 받기
+     */
+    public void getStatus() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.STATUS_MENU.getDescription())
+            .append(Menu.STATUS_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 승인 거절 이유 입력 받기
+     */
+    public void getRejectionReason() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.REJECTION_REASON_INPUT.getDescription());
+        print();
+    }
+
+    /**
      * 직원 상세 내역 조회
      */
     public void adminInfo(AdminResponseDto response) {

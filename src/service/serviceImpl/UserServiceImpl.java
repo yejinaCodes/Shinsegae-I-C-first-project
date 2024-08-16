@@ -2,6 +2,7 @@ package service.serviceImpl;
 
 import dao.UserDao;
 import dao.daoImpl.UserDaoImpl;
+import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
@@ -39,6 +40,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserPwd(int id, UserRequestDto request) {
         userDao.updateUserPwd(id, request);
+    }
+
+    @Override
+    public void updateApprovalStatus(int id, UserApprovalRequestDto request) {
+        userDao.updateApprovalStatus(id, request);
     }
 
     @Override

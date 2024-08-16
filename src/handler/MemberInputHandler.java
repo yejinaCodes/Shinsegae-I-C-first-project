@@ -4,8 +4,10 @@ import common.Department;
 import common.Member;
 import common.Position;
 import common.Role;
+import common.Status;
 import common.ValidCheck;
 import dto.request.AdminRequestDto;
+import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
 import exception.Exception;
 import java.io.BufferedReader;
@@ -44,6 +46,15 @@ public class MemberInputHandler {
     public AdminRequestDto updateAdminDeptPos() throws IOException {
         AdminRequestDto admin = new AdminRequestDto(getDepartmentInput(), getPositionInput());
         return admin;
+    }
+
+    public UserApprovalRequestDto updateApprovalStatus() throws IOException {
+        Status status = getApprovalStatusInput();
+        if (status.equals(Status.REJECTED)) {
+            return new UserApprovalRequestDto(status, getReasonInput(status));
+        } else {
+            return  new UserApprovalRequestDto(status, null);
+        }
     }
 
     public UserRequestDto createUser() throws IOException {
@@ -254,6 +265,42 @@ public class MemberInputHandler {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getAddressInput();
+        }
+    }
+
+    public Status getApprovalStatusInput() throws IOException {
+        try {
+            Status status = null;
+
+            script.getStatus();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1":
+                    status = Status.valueOf("PENDING");
+                    break;
+                case "2":
+                    status = Status.valueOf("APPROVED");
+                    break;
+                case "3":
+                    status = Status.valueOf("REJECTED");
+                    break;
+            }
+            return status;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getApprovalStatusInput();
+        }
+    }
+
+    public String getReasonInput(Status status) {
+        try {
+            script.getRejectionReason();
+            return br.readLine();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return getReasonInput(status);
         }
     }
 }

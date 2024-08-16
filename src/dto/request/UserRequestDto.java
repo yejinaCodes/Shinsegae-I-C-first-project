@@ -1,7 +1,11 @@
 package dto.request;
 
+import common.Status;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import library.LocalDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 public class UserRequestDto {
@@ -74,5 +78,27 @@ public class UserRequestDto {
         this.isUnregister = TRUE;
         this.updatedAt = LocalDateTime.getTime();
         this.unregisteredAt = LocalDateTime.getTime();
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class UserApprovalRequestDto {
+
+        private int id;
+        private int userId;
+        private int approverId;
+        private Status approvalStatus;
+        private String rejectionReason;
+        private String createdAt;
+        private String businessNumber;
+        private String companyName;
+
+        public UserApprovalRequestDto(ResultSet rs) throws SQLException {
+            this.userId = rs.getInt("user_id");
+            this.businessNumber = rs.getString("business_number");
+            this.companyName = rs.getString("company_name");
+            this.createdAt = rs.getString("created_at");
+            this.approvalStatus = Status.valueOf(rs.getString("approval_status"));
+        }
     }
 }

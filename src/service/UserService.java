@@ -1,5 +1,6 @@
 package service;
 
+import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
@@ -17,6 +18,8 @@ public interface UserService {
     void updateUser(int id, UserRequestDto request);
 
     void updateUserPwd(int id, UserRequestDto request);
+
+    void updateApprovalStatus(int id, UserApprovalRequestDto request);
 
     void unregister(int id, UserRequestDto request);
 

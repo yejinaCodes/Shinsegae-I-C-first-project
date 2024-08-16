@@ -216,7 +216,7 @@ public class AdminController {
     private void setMemberRole() throws IOException {
         script.setMemberPermission();
         String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+        validCheck.validateMenuNumber1To3(menu);
 
         switch (menu) {
             case "1":
@@ -254,6 +254,7 @@ public class AdminController {
      */
     private void approveUser() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
+        userService.updateApprovalStatus(targetUserId, memberInputHandler.updateApprovalStatus());
     }
 
     /**

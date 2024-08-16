@@ -2,6 +2,7 @@ package dao.daoImpl;
 
 import config.ConnectionFactory;
 import dao.UserDao;
+import dto.request.UserApprovalRequestDto;
 import dto.request.UserRequestDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
@@ -181,6 +182,31 @@ public class UserDaoImpl implements UserDao {
             pstmt.setString(1, request.getPassword());
             pstmt.setString(2, request.getUpdatedAt());
             pstmt.setInt(3, id);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
+
+    @Override
+    public void updateApprovalStatus(int id, UserApprovalRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("INSERT INTO UserApproval ")
+            .append("(user_id, approver_id, approval_status, rejection_reason, created_at) ")
+            .append("VALUES (?, ?, ?, ?, ?) ").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, id);
+            pstmt.setInt(2, request.getApproverId());
+            pstmt.setString(3, String.valueOf(request.getApprovalStatus()));
+            pstmt.setString(4, request.getRejectionReason());
+            pstmt.setString(5, request.getCreatedAt());
 
             pstmt.executeUpdate();
             pstmt.close();
