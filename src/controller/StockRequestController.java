@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 import library.Script;
 import service.serviceImpl.StockRequestServiceImpl;
 
@@ -18,6 +19,7 @@ public class StockRequestController {
   StockRequestServiceImpl stockRequestService = new StockRequestServiceImpl();
   public static boolean q = false;
   ArrayList<StockRequestDto> StockRequestList = new ArrayList<StockRequestDto>();
+  ArrayList<Integer> approvedList = new ArrayList<Integer>();
 
   public void menu(){
     try {
@@ -30,16 +32,16 @@ public class StockRequestController {
             createStockRequest();
             break;
           case "2":
-            script.readStockRequest();
             readByCondition();
             break;
           case "3":
-            script.updateStockRequest();
+            updateStatus();
             break;
           case "4":
-            script.cancelStockRequest();
             break;
           case "5":
+            script.cancelStockRequest();
+          case "6":
             q = true;
             break;
         }
@@ -71,15 +73,15 @@ public class StockRequestController {
   }
 
   public void readByCondition() throws IOException, SQLException {
+    script.readStockRequest();
     String condition = br.readLine();
-
+    StockRequestList.clear();
     switch (condition){
       case "1": //findAll
-        StockRequestList.clear();
         StockRequestList = stockRequestService.findByAll();
-        //System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
+        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
 
-        //이 부분 깔끔하게 쓰는 방법?
+        //이 부분 깔끔하게 쓰는 방법? 반복되네!!!
         StockRequestList.forEach(stockrequest -> System.out.println(
             stockrequest.getId() + "\t" + stockrequest.getProduct_id() + "\t"
             + stockrequest.getBox_quantity() + "\t" + stockrequest.getBox_size() + "\t"
@@ -87,9 +89,79 @@ public class StockRequestController {
             + stockrequest.getCreated_at() + "\t" + stockrequest.getRemarks()));
       case "2": //findById
       case "3": //findByStatus
+        script.readStockRequestStatus(); //wms 관리자 용.delete항목이 없음
+        //pending list만 보여주기
+        StockRequestList = stockRequestService.findByStatus();
+        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
+
+        StockRequestList.forEach(stockrequest -> System.out.println(
+            stockrequest.getId() + "\t" + stockrequest.getProduct_id() + "\t"
+                + stockrequest.getBox_quantity() + "\t" + stockrequest.getBox_size() + "\t"
+                + stockrequest.getStatus() + "\t" + stockrequest.getIncoming_date() + "\t"
+                + stockrequest.getCreated_at() + "\t" + stockrequest.getRemarks()));
       case "4": //findByCreatedDate
       case "5": //findByProductId
       case "6": //findByIncomingDate
     }
+  }
+
+  //관리자만 사용가능한 기능임
+  public void updateStatus() throws IOException, SQLException {
+    //pending인 요청서만 read
+    readByCondition(); //3번 케이스로 가야함.
+
+    //입고 요청서 승인을 여러개 할 수 있음. 입고요청서ID가 들어있는 list를 보내기
+
+    script.updateStockRequest();
+    approvedList.clear();
+
+    try {
+      //Stream, lambda사용
+      Stream<Integer> inputID = Stream.generate(() -> {
+        try {
+          String input = br.readLine().trim();
+          if (input.trim().isEmpty()) {
+            return null;
+          }
+          return Integer.parseInt(input);
+        } catch (IOException e) {
+          e.printStackTrace();
+          return null;
+        } catch (NumberFormatException e) {
+          System.out.println("숫자를 입력하시오");
+          return null;
+        }
+      }).takeWhile(input -> input != null);
+
+      // 스트림을 처리하여 각 ID를 리스트에 추가
+      inputID.forEach(input -> {
+        if (input != null) {
+          approvedList.add(input);
+        }
+      });
+    } finally {
+      if(stockRequestService.updateStatus(approvedList)){
+        System.out.println("success");
+      };
+    }
+
+
+//    Stream<Integer> inputID = Stream.iterate(
+//        br.read(),
+//        input -> input != null,
+//        input -> {
+//          try {
+//            return br.read();
+//          } catch (IOException e) {
+//            throw new RuntimeException(e);
+//          }
+//        }
+//    );
+//    inputID.forEach(input -> approvedList.add(input));
+
+    //요청완료 acknowledgement
+   // System.out.println("요청현황: " + stockRequestService.updateStatus(approvedList));
+    //System.out.println("요청현황: " + stockRequestService.updateStatus(inputID));
+
   }
 }

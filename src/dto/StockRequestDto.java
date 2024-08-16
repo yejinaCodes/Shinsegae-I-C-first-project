@@ -41,7 +41,6 @@ public class StockRequestDto {
     this.incoming_date = date;
   }
 
-
   public void setCreated_at(){
     this.created_at = LocalDate.now();
   }

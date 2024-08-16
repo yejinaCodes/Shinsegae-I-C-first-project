@@ -19,11 +19,16 @@ public class Script {
     script.append(Menu.FINDCONDITION.getDescription());
     print();
   }
-  public void updateStockRequest(){
+  public void readStockRequestStatus(){
+    script.append(Menu.FINDSTATUSWMS.getDescription());
+    print();
+  }
 
+  public void updateStockRequest(){
+    script.append(Menu.UPDATESTATUS.getDescription());
+    print();
   }
   public void cancelStockRequest(){
-
   }
 
 }

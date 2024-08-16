@@ -17,4 +17,16 @@ public class StockRequestServiceImpl implements StockRequestService {
   public ArrayList<StockRequestDto> findByAll() throws SQLException {
     return po.findByAll();
   }
+
+  @Override
+  public ArrayList<StockRequestDto> findByStatus(){
+    return po.findByStatus();
+  }
+
+  @Override
+  public boolean updateStatus(ArrayList<Integer> updateList){
+    return po.updateStatus(updateList);
+  }
+
+
 }
