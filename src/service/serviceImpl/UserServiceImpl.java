@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String findUserId(String bizNo) {
+        return userDao.findUserId(bizNo);
+    }
+
+    @Override
     public void updateUser(int id, UserRequestDto request) {
         userDao.updateUser(id, request);
     }

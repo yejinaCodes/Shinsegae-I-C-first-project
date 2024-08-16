@@ -137,6 +137,36 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public String findUserId(String bizNo) {
+        String response = "";
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("SELECT CONCAT(LEFT(user_id, 3), REPEAT('*', LENGTH(user_id) - 3)) AS user_id ")
+            .append("FROM User ")
+            .append("WHERE business_number = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, bizNo);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                response = rs.getString("user_id");
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+
+        return response;
+    }
+
+    @Override
     public void updateUser(int id, UserRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()

@@ -98,7 +98,7 @@ public class AdminController {
      */
     private void viewAdminDetail() throws IOException {
         script.getAdminId();
-        int id = validCheck.isNumber(br.readLine());
+        int id = validCheck.validateNumber(br.readLine());
         AdminResponseDto response = adminService.findById(id);
         script.adminInfo(response);
     }

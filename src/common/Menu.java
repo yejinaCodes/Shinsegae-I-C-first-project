@@ -26,7 +26,9 @@ public enum Menu {
 
     ADMIN_ID_INPUT ("사번을 입력해 주세요 > "),
     USER_ID_INPUT ("회원 번호를 입력해 주세요 > "),
+    BIZ_NO_INPUT ("사업자 번호를 입력해 주세요 > "),
     REJECTION_REASON_INPUT ("승인 거절 사유를 입력해 주세요 > "),
+
     CONFIRM("계속 진행하시겠습니까?\n1. 예 | 2. 아니요"),
 
     BORDER_LINE("------------------------------------------------------------\n"),

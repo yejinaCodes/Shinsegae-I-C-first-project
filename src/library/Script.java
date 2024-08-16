@@ -28,7 +28,7 @@ public class Script {
 
     /**
      * 메뉴 선택
-     * 1. 회원 가입 | 2. 로그인
+     * 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 찾기
      */
     public void selectLoginOrRegister() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -188,6 +188,15 @@ public class Script {
     }
 
     /**
+     * 사업자 번호 입력 받기
+     */
+    public void getBizNo() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.BIZ_NO_INPUT.getDescription());
+        print();
+    }
+
+    /**
      * 부서 입력 받기
      */
     public void getDepartment() {
@@ -288,6 +297,15 @@ public class Script {
             .append(Member.COMPANY_NAME.getText()).append(response.getCompanyName()).append("\n")
             .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
             .append(Member.APPROVAL_STATUS.getText()).append(response.getApprovalStatus()).append("\n");
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 아이디 찾기 조회
+     */
+    public void userId(String response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.ID.getText()).append(response).append("\n");
         print();
     }
 }

@@ -30,7 +30,7 @@ public class ValidCheck {
      * 숫자 유효성 검사
      * @param number
      */
-    public int isNumber(String number) {
+    public int validateNumber(String number) {
         if (!(number.matches(NUMBER))) {
             throw new Exception(ErrorCode.INVALID_NUMBER);
         }
@@ -42,7 +42,7 @@ public class ValidCheck {
      * @param menu 메뉴 번호 (1 ~ 2)
      */
     public void validateMenuNumber1To2(String menu) {
-        isNumber(menu);
+        validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_2))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
@@ -54,7 +54,7 @@ public class ValidCheck {
      * @param menu 메뉴 번호 (1 ~ 3)
      */
     public void validateMenuNumber1To3(String menu) {
-        isNumber(menu);
+        validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_3))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
@@ -66,7 +66,7 @@ public class ValidCheck {
      * @param menu 메뉴 번호 (1 ~ 4)
      */
     public void validateMenuNumber1To4(String menu) {
-        isNumber(menu);
+        validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_4))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
@@ -78,7 +78,7 @@ public class ValidCheck {
      * @param menu 메뉴 번호 (1 ~ 5)
      */
     public void validateMenuNumber1To5(String menu) {
-        isNumber(menu);
+        validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_5))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
@@ -90,7 +90,7 @@ public class ValidCheck {
      * @param menu 메뉴 번호 (1 ~ 7)
      */
     public void validateMenuNumber1To7(String menu) {
-        isNumber(menu);
+        validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_7))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
@@ -102,7 +102,7 @@ public class ValidCheck {
      * @param menu 메뉴 번호 (1 ~ 8)
      */
     public void validateMenuNumber1To8(String menu) {
-        isNumber(menu);
+        validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_8))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);

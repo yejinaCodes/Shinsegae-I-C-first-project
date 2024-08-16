@@ -15,6 +15,8 @@ public interface UserService {
 
     List<UserApprovalResponseDto> findByApproval();
 
+    String findUserId(String bizNo);
+
     void updateUser(int id, UserRequestDto request);
 
     void updateUserPwd(int id, UserRequestDto request);

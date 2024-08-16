@@ -77,7 +77,7 @@ public class MemberInputHandler {
     public int getAdminIdInput() throws IOException {
         try {
             script.getAdminId();
-            return validCheck.isNumber(br.readLine());
+            return validCheck.validateNumber(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getAdminIdInput();
@@ -87,7 +87,7 @@ public class MemberInputHandler {
     public int getUserIdInput() throws IOException {
         try {
             script.getUserId();
-            return validCheck.isNumber(br.readLine());
+            return validCheck.validateNumber(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getUserIdInput();

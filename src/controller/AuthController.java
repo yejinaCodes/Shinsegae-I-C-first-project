@@ -45,7 +45,7 @@ public class AuthController {
                         case "2":
                             break;
                         case "3":
-//                          findUserId();
+                            findUserId();
                             break;
                         case "4":
 //                            findUserPwd();
@@ -91,8 +91,10 @@ public class AuthController {
     /**
      * 쇼핑몰 사업자 회원 아이디 찾기
      */
-    private void findUserId() {
-
+    private void findUserId() throws IOException {
+        script.getBizNo();
+        String userId = userService.findUserId(memberInputHandler.getBusinessNumberInput());
+        script.userId(userId);
     }
 
     /**
