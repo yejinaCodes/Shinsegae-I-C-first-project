@@ -31,6 +31,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 /test/
-
-
 *.lib/
+*.idea
+Shinsegae-I-C-first-project.iml
