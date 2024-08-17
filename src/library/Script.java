@@ -399,4 +399,24 @@ public class Script {
             .append(Member.ID.getDescription()).append(response).append("\n");
         print();
     }
+
+    public void selectMenu(){
+        script.append(Menu.STOCKREQUESTMENUSELECT.getDescription());
+        print();
+    }
+    public void readStockRequest(){
+        script.append(Menu.FINDCONDITION.getDescription());
+        print();
+    }
+    public void readStockRequestStatus(){
+        script.append(Menu.FINDSTATUSWMS.getDescription());
+        print();
+    }
+
+    public void updateStockRequest(){
+        script.append(Menu.UPDATESTATUS.getDescription());
+        print();
+    }
+    public void cancelStockRequest(){
+    }
 }
