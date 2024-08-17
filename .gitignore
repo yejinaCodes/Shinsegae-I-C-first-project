@@ -32,4 +32,4 @@ bin/
 .DS_Store
 /test/
 *.idea
-!/Shinsegae-I-C-first-project.iml
+Shinsegae-I-C-first-project.iml/
