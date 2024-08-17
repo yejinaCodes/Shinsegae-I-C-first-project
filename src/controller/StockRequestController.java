@@ -36,6 +36,7 @@ public class StockRequestController {
             break;
           case "3":
             updateStatus();
+            //입고 반영
             break;
           case "4":
             break;
@@ -87,7 +88,9 @@ public class StockRequestController {
             + stockrequest.getBox_quantity() + "\t" + stockrequest.getBox_size() + "\t"
             + stockrequest.getStatus() + "\t" + stockrequest.getIncoming_date() + "\t"
             + stockrequest.getCreated_at() + "\t" + stockrequest.getRemarks()));
+        break;
       case "2": //findById
+        break;
       case "3": //findByStatus
         script.readStockRequestStatus(); //wms 관리자 용.delete항목이 없음
         //pending list만 보여주기
@@ -99,19 +102,21 @@ public class StockRequestController {
                 + stockrequest.getBox_quantity() + "\t" + stockrequest.getBox_size() + "\t"
                 + stockrequest.getStatus() + "\t" + stockrequest.getIncoming_date() + "\t"
                 + stockrequest.getCreated_at() + "\t" + stockrequest.getRemarks()));
+        break;
       case "4": //findByCreatedDate
+        break;
       case "5": //findByProductId
+        break;
       case "6": //findByIncomingDate
+        break;
     }
   }
-
   //관리자만 사용가능한 기능임
   public void updateStatus() throws IOException, SQLException {
     //pending인 요청서만 read
     readByCondition(); //3번 케이스로 가야함.
 
     //입고 요청서 승인을 여러개 할 수 있음. 입고요청서ID가 들어있는 list를 보내기
-
     script.updateStockRequest();
     approvedList.clear();
 
@@ -140,28 +145,10 @@ public class StockRequestController {
         }
       });
     } finally {
+      //요청완료 바꾸기
       if(stockRequestService.updateStatus(approvedList)){
         System.out.println("success");
       };
     }
-
-
-//    Stream<Integer> inputID = Stream.iterate(
-//        br.read(),
-//        input -> input != null,
-//        input -> {
-//          try {
-//            return br.read();
-//          } catch (IOException e) {
-//            throw new RuntimeException(e);
-//          }
-//        }
-//    );
-//    inputID.forEach(input -> approvedList.add(input));
-
-    //요청완료 acknowledgement
-   // System.out.println("요청현황: " + stockRequestService.updateStatus(approvedList));
-    //System.out.println("요청현황: " + stockRequestService.updateStatus(inputID));
-
   }
 }

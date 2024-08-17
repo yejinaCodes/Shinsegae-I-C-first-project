@@ -134,7 +134,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
 
     try{
       PreparedStatement pstmt = connection.prepareStatement(query);
-      //for loop 말고 stream으로 교체
+      //procedure사용하기
       Stream<Integer> strm = updateList.stream();
       strm.forEach(id -> {
           try{
@@ -145,12 +145,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
           }
           }
           );
-
-//      for(Integer id: updateList){
-//        pstmt.setInt(1, id);
-//        pstmt.executeUpdate();
-//      }
-      //procedure사용하기
       result = true;
       pstmt.close();
       ConnectionFactory.getInstance().close();
@@ -160,4 +154,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
     }
     return result;
   };
+
+
+
 }

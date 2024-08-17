@@ -28,5 +28,4 @@ public class StockRequestServiceImpl implements StockRequestService {
     return po.updateStatus(updateList);
   }
 
-
 }
