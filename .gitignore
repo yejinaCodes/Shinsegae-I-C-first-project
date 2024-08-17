@@ -29,9 +29,5 @@ bin/
 .vscode/
 
 ### Mac OS ###
-<<<<<<< HEAD
-.DS_Store!/test/
-=======
 .DS_Store
 /test/
->>>>>>> origin
