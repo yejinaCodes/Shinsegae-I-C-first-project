@@ -2,6 +2,7 @@ package library;
 
 import common.Member;
 import common.Menu;
+import common.Notice;
 import common.ResponseMessage;
 import dto.response.AdminResponseDto;
 import dto.response.UserApprovalResponseDto;
@@ -33,7 +34,7 @@ public class Script {
      */
     public void selectLoginOrRegister() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.AUTH_MENU.getDescription())
+            .append(Menu.MENU_AUTH.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -46,7 +47,7 @@ public class Script {
      */
     public void userMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.USER_MENU.getDescription())
+            .append(Menu.MENU_USER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -58,7 +59,7 @@ public class Script {
      */
     public void adminMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MENU.getDescription())
+            .append(Menu.MENU_ADMIN.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -69,7 +70,7 @@ public class Script {
      */
     public void manageMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -80,7 +81,7 @@ public class Script {
      */
     public void viewMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_VIEW_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_VIEW.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -91,7 +92,7 @@ public class Script {
      */
     public void viewAdmin() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_VIEW_ADMIN_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_VIEW_ADMIN.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -101,7 +102,7 @@ public class Script {
      */
     public void viewMemberRole() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_ROLE_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_ROLE.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -112,7 +113,7 @@ public class Script {
      */
     public void viewUser() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_VIEW_USER_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_VIEW_USER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -123,7 +124,7 @@ public class Script {
      */
     public void editMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_EDIT_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_EDIT.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -134,7 +135,7 @@ public class Script {
      */
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_PERMISSION_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_PERMISSION.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -145,7 +146,7 @@ public class Script {
      */
     public void deleteMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_DELETE_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_DELETE.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -156,7 +157,7 @@ public class Script {
      */
     public void manageUser() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.USER_MEMBER_MENU.getDescription())
+            .append(Menu.MENU_USER_MEMBER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -202,7 +203,7 @@ public class Script {
      */
     public void getDepartment() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_DEPARTMENT_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_DEPARTMENT.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -212,7 +213,7 @@ public class Script {
      */
     public void getPosition() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_POSITION_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_POSITION.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -222,7 +223,7 @@ public class Script {
      */
     public void getRole() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_ROLE_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_ROLE.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -418,5 +419,50 @@ public class Script {
         print();
     }
     public void cancelStockRequest(){
+    }
+
+    /**
+     * '고객 센터' 메뉴 선택
+     * 1. 공지사항 | 2. 게시글 | 3. 1 대 1 문의
+     */
+    public void supportMenu() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.MENU_SUPPORT.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제
+     */
+    public void showCRUDMenu() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.MENU_CRUD.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 1. 전체 조회 | 2. 상세 조회
+     */
+    public void showViewMenu() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.MENU_VIEW.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 공지사항
+     */
+    public void getTitle() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Notice.TITLE.getText());
+        print();
+    }
+    public void getContent() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Notice.CONTENT.getText());
+        print();
     }
 }

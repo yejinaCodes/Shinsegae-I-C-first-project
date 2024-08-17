@@ -3,6 +3,7 @@ import common.ValidCheck;
 import controller.AdminController;
 import controller.AuthController;
 import controller.StockRequestController;
+import controller.SupportController;
 import controller.UserController;
 import dto.response.AuthResponseDto;
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ public class MainApplication {
     private static AuthController authController = new AuthController();
     private static AdminController adminController = new AdminController();
     private static UserController userController = new UserController();
+    private static StockRequestController poc = new StockRequestController();
+    private static SupportController supportController = new SupportController();
     private static Script script = new Script();
     private static AuthResponseDto auth = null;
     private static String userType;
@@ -57,12 +60,8 @@ public class MainApplication {
      */
     private static void selectMainMenu() throws IOException {
         switch (userType) {
-            case "1":
-                userMainMenu();
-                break;
-            case "2":
-                adminMainMenu();
-                break;
+            case "1" -> userMainMenu();
+            case "2" -> adminMainMenu();
         }
     }
 
@@ -75,30 +74,13 @@ public class MainApplication {
         validCheck.validateMenuNumber1To7(menu);
 
         switch (menu) {
-            case "1":
-//                1. 회원 관리
-                userController.manageUser();
-                break;
-            case "2":
-//                2. 창고 관리
-                break;
-            case "3":
-//                3. 재고 관리
-                break;
-            case "4":
-//                4. 입고 관리
-                StockRequestController poc = new StockRequestController();
-                poc.menu();
-                break;
-            case "5":
-//                5. 출고 관리
-                break;
-            case "6":
-//                6. 고객 센터
-                break;
-            case "7":
-//                7. 로그아웃
-                break;
+            case "1" -> userController.manageUser(); // 1. 회원 관리
+//            case "2" ->  // 2. 창고 관리
+//            case "3" ->  // 3. 재고 관리
+            case "4" -> poc.menu(); //  4. 입고 관리
+//            case "5" ->  // 5. 출고 관리
+            case "6" -> supportController.handleUserSupportMenu(auth); // 6. 고객 센터
+//            case "7" -> // 7. 로그아웃
         }
     }
 
@@ -113,33 +95,14 @@ public class MainApplication {
         validCheck.validateMenuNumber1To8(menu);
 
         switch (menu) {
-            case "1":
-//                1. 회원 관리
-                adminController.manageMember();
-                break;
-            case "2":
-//                2. 재무 관리
-                break;
-            case "3":
-//                3. 창고 관리
-                break;
-            case "4":
-//                4. 재고 관리
-                break;
-            case "5":
-//                5. 입고 관리
-                StockRequestController poc = new StockRequestController();
-                poc.menu();
-                break;
-            case "6":
-//                6. 출고 관리
-                break;
-            case "7":
-//                7. 고객 센터
-                break;
-            case "8":
-//                8. 로그아웃
-                break;
+            case "1" -> adminController.manageMember(); // 1. 회원 관리
+//            case "2" -> // 2. 재무 관리
+//            case "3" -> //3. 창고 관리
+//            case "4" -> //4. 재고 관리
+            case "5" -> poc.menu(); // 5. 입고 관리
+//            case "6" -> // 6. 출고 관리
+            case "7" -> supportController.handleSupportMenu(auth); // 7. 고객 센터
+//            case "8" -> // 8. 로그아웃
         }
     }
 }

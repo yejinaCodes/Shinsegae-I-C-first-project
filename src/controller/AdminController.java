@@ -37,17 +37,10 @@ public class AdminController {
         validCheck.validateMenuNumber1To4(menu);
 
         switch (menu) {
-            case "1":
-                viewMember();
-                break;
-            case "2":
-                editMember();
-                break;
-            case "3":
-                setMemberRole();
-                break;
-            case "4":
-                delete();
+            case "1" -> viewMember();
+            case "2" -> editMember();
+            case "3" -> setMemberRole();
+            case "4" -> delete();
         }
     }
 
@@ -61,12 +54,8 @@ public class AdminController {
         validCheck.validateMenuNumber1To2(menu);
 
         switch (menu) {
-            case "1":
-                viewAdmin();
-                break;
-            case "2":
-                viewUser();
-                break;
+            case "1" -> viewAdmin();
+            case "2" -> viewUser();
         }
 
     }
@@ -81,15 +70,9 @@ public class AdminController {
         validCheck.validateMenuNumber1To3(menu);
 
         switch (menu) {
-            case "1":
-                viewAdminDetail();
-                break;
-            case "2":
-                viewAllAdmin();
-                break;
-            case "3":
-                viewAdminByRole();
-                break;
+            case "1" -> viewAdminDetail();
+            case "2" -> viewAllAdmin();
+            case "3" -> viewAdminByRole();
         }
     }
 
@@ -124,15 +107,9 @@ public class AdminController {
         String role = "";
 
         switch (menu) {
-            case "1":
-                role = Role.SUPER_ADMIN.toString();
-                break;
-            case "2":
-                role = Role.ADMIN.toString();
-                break;
-            case "3":
-                role = Role.EMPLOYEE.toString();
-                break;
+            case "1" -> role = Role.SUPER_ADMIN.toString();
+            case "2" -> role = Role.ADMIN.toString();
+            case "3" -> role = Role.EMPLOYEE.toString();
         }
 
         List<AdminResponseDto> list = adminService.findByRole(role);
@@ -152,15 +129,9 @@ public class AdminController {
         validCheck.validateMenuNumber1To3(menu);
 
         switch (menu) {
-            case "1":
-                viewUserDetail();
-                break;
-            case "2":
-                viewAllUser();
-                break;
-            case "3":
-                viewPendingApproval();
-                break;
+            case "1" -> viewUserDetail();
+            case "2" -> viewAllUser();
+            case "3" -> viewPendingApproval();
         }
     }
 
@@ -194,12 +165,8 @@ public class AdminController {
         validCheck.validateMenuNumber1To2(menu);
 
         switch (menu) {
-            case "1":
-                editAdmin();
-                break;
-            case "2":
-                editPwd();
-                break;
+            case "1" -> editAdmin();
+            case "2" -> editPwd();
         }
     }
 
@@ -228,15 +195,9 @@ public class AdminController {
         validCheck.validateMenuNumber1To3(menu);
 
         switch (menu) {
-            case "1":
-                setAdminRole();
-                break;
-            case "2":
-                setDeptAndPosition();
-                break;
-            case "3":
-                approveUser();
-                break;
+            case "1" -> setAdminRole();
+            case "2" -> setDeptAndPosition();
+            case "3" -> approveUser();
         }
     }
 
@@ -276,12 +237,8 @@ public class AdminController {
         validCheck.validateMenuNumber1To2(menu);
 
         switch (menu) {
-            case "1":
-                deleteAdmin();
-                break;
-            case "2":
-                deleteUser();
-                break;
+            case "1" -> deleteAdmin();
+            case "2" -> deleteUser();
         }
     }
 
