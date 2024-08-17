@@ -15,7 +15,11 @@ public enum ErrorCode {
     INVALID_BIZ_NO(404, "❗️❗️️유효하지 않은 사업자 번호입니다. 올바른 형식으로 입력해 주세요.❗️❗️️\n❗️❗️️예시> 000-00-00000❗️❗️️"),
     USER_NOT_FOUND(404, "❗️❗️️존재하지 않는 아이디 입니다.❗️❗️"),
     PASSWORD_NOT_FOUND(404, "❗️❗️️잘못된 비밀번호 입니다.❗️❗️"),
-    FAILURE_LOGIN(404, "❗️❗️️최대 시도 횟수를 초과했습니다.❗️❗️");
+    FAILURE_LOGIN(404, "❗️❗️️최대 시도 횟수를 초과했습니다.❗️❗️"),
+    ID_DUPLICATE(409, "❗️❗️️이미 존재하는 ID입니다. 다른 ID를 선택해주세요.❗️❗️"),
+    EMAIL_DUPLICATE(409, "❗️❗️️이미 존재하는 이메일 입니다. 다른 이메일을 선택해주세요.❗️❗️"),
+    PHONE_DUPLICATE(409, "❗️❗️️이미 존재하는 전화번호 입니다. 다른 전화번호를 선택해주세요.❗️❗️"),
+    BIZ_NO_DUPLICATE(409, "❗️❗️️이미 존재하는 사업자 번호 입니다. 관리자에게 문의해주세요.❗️❗️");
 
     private int code;
     private String message;
@@ -32,4 +36,6 @@ public enum ErrorCode {
     public String getMessage() {
         return message;
     }
+
+    public String getError() { return "[" + code + "]" + " " + message; }
 }

@@ -3,6 +3,7 @@ import common.ValidCheck;
 import controller.AdminController;
 import controller.AuthController;
 import controller.UserController;
+import dto.response.AuthResponseDto;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,12 +18,16 @@ public class MainApplication {
     private static AdminController adminController = new AdminController();
     private static UserController userController = new UserController();
     private static Script script = new Script();
+    private static AuthResponseDto auth = null;
     private static String userType;
 
     public static void main(String[] args) {
         try {
             selectUserType();
             while (!isQuit) {
+                System.out.println(auth.getId());
+                System.out.println(auth.getDepartment());
+                System.out.println(auth.getRole());
                 selectMainMenu();
             }
         } catch (IOException e) {
@@ -39,7 +44,7 @@ public class MainApplication {
             userType = br.readLine().trim();
             validCheck.validateMenuNumber1To2(userType);
 
-            authController.handleAuth(userType);
+            auth = authController.handleAuth(userType);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             selectUserType();

@@ -1,5 +1,6 @@
 package dao.daoImpl;
 
+import common.ErrorCode;
 import config.ConnectionFactory;
 import dao.AdminDao;
 import dto.request.AdminRequestDto;
@@ -38,7 +39,17 @@ public class AdminDaoImpl implements AdminDao {
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            if (e.getErrorCode() == 1062) {
+                String errorMessage = e.getMessage();
+
+                if (errorMessage.contains("admin.admin_id")) {
+                    System.err.println(ErrorCode.ID_DUPLICATE.getError());
+                } else if (errorMessage.contains("admin.phone")) {
+                    System.out.println(ErrorCode.PHONE_DUPLICATE.getError());
+                }
+            } else {
+                System.err.println(e.getMessage());
+            }
         } finally {
             ConnectionFactory.getInstance().close();
         }
@@ -76,7 +87,7 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public List<AdminResponseDto> findAll() {
-        List <AdminResponseDto> response = new ArrayList<>();
+        List<AdminResponseDto> response = new ArrayList<>();
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("SELECT * ")
@@ -104,7 +115,7 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public List<AdminResponseDto> findByRole(String role) {
-        List <AdminResponseDto> response = new ArrayList<>();
+        List<AdminResponseDto> response = new ArrayList<>();
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("SELECT * ")
@@ -137,7 +148,8 @@ public class AdminDaoImpl implements AdminDao {
         String response = "";
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT CONCAT(LEFT(admin_id, 3), REPEAT('*', LENGTH(admin_id) - 3)) AS admin_id ")
+            .append(
+                "SELECT CONCAT(LEFT(admin_id, 3), REPEAT('*', LENGTH(admin_id) - 3)) AS admin_id ")
             .append("FROM Admin ")
             .append("WHERE id = ?").toString();
 
@@ -166,7 +178,7 @@ public class AdminDaoImpl implements AdminDao {
         AuthResponseDto response = null;
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT id, password, salt ")
+            .append("SELECT id, password AS pwd, salt, department, role ")
             .append("FROM Admin ")
             .append("WHERE admin_id = ?").toString();
 

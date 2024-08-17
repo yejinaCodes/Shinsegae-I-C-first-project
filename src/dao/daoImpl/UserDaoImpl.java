@@ -1,5 +1,7 @@
 package dao.daoImpl;
 
+import common.ErrorCode;
+import common.Status;
 import config.ConnectionFactory;
 import dao.UserDao;
 import dto.request.UserApprovalRequestDto;
@@ -7,10 +9,12 @@ import dto.request.UserRequestDto;
 import dto.response.AuthResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +49,21 @@ public class UserDaoImpl implements UserDao {
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            if (e.getErrorCode() == 1062) {
+                String errorMessage = e.getMessage();
+
+                if (errorMessage.contains("user.business_number")) {
+                    System.err.println(ErrorCode.BIZ_NO_DUPLICATE.getError());
+                } else if (errorMessage.contains("user.user_id")) {
+                    System.out.println(ErrorCode.ID_DUPLICATE.getError());
+                } else if (errorMessage.contains("user.email")) {
+                    System.out.println(ErrorCode.EMAIL_DUPLICATE.getError());
+                } else if (errorMessage.contains("user.phone")) {
+                    System.out.println(ErrorCode.PHONE_DUPLICATE.getError());
+                }
+            } else {
+                System.err.println(e.getMessage());
+            }
         } finally {
             ConnectionFactory.getInstance().close();
         }
@@ -175,22 +193,29 @@ public class UserDaoImpl implements UserDao {
         AuthResponseDto response = null;
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT id, password, salt ")
-            .append("FROM User ")
-            .append("WHERE user_id = ?").toString();
+            .append("{call user_login(?, ?, ?, ?, ?, ?)}").toString();
 
         try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, userId);
+            CallableStatement cstmt = connection.prepareCall(query);
 
-            rs = pstmt.executeQuery();
+            cstmt.setString(1, userId);
 
-            if (rs.next()) {
-                response = new AuthResponseDto(rs);
-            }
+            cstmt.registerOutParameter(2, Types.INTEGER);
+            cstmt.registerOutParameter(3, Types.VARCHAR);
+            cstmt.registerOutParameter(4, Types.VARCHAR);
+            cstmt.registerOutParameter(5, Types.VARCHAR);
+            cstmt.registerOutParameter(6, Types.VARCHAR);
 
-            rs.close();
-            pstmt.close();
+            cstmt.executeQuery();
+
+            int id = cstmt.getInt(2);
+            String password = cstmt.getString(3);
+            String salt = cstmt.getString(4);
+            String approvalStatus = cstmt.getString(5);
+            String rejectionReason = cstmt.getString(6);
+            response = new AuthResponseDto(id, password, salt, approvalStatus, rejectionReason);
+
+            cstmt.close();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         } finally {

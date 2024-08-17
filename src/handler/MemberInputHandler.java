@@ -111,7 +111,7 @@ public class MemberInputHandler {
 
     public String getNameInput() throws IOException {
         try {
-            System.out.print(Member.NAME.getText());
+            System.out.print(Member.NAME.getDescription());
             return validCheck.validateStringLength30(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -121,7 +121,7 @@ public class MemberInputHandler {
 
     public String getBusinessNumberInput() throws IOException {
         try {
-            System.out.print(Member.BUSINESS_NUMBER.getText());
+            System.out.print(Member.BUSINESS_NUMBER.getDescription());
             return validCheck.validateBizNo(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -131,7 +131,7 @@ public class MemberInputHandler {
 
     public String getCompanyNameInput() throws IOException {
         try {
-            System.out.print(Member.COMPANY_NAME.getText());
+            System.out.print(Member.COMPANY_NAME.getDescription());
             return validCheck.validateStringLength50(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -141,7 +141,7 @@ public class MemberInputHandler {
 
     public String getIdInput() throws IOException {
         try {
-            System.out.print(Member.ID.getText());
+            System.out.print(Member.ID.getDescription());
             return validCheck.validateId(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -155,7 +155,7 @@ public class MemberInputHandler {
 
     public String getPwdInput(String salt) throws IOException {
         try {
-            System.out.print(Member.PW.getText());
+            System.out.print(Member.PW.getDescription());
             return encrypt.getEncrypt(validCheck.validatePw(br.readLine()), salt);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -165,7 +165,7 @@ public class MemberInputHandler {
 
     public String getPwdInput() throws IOException {
         try {
-            System.out.print(Member.PW.getText());
+            System.out.print(Member.PW.getDescription());
             return validCheck.validatePw(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -175,7 +175,7 @@ public class MemberInputHandler {
 
     public String getEmailInput() throws IOException {
         try {
-            System.out.print(Member.EMAIL.getText());
+            System.out.print(Member.EMAIL.getDescription());
             return validCheck.validateEmail(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -269,7 +269,7 @@ public class MemberInputHandler {
 
     public String getPhoneInput() throws IOException {
         try {
-            System.out.print(Member.PHONE.getText());
+            System.out.print(Member.PHONE.getDescription());
             return validCheck.validatePhone(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -279,7 +279,7 @@ public class MemberInputHandler {
 
     public String getZipCodeInput() throws IOException {
         try {
-            System.out.print(Member.ZIP_CODE.getText());
+            System.out.print(Member.ZIP_CODE.getDescription());
             return validCheck.validateStringLength10(br.readLine());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -289,7 +289,7 @@ public class MemberInputHandler {
 
     public String getAddressInput() throws IOException {
         try {
-            System.out.print(Member.ADDRESS.getText());
+            System.out.print(Member.ADDRESS.getDescription());
             return br.readLine();
         } catch (Exception e) {
             System.out.println(e.getMessage());

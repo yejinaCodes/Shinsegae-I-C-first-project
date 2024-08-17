@@ -276,17 +276,17 @@ public class Script {
      */
     public void adminInfo(AdminResponseDto response) {
         script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.ADMIN_ID.getText()).append(response.getId()).append("\n")
-            .append(Member.NAME.getText()).append(response.getName()).append("\n")
-            .append(Member.ID.getText()).append(response.getAdminId()).append("\n")
-            .append(Member.ADMIN_COMPANY_EMAIL.getText()).append(response.getCompanyEmail()).append("\n")
-            .append(Member.DEPARTMENT.getText()).append(response.getDepartment()).append("\n")
-            .append(Member.POSITION.getText()).append(response.getPosition()).append("\n")
-            .append(Member.ROLE.getText()).append(response.getRole()).append("\n")
-            .append(Member.PHONE.getText()).append(response.getPhone()).append("\n")
-            .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
-            .append(Member.AUTHORIZER_ID.getText()).append(response.getAuthorizerId()).append("\n")
-            .append(Member.UPDATED_AT.getText()).append(response.getUpdatedAt()).append("\n");
+            .append(Member.ADMIN_ID.getDescription()).append(response.getId()).append("\n")
+            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
+            .append(Member.ID.getDescription()).append(response.getAdminId()).append("\n")
+            .append(Member.ADMIN_COMPANY_EMAIL.getDescription()).append(response.getCompanyEmail()).append("\n")
+            .append(Member.DEPARTMENT.getDescription()).append(response.getDepartment()).append("\n")
+            .append(Member.POSITION.getDescription()).append(response.getPosition()).append("\n")
+            .append(Member.ROLE.getDescription()).append(response.getRole()).append("\n")
+            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.AUTHORIZER_ID.getDescription()).append(response.getAuthorizerId()).append("\n")
+            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
         print();
     }
 
@@ -295,21 +295,21 @@ public class Script {
      */
     public void userInfo(UserResponseDto response) {
         script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.USER_ID.getText()).append(response.getId()).append("\n")
-            .append(Member.NAME.getText()).append(response.getName()).append("\n")
-            .append(Member.BUSINESS_NUMBER.getText()).append(response.getBusinessNumber()).append("\n")
-            .append(Member.COMPANY_NAME.getText()).append(response.getCompanyName()).append("\n")
-            .append(Member.ID.getText()).append(response.getUserId()).append("\n")
-            .append(Member.EMAIL.getText()).append(response.getEmail()).append("\n")
-            .append(Member.PHONE.getText()).append(response.getPhone()).append("\n")
-            .append(Member.ZIP_CODE.getText()).append(response.getZipCode()).append("\n")
-            .append(Member.ADDRESS.getText()).append(response.getAddress()).append("\n")
-            .append(Member.IS_UNREGISTER.getText()).append(response.getIsUnregister()).append("\n")
-            .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
-            .append(Member.UPDATED_AT.getText()).append(response.getUpdatedAt()).append("\n")
-            .append(Member.UPDATED_ADMIN_ID.getText()).append(response.getUpdatedAdminId()).append("\n")
-            .append(Member.UPDATED_ADMIN_AT.getText()).append(response.getUpdatedAdminAt()).append("\n")
-            .append(Member.UNREGISTERED_AT.getText()).append(response.getUnregisteredAt()).append("\n");
+            .append(Member.USER_ID.getDescription()).append(response.getId()).append("\n")
+            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
+            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
+            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
+            .append(Member.ID.getDescription()).append(response.getUserId()).append("\n")
+            .append(Member.EMAIL.getDescription()).append(response.getEmail()).append("\n")
+            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
+            .append(Member.ZIP_CODE.getDescription()).append(response.getZipCode()).append("\n")
+            .append(Member.ADDRESS.getDescription()).append(response.getAddress()).append("\n")
+            .append(Member.IS_UNREGISTER.getDescription()).append(response.getIsUnregister()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n")
+            .append(Member.UPDATED_ADMIN_ID.getDescription()).append(response.getUpdatedAdminId()).append("\n")
+            .append(Member.UPDATED_ADMIN_AT.getDescription()).append(response.getUpdatedAdminAt()).append("\n")
+            .append(Member.UNREGISTERED_AT.getDescription()).append(response.getUnregisteredAt()).append("\n");
         print();
     }
 
@@ -318,11 +318,11 @@ public class Script {
      */
     public void approvalUser(UserApprovalResponseDto response) {
         script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.USER_ID.getText()).append(response.getUserId()).append("\n")
-            .append(Member.BUSINESS_NUMBER.getText()).append(response.getBusinessNumber()).append("\n")
-            .append(Member.COMPANY_NAME.getText()).append(response.getCompanyName()).append("\n")
-            .append(Member.CREATED_AT.getText()).append(response.getCreatedAt()).append("\n")
-            .append(Member.APPROVAL_STATUS.getText()).append(response.getApprovalStatus()).append("\n");
+            .append(Member.USER_ID.getDescription()).append(response.getUserId()).append("\n")
+            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
+            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.APPROVAL_STATUS.getDescription()).append(response.getApprovalStatus()).append("\n");
         print();
     }
 
@@ -331,7 +331,7 @@ public class Script {
      */
     public void accountId(String response) {
         script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.ID.getText()).append(response).append("\n");
+            .append(Member.ID.getDescription()).append(response).append("\n");
         print();
     }
 }

@@ -30,13 +30,16 @@ public class AuthController {
     private static AuthService authService = new AuthServiceImpl();
     private static AdminService adminService = new AdminServiceImpl();
     private static UserService userService = new UserServiceImpl();
+    private static boolean isQuit = false;
 
     /**
      * 메뉴 선택 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 재설정
      *
      * @param userType (1. 쇼핑몰, 2. 어드민)
      */
-    public void handleAuth(String userType) throws IOException {
+    public AuthResponseDto handleAuth(String userType) throws IOException {
+        AuthResponseDto result = null;
+        while (!isQuit)
         try {
             script.selectLoginOrRegister();
             String menu = br.readLine().trim();
@@ -47,18 +50,16 @@ public class AuthController {
                     switch (menu) {
                         case "1":
                             registerUser();
-                            loginUser();
                             break;
                         case "2":
-                            loginUser();
+                            result = loginUser();
+                            isQuit = !isQuit;
                             break;
                         case "3":
                             findUserId();
-                            handleAuth(userType);
                             break;
                         case "4":
                             resetUserPassword();
-                            handleAuth(userType);
                             break;
                     }
                     break;
@@ -66,18 +67,16 @@ public class AuthController {
                     switch (menu) {
                         case "1":
                             registerAdmin();
-                            loginAdmin();
                             break;
                         case "2":
-                            loginAdmin();
+                            result = loginAdmin();
+                            isQuit = !isQuit;
                             break;
                         case "3":
                             findAdminId();
-                            handleAuth(userType);
                             break;
                         case "4":
                             resetAdminPassword();
-                            handleAuth(userType);
                             break;
                     }
                     break;
@@ -86,6 +85,7 @@ public class AuthController {
             System.out.println(e.getMessage());
             handleAuth(userType);
         }
+        return result;
     }
 
     /**
@@ -105,7 +105,7 @@ public class AuthController {
     /**
      * 유저 로그인
      */
-    private void loginUser() throws IOException {
+    private AuthResponseDto loginUser() throws IOException {
 
         boolean loginSuccessful = false;
         int maxAttempts = 3;
@@ -116,7 +116,9 @@ public class AuthController {
                 script.login();
                 AuthRequestDto user = memberInputHandler.login();
                 auth = authService.loginUser(user);
-                loginSuccessful = true;
+                if (auth != null) {
+                    loginSuccessful = true;
+                }
             } catch (IOException e) {
                 System.out.println(ErrorCode.INVALID_VALUE.getMessage());
                 attempts++;
@@ -130,6 +132,7 @@ public class AuthController {
             System.out.println(ErrorCode.FAILURE_LOGIN.getMessage());
             handleAuth("1");
         }
+        return auth;
     }
 
     /**

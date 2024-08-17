@@ -1,6 +1,8 @@
 package service.serviceImpl;
 
 import common.ErrorCode;
+import common.Member;
+import common.Status;
 import dao.AdminDao;
 import dao.UserDao;
 import dao.daoImpl.AdminDaoImpl;
@@ -23,16 +25,25 @@ public class AuthServiceImpl implements AuthService {
         String userId = user.getId();
         AuthResponseDto auth = userDao.findAuth(userId);
 
-            if (auth == null) {
-                throw new AuthenticationException(ErrorCode.USER_NOT_FOUND.getMessage());
-            }
+        if (auth.getId() == 0) {
+            throw new AuthenticationException(ErrorCode.USER_NOT_FOUND.getMessage());
+        }
 
-            String inputPwd = encrypt.getEncrypt(user.getPassword(), auth.getSalt());
-            if (!inputPwd.equals(auth.getPassword())) {
-                throw new AuthenticationException(ErrorCode.PASSWORD_NOT_FOUND.getMessage());
-            }
+        String inputPwd = encrypt.getEncrypt(user.getPassword(), auth.getSalt());
+        if (!inputPwd.equals(auth.getPassword())) {
+            throw new AuthenticationException(ErrorCode.PASSWORD_NOT_FOUND.getMessage());
+        }
 
-        return auth;
+        Status status = auth.getApprovalStatus();
+
+        switch (status) {
+            case PENDING -> System.out.println(Member.PENDING_STATUS.getDescription());
+            case REJECTED -> System.out.println(Member.REJECTED_STATUS.getDescription() + auth.getRejectionReason());
+            case APPROVED -> {
+                return auth;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -40,14 +51,14 @@ public class AuthServiceImpl implements AuthService {
         String adminId = user.getId();
         AuthResponseDto auth = adminDao.findAuth(adminId);
 
-            if (auth == null) {
-                throw new AuthenticationException(ErrorCode.USER_NOT_FOUND.getMessage());
-            }
+        if (auth == null) {
+            throw new AuthenticationException(ErrorCode.USER_NOT_FOUND.getMessage());
+        }
 
-            String inputPwd = encrypt.getEncrypt(user.getPassword(), auth.getSalt());
-            if (!inputPwd.equals(auth.getPassword())) {
-                throw new AuthenticationException(ErrorCode.PASSWORD_NOT_FOUND.getMessage());
-            }
+        String inputPwd = encrypt.getEncrypt(user.getPassword(), auth.getSalt());
+        if (!inputPwd.equals(auth.getPassword())) {
+            throw new AuthenticationException(ErrorCode.PASSWORD_NOT_FOUND.getMessage());
+        }
         return auth;
     }
 }

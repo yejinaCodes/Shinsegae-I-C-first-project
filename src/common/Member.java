@@ -23,7 +23,9 @@ public enum Member {
     UPDATED_ADMIN_ID("최종 수정자(직원) ID: "),
     UPDATED_ADMIN_AT("최종 수정(직원) 시각: "),
     UNREGISTERED_AT("탈퇴 시각: "),
-    APPROVAL_STATUS("승인 상태: ");
+    APPROVAL_STATUS("승인 상태: "),
+    PENDING_STATUS("\n승인 대기중입니다."),
+    REJECTED_STATUS("\n승인이 거절되었습니다. 관리자에게 문의해주세요.\n[사유]\n");
 
 
     private final String description;
@@ -32,7 +34,7 @@ public enum Member {
         this.description = description;
     }
 
-    public String getText() {
+    public String getDescription() {
         return description;
     }
 }
