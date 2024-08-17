@@ -9,12 +9,6 @@
     <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
-  <component name="DBNavigator.Project.DatabaseBrowserManager">
-    <autoscroll-to-editor value="false" />
-    <autoscroll-from-editor value="true" />
-    <show-object-properties value="false" />
-    <loaded-nodes />
-  </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="cea20039-363c-48c6-a23a-b2b6a8f0b43b">
       <console name="Connection" type="STANDARD" schema="wms" session="Main"><![CDATA[select * from stockRequest;
@@ -125,30 +119,14 @@ INSERT INTO Category (parent_id, name, type) VALUES (19, '숄더백', 3);]]></co
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="cea20039-363c-48c6-a23a-b2b6a8f0b43b" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="cea20039-363c-48c6-a23a-b2b6a8f0b43b" />
   </component>
-  <component name="DBNavigator.Project.ExecutionManager">
-    <retain-sticky-names value="false" />
-  </component>
-  <component name="DBNavigator.Project.MethodExecutionManager">
-    <method-browser />
-    <execution-history>
-      <group-entries value="true" />
-      <execution-inputs />
-    </execution-history>
-    <argument-values-cache />
-  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
-  </component>
-  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
