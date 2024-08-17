@@ -12,50 +12,139 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="cea20039-363c-48c6-a23a-b2b6a8f0b43b">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[DELIMITER //
+      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[select * from stockRequest;
 
-CREATE PROCEDURE UpdateStatus(IN idList TEXT)
-BEGIN
-    -- Temporary table for IDs
-    CREATE TEMPORARY TABLE IF NOT EXISTS TempIDs (id INT);
+CREATE TABLE Category
+(
+    id        INT UNSIGNED AUTO_INCREMENT,
+    parent_id INT UNSIGNED NULL,
+    name      VARCHAR(30)  NOT NULL,
+    type      TINYINT      NOT NULL,
+    code      char(1)      NOT NULL,
+    PRIMARY KEY (id)
+);
 
-    -- Insert IDs into the temporary table
-    SET @query = CONCAT('INSERT INTO TempIDs (id) VALUES ', 
-                        REPLACE(idList, ',', '),('), ');');
-    PREPARE stmt FROM @query;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
 
-    -- Update the stockRequest table based on IDs in the temporary table
-    UPDATE stockRequest
-    JOIN TempIDs ON stockRequest.ID = TempIDs.id
-    SET stockRequest.approvalStatus = 'APPROVED'
-    WHERE stockRequest.approvalStatus = 'PENDING';
+ALTER TABLE Category
+    ADD CONSTRAINT fk_parentCategory FOREIGN KEY (parent_id) REFERENCES Category (id) ON DELETE SET NULL;
 
-    -- Drop the temporary table
-    DROP TEMPORARY TABLE IF EXISTS TempIDs;
-END //
+-- 대분류
+INSERT INTO Category (name, type, code) VALUES ('의류', 1, 'C');
+INSERT INTO Category (name, type, code) VALUES ('신발', 1, 'L');
+INSERT INTO Category (name, type, code) VALUES ('악세서리', 1, 'A');
+INSERT INTO Category (name, type, code) VALUES ('가방', 1, 'B');
 
-DELIMITER ;]]></console>
+-- 의류
+INSERT INTO Category (parent_id, name, type, code) VALUES (1, '아우터', 2);
+INSERT INTO Category (parent_id, name, type, code) VALUES (1, '상의', 2);
+INSERT INTO Category (parent_id, name, type, code) VALUES (1, '팬츠', 2);
+INSERT INTO Category (parent_id, name, type, code) VALUES (1, '세트', 2);
+
+-- 신발
+INSERT INTO Category (parent_id, name, type) VALUES (2, '운동화', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (2, '구두', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (2, '샌들', 2);
+
+-- 악세서리
+INSERT INTO Category (parent_id, name, type) VALUES (3, '목걸이', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (3, '귀걸이', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (3, '반지', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (3, '시계', 2);
+
+-- 가방
+INSERT INTO Category (parent_id, name, type) VALUES (4, '백팩', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (4, '크로스백', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (4, '핸드백', 2);
+INSERT INTO Category (parent_id, name, type) VALUES (4, '숄더백', 2);
+
+-- 아우터
+INSERT INTO Category (parent_id, name, type) VALUES (5, '가디건', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (5, '자켓', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (5, '코트', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (5, '패딩', 3);
+
+-- 상의
+INSERT INTO Category (parent_id, name, type) VALUES (6, '셔츠', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (6, '맨투맨', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (6, '반팔', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (6, '긴팔', 3);
+
+-- 팬츠
+INSERT INTO Category (parent_id, name, type) VALUES (7, '긴바지', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (7, '반바지', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (7, '데님', 3);
+
+-- 세트
+INSERT INTO Category (parent_id, name, type) VALUES (8, '원피스', 3);
+INSERT INTO Category (parent_id, name, type) VALUES (8, '점프슈트', 3);
+
+-- 운동화
+INSERT INTO Category (parent_id, name, type) VALUES (9, '운동화', 3);
+
+-- 구두
+INSERT INTO Category (parent_id, name, type) VALUES (10, '구두', 3);
+
+-- 샌들
+INSERT INTO Category (parent_id, name, type) VALUES (11, '샌들', 3);
+
+-- 목걸이
+INSERT INTO Category (parent_id, name, type) VALUES (12, '목걸이', 3);
+
+-- 귀걸이
+INSERT INTO Category (parent_id, name, type) VALUES (13, '귀걸이', 3);
+
+-- 반지
+INSERT INTO Category (parent_id, name, type) VALUES (14, '반지', 3);
+
+-- 시계
+INSERT INTO Category (parent_id, name, type) VALUES (15, '시계', 3);
+
+-- 백팩
+INSERT INTO Category (parent_id, name, type) VALUES (16, '백팩', 3);
+
+-- 크로스백
+INSERT INTO Category (parent_id, name, type) VALUES (17, '크로스백', 3);
+
+-- 핸드백
+INSERT INTO Category (parent_id, name, type) VALUES (18, '핸드백', 3);
+
+-- 숄더백
+INSERT INTO Category (parent_id, name, type) VALUES (19, '숄더백', 3);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="cea20039-363c-48c6-a23a-b2b6a8f0b43b" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="cea20039-363c-48c6-a23a-b2b6a8f0b43b" />
   </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
+  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
+  </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
