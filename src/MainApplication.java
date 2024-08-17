@@ -2,6 +2,7 @@ import common.ErrorCode;
 import common.ValidCheck;
 import controller.AdminController;
 import controller.AuthController;
+import controller.StockRequestController;
 import controller.UserController;
 import dto.response.AuthResponseDto;
 import java.io.BufferedReader;
@@ -86,6 +87,8 @@ public class MainApplication {
                 break;
             case "4":
 //                4. 입고 관리
+                StockRequestController poc = new StockRequestController();
+                poc.menu();
                 break;
             case "5":
 //                5. 출고 관리
@@ -125,6 +128,8 @@ public class MainApplication {
                 break;
             case "5":
 //                5. 입고 관리
+                StockRequestController poc = new StockRequestController();
+                poc.menu();
                 break;
             case "6":
 //                6. 출고 관리

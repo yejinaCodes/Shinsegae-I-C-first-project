@@ -6,7 +6,7 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -17,7 +17,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="cea20039-363c-48c6-a23a-b2b6a8f0b43b">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[select * from stockRequest;
+      <console name="Connection" type="STANDARD" schema="wms" session="Main"><![CDATA[select * from stockRequest;
 
 CREATE TABLE Category
 (
@@ -29,9 +29,13 @@ CREATE TABLE Category
     PRIMARY KEY (id)
 );
 
+desc Category;
 
-ALTER TABLE Category
-    ADD CONSTRAINT fk_parentCategory FOREIGN KEY (parent_id) REFERENCES Category (id) ON DELETE SET NULL;
+ALTER TABLE Category 
+ADD CONSTRAINT fk_parentCategory 
+FOREIGN KEY (parent_id) 
+REFERENCES Category (id) 
+ON DELETE SET NULL;
 
 -- 대분류
 INSERT INTO Category (name, type, code) VALUES ('의류', 1, 'C');
