@@ -90,7 +90,7 @@ public class AdminDaoImpl implements AdminDao {
         List<AdminResponseDto> response = new ArrayList<>();
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT * ")
+            .append("SELECT id, name, department, position, role ")
             .append("FROM Admin").toString();
 
         try {
@@ -118,7 +118,7 @@ public class AdminDaoImpl implements AdminDao {
         List<AdminResponseDto> response = new ArrayList<>();
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT * ")
+            .append("SELECT id, name, department, position, role ")
             .append("FROM Admin ")
             .append("WHERE role = ?").toString();
 

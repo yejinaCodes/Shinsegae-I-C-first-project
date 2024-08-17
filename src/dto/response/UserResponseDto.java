@@ -2,6 +2,7 @@ package dto.response;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import library.ResultSetReader;
 import lombok.Getter;
 
 @Getter
@@ -17,29 +18,39 @@ public class UserResponseDto {
     private String phone;
     private String zipCode;
     private String address;
-    private int isUnregister;
+    private Integer isUnregister;
     private String createdAt;
     private String updatedAt;
-    private int updatedAdminId;
+    private Integer updatedAdminId;
     private String updatedAdminAt;
     private String unregisteredAt;
+
+    private static ResultSetReader rsr = new ResultSetReader();
 
     public UserResponseDto(ResultSet rs) throws SQLException {
         this.id = rs.getInt("id");
         this.name = rs.getString("name");
         this.businessNumber = rs.getString("business_number");
         this.companyName = rs.getString("company_name");
-        this.userId = rs.getString("user_id");
-        this.password = rs.getString("password");
-        this.email = rs.getString("email");
-        this.phone = rs.getString("phone");
-        this.zipCode = rs.getString("zip_code");
-        this.address = rs.getString("address");
-        this.isUnregister = rs.getInt("is_unregister");
-        this.createdAt = rs.getString("created_at");
-        this.updatedAt = rs.getString("updated_at");
-        this.updatedAdminId = rs.getInt("updated_admin_id");
-        this.updatedAdminAt = rs.getString("updated_admin_at");
-        this.unregisteredAt = rs.getString("unregistered_at");
+        this.userId = rsr.getColumnValue(rs,"user_id", String.class);
+        this.password = rsr.getColumnValue(rs,"password", String.class);
+        this.email = rsr.getColumnValue(rs,"email", String.class);
+        this.phone = rsr.getColumnValue(rs,"phone", String.class);
+        this.zipCode = rsr.getColumnValue(rs,"zip_code", String.class);
+        this.address = rsr.getColumnValue(rs,"address", String.class);
+        this.isUnregister = rsr.getColumnValue(rs,"is_unregister", Integer.class);
+        this.createdAt = rsr.getColumnValue(rs,"created_at", String.class);
+        this.updatedAt = rsr.getColumnValue(rs,"updated_at", String.class);
+        this.updatedAdminId = rsr.getColumnValue(rs,"updated_admin_id", Integer.class);
+        this.updatedAdminAt = rsr.getColumnValue(rs,"updated_admin_at", String.class);
+        this.unregisteredAt = rsr.getColumnValue(rs,"unregistered_at", String.class);
+    }
+    public String formatAdminList() {
+        return String.format("| %-2d | %-20s \t| %-15s\t| %-9s\t|",
+            id,
+            companyName,
+            businessNumber,
+            name
+        );
     }
 }

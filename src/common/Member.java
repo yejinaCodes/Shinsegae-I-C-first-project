@@ -25,7 +25,13 @@ public enum Member {
     UNREGISTERED_AT("탈퇴 시각: "),
     APPROVAL_STATUS("승인 상태: "),
     PENDING_STATUS("\n승인 대기중입니다."),
-    REJECTED_STATUS("\n승인이 거절되었습니다. 관리자에게 문의해주세요.\n[사유]\n");
+    REJECTED_STATUS("\n승인이 거절되었습니다. 관리자에게 문의해주세요.\n[사유]\n"),
+    ADMIN_BORDER_LINE("+----+----------------+-------------+-----------+-------+"),
+    ADMIN_LIST("| id |      이름       |     부서     |    직급     |  권한  |"),
+    USER_BORDER_LINE("+----+--------------------------+-----------------+-------------+"),
+    USER_LIST("| id |           상호명           |     사업자 번호     |    대표명    |"),
+    USER_APPROVAL_BORDER_LINE("+----+--------------------------+-----------------+-------------+---------------+-----------------------+"),
+    USER_APPROVAL_LIST("| id |           상호명           |     사업자 번호    |    대표명     |    승인 상태    |          가입일         |");
 
 
     private final String description;

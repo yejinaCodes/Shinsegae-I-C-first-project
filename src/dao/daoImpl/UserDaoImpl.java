@@ -74,7 +74,7 @@ public class UserDaoImpl implements UserDao {
         List<UserResponseDto> response = new ArrayList<>();
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
-            .append("SELECT * ")
+            .append("SELECT id, company_name, business_number, name ")
             .append("FROM User ").toString();
 
         try {
@@ -133,7 +133,7 @@ public class UserDaoImpl implements UserDao {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append(
-                "SELECT u.id AS user_id, u.business_number, u.company_name, u.created_at, ua.approval_status ")
+                "SELECT u.id AS user_id, u.company_name, u.business_number, u.name, ua.approval_status, u.created_at ")
             .append("FROM User u ")
             .append("LEFT JOIN UserApproval ua ON u.id = ua.user_id ")
             .append("WHERE ua.approval_status = 'PENDING'").toString();

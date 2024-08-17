@@ -272,6 +272,32 @@ public class Script {
     }
 
     /**
+     * 직원 내역 조회 title
+     */
+    public void adminListTitle() {
+        script.append(Member.ADMIN_BORDER_LINE.getDescription()).append("\n")
+            .append(Member.ADMIN_LIST.getDescription()).append("\n")
+            .append(Member.ADMIN_BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 직원 내역 조회 Border line
+     */
+    public void adminListBorder() {
+        script.append(Member.ADMIN_BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 직원 전체 내역 조회
+     */
+    public void adminList(AdminResponseDto response) {
+        script.append(response.formatAdminList());
+        print();
+    }
+
+    /**
      * 직원 상세 내역 조회
      */
     public void adminInfo(AdminResponseDto response) {
@@ -314,15 +340,54 @@ public class Script {
     }
 
     /**
-     * 쇼핑몰 유저 상세 내역 조회
+     * 쇼핑몰 유저 내역 조회 title
      */
-    public void approvalUser(UserApprovalResponseDto response) {
-        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.USER_ID.getDescription()).append(response.getUserId()).append("\n")
-            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
-            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
-            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
-            .append(Member.APPROVAL_STATUS.getDescription()).append(response.getApprovalStatus()).append("\n");
+    public void userListTitle() {
+        script.append(Member.USER_BORDER_LINE.getDescription()).append("\n")
+            .append(Member.USER_LIST.getDescription()).append("\n")
+            .append(Member.USER_BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 내역 조회 Border line
+     */
+    public void userListBorder() {
+        script.append(Member.USER_BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 전체 내역 조회
+     */
+    public void userList(UserResponseDto response) {
+        script.append(response.formatAdminList());
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 가입 승인 내역 조회 title
+     */
+    public void userApprovalListTitle() {
+        script.append(Member.USER_APPROVAL_BORDER_LINE.getDescription()).append("\n")
+            .append(Member.USER_APPROVAL_LIST.getDescription()).append("\n")
+            .append(Member.USER_APPROVAL_BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 가입 승인 내역 조회 Border line
+     */
+    public void userApprovalListBorder() {
+        script.append(Member.USER_APPROVAL_BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 가입 승인 전체 내역 조회
+     */
+    public void userApprovalList(UserApprovalResponseDto response) {
+        script.append(response.formatAdminList());
         print();
     }
 

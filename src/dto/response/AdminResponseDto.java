@@ -6,6 +6,7 @@ import common.Role;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import library.ResultSetReader;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,15 +23,17 @@ public class AdminResponseDto {
     private Role role;
     private String phone;
     private String createdAt;
-    private int authorizerId;
+    private Integer authorizerId;
     private String updatedAt;
+
+    private static ResultSetReader rsr = new ResultSetReader();
 
     public AdminResponseDto(ResultSet rs) throws SQLException {
         this.id = rs.getInt("id");
         this.name = rs.getString("name");
-        this.adminId = rs.getString("admin_id");
-        this.password = rs.getString("password");
-        this.companyEmail = rs.getString("company_email");
+        this.adminId = rsr.getColumnValue(rs, "admin_id", String.class);
+        this.password = rsr.getColumnValue(rs,"password", String.class);
+        this.companyEmail = rsr.getColumnValue(rs,"company_email", String.class);
         this.department = Optional.ofNullable(rs.getString("department"))
             .map(d -> {
                 try {
@@ -58,10 +61,20 @@ public class AdminResponseDto {
                 }
             })
             .orElse(null);
-        this.phone = rs.getString("phone");
-        this.createdAt = rs.getString("created_at");
-        this.authorizerId = rs.getInt("authorizer_id");
-        this.updatedAt = rs.getString("updated_at");
+        this.phone = rsr.getColumnValue(rs,"phone", String.class);
+        this.createdAt = rsr.getColumnValue(rs,"created_at", String.class);
+        this.authorizerId = rsr.getColumnValue(rs,"authorizer_id", Integer.class);
+        this.updatedAt = rsr.getColumnValue(rs,"updated_at", String.class);
+    }
+
+    public String formatAdminList() {
+        return String.format("| %-2d | %-12s\t| %-10s\t| %-8s\t| %-4s\t|",
+            id,
+            name,
+            department,
+            position,
+            role
+        );
     }
 }
 

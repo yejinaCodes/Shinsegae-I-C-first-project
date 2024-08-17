@@ -108,7 +108,9 @@ public class AdminController {
      */
     private void viewAllAdmin() {
         List<AdminResponseDto> list = adminService.findAll();
-        list.forEach(l -> script.adminInfo(l));
+        script.adminListTitle();
+        list.forEach(l -> script.adminList(l));
+        script.adminListBorder();
     }
 
     /**
@@ -134,7 +136,9 @@ public class AdminController {
         }
 
         List<AdminResponseDto> list = adminService.findByRole(role);
-        list.forEach(l -> script.adminInfo(l));
+        script.adminListTitle();
+        list.forEach(l -> script.adminList(l));
+        script.adminListBorder();
     }
 
 
@@ -168,12 +172,16 @@ public class AdminController {
 
     private void viewAllUser() {
         List<UserResponseDto> list = userService.findAll();
-        list.forEach(l -> script.userInfo(l));
+        script.userListTitle();
+        list.forEach(l -> script.userList(l));
+        script.userListBorder();
     }
 
     private void viewPendingApproval() {
         List<UserApprovalResponseDto> list = userService.findByApproval();
-        list.forEach(l -> script.approvalUser(l));
+        script.userApprovalListTitle();
+        list.forEach(l -> script.userApprovalList(l));
+        script.userApprovalListBorder();
     }
 
     /**
