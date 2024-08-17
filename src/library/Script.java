@@ -417,6 +417,11 @@ public class Script {
         script.append(Menu.UPDATESTATUS.getDescription());
         print();
     }
+
+    public void updateRequestForm(){
+        script.append(Menu.UPDATEREQUEST.getDescription());
+        print();
+    }
     public void cancelStockRequest(){
     }
 }

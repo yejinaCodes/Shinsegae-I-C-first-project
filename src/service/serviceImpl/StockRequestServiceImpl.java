@@ -19,8 +19,8 @@ public class StockRequestServiceImpl implements StockRequestService {
   }
 
   @Override
-  public ArrayList<StockRequestDto> findByStatus(){
-    return po.findByStatus();
+  public ArrayList<StockRequestDto> findByStatus(int status){
+    return po.findByStatus(status);
   }
 
   @Override
@@ -28,4 +28,9 @@ public class StockRequestServiceImpl implements StockRequestService {
     return po.updateStatus(updateList);
   }
 
+
+  @Override
+  public boolean updateForm(int formID, StockRequestDto form) throws SQLException {
+    return po.updateForm(formID, form);
+  }
 }

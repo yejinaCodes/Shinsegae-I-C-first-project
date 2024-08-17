@@ -3,6 +3,7 @@ package dto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 public class StockRequestDto {

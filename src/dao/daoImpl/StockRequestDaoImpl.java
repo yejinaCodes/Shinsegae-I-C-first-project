@@ -3,6 +3,7 @@ package dao.daoImpl;
 import config.ConnectionFactory;
 import dao.StockRequestDao;
 import dto.StockRequestDto;
+import exception.Exception;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
       pstmt.close();
       ConnectionFactory.getInstance().close();
 
-    }catch(Exception e){
+    }catch(Exception | SQLException e){
       System.out.println("입고 요청서 DB 전송 실패");
     }
     ConnectionFactory.getInstance().close();
@@ -80,23 +81,24 @@ public class StockRequestDaoImpl implements StockRequestDao {
     }catch(Exception e){
       System.out.println("입고 요청서 DB list 받기 실패");
     }
-    connection.close();
+    ConnectionFactory.getInstance().close();
     return stockRequestDb;
   }
 
   @Override
-  public ArrayList<StockRequestDto> findByStatus(){
+  public ArrayList<StockRequestDto> findByStatus(int status){
     stockRequestDb.clear();
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
         .append("SELECT * from stockRequest ")
-        .append("WHERE approvalStatus like 'PENDING' ")
+        .append("WHERE approvalStatus like ? ")
         .append("ORDER BY createdAt asc")
         .toString();
 
     try{
       PreparedStatement pstmt = connection.prepareStatement(query);
+      pstmt.setString(1, status == 1 ? "PENDING" : "APPROVED");
       rs = pstmt.executeQuery();
       while(rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
@@ -155,6 +157,34 @@ public class StockRequestDaoImpl implements StockRequestDao {
     return result;
   };
 
+  @Override
+  public boolean updateForm(int formID, StockRequestDto updateForm) throws SQLException {
+    Connection connection = ConnectionFactory.getInstance().open();
 
+    String query = new StringBuilder()
+        .append("UPDATE stockRequest ")
+        .append("SET productID = ?, boxQuantity = ?, boxSize = ?, "
+        + "incomingDate = ?, cellID = ?, remarks = ? ")
+        .append("WHERE ID = ?")
+        .toString();
 
+    try{
+      PreparedStatement pstmt = connection.prepareStatement(query);
+      pstmt.setString(1, String.valueOf(updateForm.getProduct_id()));
+      pstmt.setString(2, String.valueOf(updateForm.getBox_quantity()));
+      pstmt.setString(3, String.valueOf(updateForm.getBox_size()));
+      pstmt.setString(4, String.valueOf(updateForm.getIncoming_date()));
+      pstmt.setString(5, String.valueOf(updateForm.getCell_id()));
+      pstmt.setString(6, String.valueOf(updateForm.getRemarks()));
+      pstmt.setString(7, String.valueOf(formID));
+
+      pstmt.executeUpdate();
+      pstmt.close();
+      ConnectionFactory.getInstance().close();
+    }catch(RuntimeException e){
+      System.out.println(e.getMessage());
+      return false;
+    }
+    return true;
+  }
 }
