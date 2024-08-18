@@ -3,11 +3,13 @@ package controller;
 import common.ValidCheck;
 import dto.request.NoticeRequestDto;
 import dto.response.AuthResponseDto;
+import dto.response.NoticeResponseDto;
 import handler.MemberInputHandler;
 import handler.NoticeInputHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import library.Script;
 import service.NoticeService;
 import service.serviceImpl.NoticeServiceImpl;
@@ -25,7 +27,7 @@ public class SupportController {
     /**
      * [직원]
      * '고객 센터' 메뉴 선택
-     * 1. 공지사항 | 2. 게시글 | 3. 1 대 1 문의 내역
+     * 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역
      */
     public void handleSupportMenu(AuthResponseDto admin) throws IOException {
         auth = admin;
@@ -61,7 +63,7 @@ public class SupportController {
     /**
      * [쇼핑몰 회원]
      * '고객 센터' 메뉴 선택
-     * 1. 공지사항 | 2. 게시글 | 3. 1 대 1 문의 내역
+     * 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역
      */
     public void handleUserSupportMenu(AuthResponseDto auth) throws IOException {
         script.supportMenu();
@@ -141,14 +143,23 @@ public class SupportController {
      * '고객 센터 > 공지사항 > 전체 조회' 메뉴
      */
     private void viewNoticeList() {
-
+        List<NoticeResponseDto> list = noticeService.findAll();
+        script.noticeListTitle();
+        list.forEach(l -> script.noticeList(l));
+        script.noticeListBorder();
     }
 
     /**
      * '고객 센터 > 공지사항 > 상세 조회' 메뉴
      */
     private void viewNoticeDetail() {
-
+        try {
+            int targetNotice = noticeInputHandler.getNoticeIdInput();
+            NoticeResponseDto response = noticeService.findById(targetNotice);
+            script.noticeInfo(response);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

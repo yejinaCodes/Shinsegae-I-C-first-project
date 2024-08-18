@@ -79,11 +79,17 @@ public class AdminController {
     /**
      * '회원 관리 > 조회 > 직원 조회 > 직원 상세 조회'
      */
-    private void viewAdminDetail() throws IOException {
-        script.getAdminId();
-        int id = validCheck.validateNumber(br.readLine());
-        AdminResponseDto response = adminService.findById(id);
-        script.adminInfo(response);
+    private void viewAdminDetail() {
+        try {
+            script.getAdminId();
+            int id = validCheck.validateNumber(br.readLine());
+            AdminResponseDto response = adminService.findById(id);
+            script.adminInfo(response);
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

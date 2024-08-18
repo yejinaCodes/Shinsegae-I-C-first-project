@@ -49,4 +49,15 @@ public class NoticeInputHandler {
             return br.readLine();
         }
     }
+
+
+    public int getNoticeIdInput() throws IOException {
+        try {
+            script.getNoticeId();
+            return validCheck.validateNumber(br.readLine());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getNoticeIdInput();
+        }
+    }
 }

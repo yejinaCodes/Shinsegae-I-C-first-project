@@ -5,6 +5,7 @@ import common.Menu;
 import common.Notice;
 import common.ResponseMessage;
 import dto.response.AdminResponseDto;
+import dto.response.NoticeResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 
@@ -299,48 +300,6 @@ public class Script {
     }
 
     /**
-     * 직원 상세 내역 조회
-     */
-    public void adminInfo(AdminResponseDto response) {
-        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.ADMIN_ID.getDescription()).append(response.getId()).append("\n")
-            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
-            .append(Member.ID.getDescription()).append(response.getAdminId()).append("\n")
-            .append(Member.ADMIN_COMPANY_EMAIL.getDescription()).append(response.getCompanyEmail()).append("\n")
-            .append(Member.DEPARTMENT.getDescription()).append(response.getDepartment()).append("\n")
-            .append(Member.POSITION.getDescription()).append(response.getPosition()).append("\n")
-            .append(Member.ROLE.getDescription()).append(response.getRole()).append("\n")
-            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
-            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
-            .append(Member.AUTHORIZER_ID.getDescription()).append(response.getAuthorizerId()).append("\n")
-            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
-        print();
-    }
-
-    /**
-     * 쇼핑몰 유저 상세 내역 조회
-     */
-    public void userInfo(UserResponseDto response) {
-        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.USER_ID.getDescription()).append(response.getId()).append("\n")
-            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
-            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
-            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
-            .append(Member.ID.getDescription()).append(response.getUserId()).append("\n")
-            .append(Member.EMAIL.getDescription()).append(response.getEmail()).append("\n")
-            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
-            .append(Member.ZIP_CODE.getDescription()).append(response.getZipCode()).append("\n")
-            .append(Member.ADDRESS.getDescription()).append(response.getAddress()).append("\n")
-            .append(Member.IS_UNREGISTER.getDescription()).append(response.getIsUnregister()).append("\n")
-            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
-            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n")
-            .append(Member.UPDATED_ADMIN_ID.getDescription()).append(response.getUpdatedAdminId()).append("\n")
-            .append(Member.UPDATED_ADMIN_AT.getDescription()).append(response.getUpdatedAdminAt()).append("\n")
-            .append(Member.UNREGISTERED_AT.getDescription()).append(response.getUnregisteredAt()).append("\n");
-        print();
-    }
-
-    /**
      * 쇼핑몰 유저 내역 조회 title
      */
     public void userListTitle() {
@@ -457,12 +416,105 @@ public class Script {
      */
     public void getTitle() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Notice.TITLE.getText());
+            .append(Notice.TITLE.getDescription());
         print();
     }
+
     public void getContent() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Notice.CONTENT.getText());
+            .append(Notice.CONTENT.getDescription());
+        print();
+    }
+
+    public void getNoticeId() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Notice.ID.getDescription());
+        print();
+    }
+
+
+    /**
+     * 공지사항 내역 조회 title
+     */
+    public void noticeListTitle() {
+        script.append(Notice.BORDER_LINE.getDescription()).append("\n")
+            .append(Notice.NOTICE_LIST.getDescription()).append("\n")
+            .append(Notice.BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 공지사항 내역 조회 Border line
+     */
+    public void noticeListBorder() {
+        script.append(Notice.BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 공지시항 전체 내역 조회
+     */
+    public void noticeList(NoticeResponseDto response) {
+        script.append(response.formatNoticeList());
+        print();
+    }
+
+    /**
+     * 상세 내역
+     */
+    /**
+     * 직원 상세 내역 조회
+     */
+    public void adminInfo(AdminResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.ADMIN_ID.getDescription()).append(response.getId()).append("\n")
+            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
+            .append(Member.ID.getDescription()).append(response.getAdminId()).append("\n")
+            .append(Member.ADMIN_COMPANY_EMAIL.getDescription()).append(response.getCompanyEmail()).append("\n")
+            .append(Member.DEPARTMENT.getDescription()).append(response.getDepartment()).append("\n")
+            .append(Member.POSITION.getDescription()).append(response.getPosition()).append("\n")
+            .append(Member.ROLE.getDescription()).append(response.getRole()).append("\n")
+            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.AUTHORIZER_ID.getDescription()).append(response.getAuthorizerId()).append("\n")
+            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 상세 내역 조회
+     */
+    public void userInfo(UserResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.USER_ID.getDescription()).append(response.getId()).append("\n")
+            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
+            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
+            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
+            .append(Member.ID.getDescription()).append(response.getUserId()).append("\n")
+            .append(Member.EMAIL.getDescription()).append(response.getEmail()).append("\n")
+            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
+            .append(Member.ZIP_CODE.getDescription()).append(response.getZipCode()).append("\n")
+            .append(Member.ADDRESS.getDescription()).append(response.getAddress()).append("\n")
+            .append(Member.IS_UNREGISTER.getDescription()).append(response.getIsUnregister()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n")
+            .append(Member.UPDATED_ADMIN_ID.getDescription()).append(response.getUpdatedAdminId()).append("\n")
+            .append(Member.UPDATED_ADMIN_AT.getDescription()).append(response.getUpdatedAdminAt()).append("\n")
+            .append(Member.UNREGISTERED_AT.getDescription()).append(response.getUnregisteredAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 공지사항 상세 내역 조회
+     */
+    public void noticeInfo(NoticeResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Notice.AUTHOR.getDescription()).append(response.getAuthor()).append("\n")
+            .append(Notice.TITLE.getDescription()).append(response.getTitle()).append("\n")
+            .append(Notice.CONTENT.getDescription()).append(response.getContent()).append("\n")
+            .append(Notice.VIEW_COUNT.getDescription()).append(response.getViewCount()).append("\n")
+            .append(Notice.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Notice.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
         print();
     }
 }
