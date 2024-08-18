@@ -25,4 +25,9 @@ public class NoticeServiceImpl implements NoticeService {
     public List<NoticeResponseDto> findAll() {
         return noticeDao.findAll();
     }
+
+    @Override
+    public void update(int id, NoticeRequestDto request) {
+        noticeDao.update(id, request);
+    }
 }

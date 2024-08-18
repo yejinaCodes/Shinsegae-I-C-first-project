@@ -167,7 +167,12 @@ public class SupportController {
      * '고객 센터 > 공지사항 > 수정' 메뉴
      */
     private void updateNotice() {
-
+        try {
+            int targetNotice = noticeInputHandler.getNoticeIdInput();
+            noticeService.update(targetNotice, noticeInputHandler.update());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

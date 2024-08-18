@@ -11,4 +11,6 @@ public interface NoticeService {
     NoticeResponseDto findById(int id);
 
     List<NoticeResponseDto> findAll();
+
+    void update(int id, NoticeRequestDto request);
 }

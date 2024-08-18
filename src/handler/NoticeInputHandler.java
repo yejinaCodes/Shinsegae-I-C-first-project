@@ -31,6 +31,10 @@ public class NoticeInputHandler {
         return notice;
     }
 
+    public NoticeRequestDto update() throws IOException {
+        return new NoticeRequestDto(getTitleInput(), getContentInput());
+    }
+
 
     public String getTitleInput() throws IOException {
         while (true) {

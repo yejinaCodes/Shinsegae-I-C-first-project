@@ -109,4 +109,29 @@ public class NoticeDaoImpl implements NoticeDao {
         }
         return response;
     }
+
+    @Override
+    public void update(int id, NoticeRequestDto request) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("UPDATE Notice ")
+            .append("SET ")
+            .append("title = ?, content = ?, updated_at = ? ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, request.getTitle());
+            pstmt.setString(2, request.getContent());
+            pstmt.setString(3, request.getUpdatedAt());
+            pstmt.setInt(4, id);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
 }
