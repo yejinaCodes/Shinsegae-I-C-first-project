@@ -1,10 +1,8 @@
 package dao.daoImpl;
 
-import common.ErrorCode;
 import config.ConnectionFactory;
 import dao.NoticeDao;
 import dto.request.NoticeRequestDto;
-import dto.response.AuthResponseDto;
 import dto.response.NoticeResponseDto;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -125,6 +123,26 @@ public class NoticeDaoImpl implements NoticeDao {
             pstmt.setString(2, request.getContent());
             pstmt.setString(3, request.getUpdatedAt());
             pstmt.setInt(4, id);
+
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            ConnectionFactory.getInstance().close();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        connection = ConnectionFactory.getInstance().open();
+        String query = new StringBuilder()
+            .append("DELETE FROM Notice ")
+            .append("WHERE id = ?").toString();
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, id);
 
             pstmt.executeUpdate();
             pstmt.close();

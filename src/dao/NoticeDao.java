@@ -12,4 +12,6 @@ public interface NoticeDao {
     List<NoticeResponseDto> findAll();
 
     void update(int id, NoticeRequestDto request);
+
+    void delete(int id);
 }

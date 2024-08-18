@@ -30,4 +30,9 @@ public class NoticeServiceImpl implements NoticeService {
     public void update(int id, NoticeRequestDto request) {
         noticeDao.update(id, request);
     }
+
+    @Override
+    public void delete(int id) {
+        noticeDao.delete(id);
+    }
 }

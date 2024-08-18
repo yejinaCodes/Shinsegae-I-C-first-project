@@ -2,6 +2,7 @@ package controller;
 
 import common.ValidCheck;
 import dto.request.NoticeRequestDto;
+import dto.request.UserRequestDto;
 import dto.response.AuthResponseDto;
 import dto.response.NoticeResponseDto;
 import handler.MemberInputHandler;
@@ -180,7 +181,26 @@ public class SupportController {
      * '고객 센터 > 공지사항 > 삭제' 메뉴
      */
     private void deleteNotice() {
+        try {
+            int targetNotice = noticeInputHandler.getNoticeIdInput();
 
+            script.confirm();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To2(menu);
+
+            switch (menu) {
+                case "1":
+                    noticeService.delete(targetNotice);
+                    break;
+                case "2":
+                    break;
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
