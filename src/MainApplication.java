@@ -46,8 +46,10 @@ public class MainApplication {
             validCheck.validateMenuNumber1To2(userType);
 
             auth = authController.handleAuth(userType);
+            script.loginSuccess();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            script.loginFailure();
             selectUserType();
         }
     }
@@ -77,7 +79,10 @@ public class MainApplication {
             case "4" -> poc.menu(); //  4. 입고 관리
 //            case "5" ->  // 5. 출고 관리
             case "6" -> supportController.handleUserSupportMenu(auth); // 6. 고객 센터
-//            case "7" -> // 7. 로그아웃
+            case "7" -> {
+                isQuit = !isQuit; // 7. 로그아웃
+                script.logout();
+            }
         }
     }
 
@@ -99,7 +104,10 @@ public class MainApplication {
             case "5" -> poc.menu(); // 5. 입고 관리
 //            case "6" -> // 6. 출고 관리
             case "7" -> supportController.handleSupportMenu(auth); // 7. 고객 센터
-//            case "8" -> // 8. 로그아웃
+            case "8" -> {
+                isQuit = !isQuit; // 8. 로그아웃
+                script.logout();
+            }
         }
     }
 }
