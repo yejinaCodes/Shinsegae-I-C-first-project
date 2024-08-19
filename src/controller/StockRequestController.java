@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 import library.Script;
@@ -25,6 +26,7 @@ public class StockRequestController {
   public void menu(){
     try {
       while (!q) {
+        System.out.println();
         script.selectMenu();
         String menu = br.readLine();
         //menu 유효성 검사하기 validation check 추가하기
@@ -48,7 +50,12 @@ public class StockRequestController {
           case "5":
             //입고요청서 삭제. 유저만 가능
             script.cancelStockRequest();
+            deleteRequest();
+            break;
           case "6":
+            printRequestInstr();
+            break;
+          case "7":
             //나가기
             q = true;
             break;
@@ -100,10 +107,17 @@ public class StockRequestController {
       case "1": //findAll
         StockRequestList = stockRequestService.findByAll();
         System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
-
         printDB(StockRequestList);
         break;
       case "2": //findById
+        System.out.println(Menu.INSERTSEARCHID.getDescription());
+        int requestId = Integer.parseInt(br.readLine());
+        try{
+          StockRequestList = stockRequestService.findById(requestId);
+        }catch(Exception e){
+          System.out.println(e.getMessage());
+        }
+        printDB(StockRequestList);
         break;
       case "3": //findByStatus
         script.readStockRequestStatus(); //wms 관리자 용.delete항목이 없음
@@ -113,10 +127,28 @@ public class StockRequestController {
         printDB(StockRequestList);
         break;
       case "4": //findByCreatedDate
+        System.out.println(Menu.INSERTCREATEDDATE.getDescription());
+        String createdDate = br.readLine();
+        StockRequestList = stockRequestService.findByCreatedDate(createdDate);
+        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
+        printDB(StockRequestList);
         break;
       case "5": //findByProductId
+        System.out.println(Menu.INSERTPRODUCTID.getDescription());
+        String productId = br.readLine();
+        try{
+          StockRequestList = stockRequestService.findByProductId(productId);
+        }catch(Exception e){
+          System.out.println(e.getMessage());
+        }
+        printDB(StockRequestList);
         break;
       case "6": //findByIncomingDate
+        System.out.println(Menu.INSERTINCOMINGDATE.getDescription());
+        String incomingDate = br.readLine();
+        StockRequestList = stockRequestService.findByIncomingDate(incomingDate);
+        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
+        printDB(StockRequestList);
         break;
     }
   }
@@ -183,9 +215,42 @@ public class StockRequestController {
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch(Exception e){
-      e.getMessage();
+      System.out.println(e.getMessage());
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
+
+  public void deleteRequest() throws IOException {
+
+    //pending list 보여주기
+    StockRequestList = stockRequestService.findByStatus(1);
+    System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
+    printDB(StockRequestList);
+
+    System.out.println(Menu.DELETEREQUEST.getDescription());
+    int requestID = Integer.parseInt(br.readLine());
+
+    //해당 요청서 delete하기
+    try{
+      stockRequestService.delete(requestID);
+    }catch(Exception e){
+      e.getMessage();
+    }
+  }
+
+  //입고 지시서는 입고 승인후 작성됨.
+  public void printRequestInstr(){
+    script.printInstruc();
+    StockRequestList.clear();
+
+    StockRequestList = stockRequestService.printInstr();
+    System.out.println(Menu.INSTRUCOLUMN.getDescription());
+    StockRequestList.forEach(instr -> System.out.println(
+        instr.getId() + "\t\t\t\t" + instr.getStock_request_id().orElse(null)+ "\t\t\t\t"
+            + instr.getBox_quantity() + "\t\t" + instr.getCreated_at() + "\t"
+            + instr.getLoading_instr().orElse(null) + "\t\t\t" + instr.getRemarks() + "\t\t\t"));
+
+  }
+
 }

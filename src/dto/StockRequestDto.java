@@ -2,13 +2,13 @@ package dto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 public class StockRequestDto {
   private int id;
-  private int  cell_id;
+  private int cell_id;
   private String product_id;
   private int supplier_id;
   private LocalDate incoming_date;
@@ -17,6 +17,8 @@ public class StockRequestDto {
   private char box_size;
   private String status;
   private String remarks;
+  private Optional<String> loading_instr;
+  private Optional<Integer> stock_request_id;
 
   public StockRequestDto() {
   }

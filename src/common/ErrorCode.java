@@ -19,7 +19,9 @@ public enum ErrorCode {
     ID_DUPLICATE(409, "❗️❗️️이미 존재하는 ID입니다. 다른 ID를 선택해주세요.❗️❗️"),
     EMAIL_DUPLICATE(409, "❗️❗️️이미 존재하는 이메일 입니다. 다른 이메일을 선택해주세요.❗️❗️"),
     PHONE_DUPLICATE(409, "❗️❗️️이미 존재하는 전화번호 입니다. 다른 전화번호를 선택해주세요.❗️❗️"),
-    BIZ_NO_DUPLICATE(409, "❗️❗️️이미 존재하는 사업자 번호 입니다. 관리자에게 문의해주세요.❗️❗️");
+    BIZ_NO_DUPLICATE(409, "❗️❗️️이미 존재하는 사업자 번호 입니다. 관리자에게 문의해주세요.❗️❗️"),
+
+    NOREQUESTAVAILABLE(410, "존재하지 않은 입고 요청서 입니다.️");
 
     private int code;
     private String message;
