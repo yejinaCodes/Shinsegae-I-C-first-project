@@ -4,9 +4,9 @@ import dto.WaybillDto;
 import java.util.List;
 
 public interface WaybillService {
-    void createRelease(WaybillDto var1);
+    void createRelease(WaybillDto waybillDto);
 
     List<WaybillDto> getAll();
 
-    WaybillDto getId(int var1);
+    WaybillDto getId(String id);
 }

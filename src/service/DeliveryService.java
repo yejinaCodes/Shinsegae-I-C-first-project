@@ -4,11 +4,11 @@ import dto.DeliveryDto;
 import java.util.List;
 
 public interface DeliveryService {
-    void createDelivery(DeliveryDto var1);
+    void createDelivery(DeliveryDto deliveryDto);
 
-    void updateDelivery(int var1);
-
-    void deleteDelivery(int var1);
+    void updateDelivery(int id);
 
     List<DeliveryDto> getAll();
+
+    DeliveryDto getId(int id);
 }

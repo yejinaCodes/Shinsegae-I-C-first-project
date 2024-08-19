@@ -2,10 +2,19 @@ package dao;
 
 import dto.ReleaseDto;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public interface ReleaseDao {
-    int stockCheck(int var1);
+    int stockCheck(int id);
 
-    void createRelease(ReleaseDto var1);
+    void createRelease(ReleaseDto releaseDto);
 
-    void updateRelease(int var1, int var2);
+    void updateRelease(int id, int select) throws SQLException;
+
+    boolean productCheck(String product_id);
+
+    List<ReleaseDto> findAll();
+
+    ReleaseDto findById(int id);
 }

@@ -5,15 +5,15 @@ import java.util.Deque;
 import java.util.List;
 
 public interface DeliveryDao {
-    void createDelivery(DeliveryDto var1);
+    void createDelivery(DeliveryDto deliveryDto);
 
-    void updateDelivery(int var1, int var2);
+    void updateDelivery(int id, int select);
 
-    boolean existenceByRelease(int var1);
+    boolean existenceByRelease(int id);
 
     List<DeliveryDto> findByAll();
 
-    DeliveryDto findByID(int var1);
+    DeliveryDto findByID(int id);
 
     List<Integer> deliveryManAll();
 

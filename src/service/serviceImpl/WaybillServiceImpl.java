@@ -1,25 +1,24 @@
 package service.serviceImpl;
 
-import dao.daoImpl.WaybillDaoImpl;
+import dao.daoImpl.WaybillImplDao;
 import dto.WaybillDto;
-import java.util.List;
 import service.WaybillService;
 
+import java.util.List;
+
 public class WaybillServiceImpl implements WaybillService {
-    static WaybillDaoImpl dao = new WaybillDaoImpl();
+    static WaybillImplDao dao = new WaybillImplDao();
 
-    public WaybillServiceImpl() {
-    }
-
+    @Override
     public void createRelease(WaybillDto waybillDto) {
         dao.createWaybill(waybillDto);
     }
 
-    public List<WaybillDto> getAll() {
+    public List<WaybillDto> getAll(){
         return dao.findByAll();
     }
 
-    public WaybillDto getId(int id) {
+    public WaybillDto getId(String id){
         return dao.findById(id);
     }
 }

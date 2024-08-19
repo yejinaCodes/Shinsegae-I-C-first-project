@@ -1,21 +1,20 @@
 package service.serviceImpl;
 
-import dao.daoImpl.ShippingInstructionDaoImpl;
+import dao.daoImpl.ShippingInstructionImplDao;
 import dto.ShippingInstructionDto;
-import java.util.List;
 import service.ShippingInstructionService;
 
+import java.util.List;
+
 public class ShippingInstructionServiceImpl implements ShippingInstructionService {
-    ShippingInstructionDaoImpl instructionDaoImpl = new ShippingInstructionDaoImpl();
+    ShippingInstructionImplDao instructionImplDao = new ShippingInstructionImplDao();
 
-    public ShippingInstructionServiceImpl() {
+    public void createShippingInstruction(){
+        instructionImplDao.createShippingInstruction();
     }
 
-    public void createShippingInstruction() {
-        this.instructionDaoImpl.createShippingInstruction();
-    }
-
+    @Override
     public List<ShippingInstructionDto> getAll() {
-        return this.instructionDaoImpl.findAll();
+        return instructionImplDao.findAll();
     }
 }
