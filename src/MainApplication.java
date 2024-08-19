@@ -29,9 +29,6 @@ public class MainApplication {
         try {
             selectUserType();
             while (!isQuit) {
-                System.out.println(auth.getId());
-                System.out.println(auth.getDepartment());
-                System.out.println(auth.getRole());
                 selectMainMenu();
             }
         } catch (IOException e) {
@@ -74,7 +71,7 @@ public class MainApplication {
         validCheck.validateMenuNumber1To7(menu);
 
         switch (menu) {
-            case "1" -> userController.manageUser(); // 1. 회원 관리
+            case "1" -> userController.manageUser(auth); // 1. 회원 관리
 //            case "2" ->  // 2. 창고 관리
 //            case "3" ->  // 3. 재고 관리
             case "4" -> poc.menu(); //  4. 입고 관리
@@ -95,7 +92,7 @@ public class MainApplication {
         validCheck.validateMenuNumber1To8(menu);
 
         switch (menu) {
-            case "1" -> adminController.manageMember(); // 1. 회원 관리
+            case "1" -> adminController.manageMember(auth); // 1. 회원 관리
 //            case "2" -> // 2. 재무 관리
 //            case "3" -> //3. 창고 관리
 //            case "4" -> //4. 재고 관리

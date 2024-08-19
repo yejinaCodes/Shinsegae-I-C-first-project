@@ -21,7 +21,7 @@ public interface UserService {
 
     void updateUserPwd(String bizNo, UserRequestDto request);
 
-    void updateApprovalStatus(int id, UserApprovalRequestDto request);
+    void updateApprovalStatus(int auth, int id, UserApprovalRequestDto request);
 
     void unregister(int id, UserRequestDto request);
 

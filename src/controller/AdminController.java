@@ -1,6 +1,7 @@
 package controller;
 
 import dto.request.UserRequestDto;
+import dto.response.AuthResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 import handler.MemberInputHandler;
@@ -25,13 +26,15 @@ public class AdminController {
     private static Script script = new Script();
     private static AdminService adminService = new AdminServiceImpl();
     private static UserService userService = new UserServiceImpl();
+    private static AuthResponseDto auth = new AuthResponseDto();
 
 
     /**
      * '회원 관리' 메뉴 선택
      * 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제
      */
-    public void manageMember() throws IOException {
+    public void manageMember(AuthResponseDto user) throws IOException {
+        auth = user;
         script.manageMember();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To4(menu);
@@ -180,7 +183,7 @@ public class AdminController {
      * '회원 관리 > 수정 > 회원 정보 수정'
      */
     private void editAdmin() throws IOException {
-        adminService.updateAdmin(memberInputHandler.updateAdmin());
+        adminService.updateAdmin(auth.getId(), memberInputHandler.updateAdmin());
     }
 
     /**
@@ -214,7 +217,7 @@ public class AdminController {
      */
     private void setAdminRole() throws IOException {
         int targetEmployeeId = memberInputHandler.getAdminIdInput();
-        adminService.updateRole(targetEmployeeId, memberInputHandler.updateAdminRole());
+        adminService.updateRole(auth.getId(), targetEmployeeId, memberInputHandler.updateAdminRole());
     }
 
     /**
@@ -222,7 +225,7 @@ public class AdminController {
      */
     private void setDeptAndPosition() throws IOException {
         int targetEmployeeId = memberInputHandler.getAdminIdInput();
-        adminService.updateAdminDeptPos(targetEmployeeId, memberInputHandler.updateAdminDeptPos());
+        adminService.updateAdminDeptPos(auth.getId(), targetEmployeeId, memberInputHandler.updateAdminDeptPos());
     }
 
     /**
@@ -230,7 +233,7 @@ public class AdminController {
      */
     private void approveUser() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
-        userService.updateApprovalStatus(targetUserId, memberInputHandler.updateApprovalStatus());
+        userService.updateApprovalStatus(auth.getId(), targetUserId, memberInputHandler.updateApprovalStatus());
     }
 
     /**
