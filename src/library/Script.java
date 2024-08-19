@@ -1,9 +1,12 @@
 package library;
 
+import common.Board;
 import common.Member;
 import common.Menu;
 import common.ResponseMessage;
 import dto.response.AdminResponseDto;
+import dto.response.BoardResponseDto;
+import dto.response.NoticeResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
 
@@ -33,7 +36,7 @@ public class Script {
      */
     public void selectLoginOrRegister() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.AUTH_MENU.getDescription())
+            .append(Menu.MENU_AUTH.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -46,7 +49,7 @@ public class Script {
      */
     public void userMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.USER_MENU.getDescription())
+            .append(Menu.MENU_USER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -58,7 +61,7 @@ public class Script {
      */
     public void adminMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MENU.getDescription())
+            .append(Menu.MENU_ADMIN.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -69,7 +72,7 @@ public class Script {
      */
     public void manageMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -80,7 +83,7 @@ public class Script {
      */
     public void viewMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_VIEW_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_VIEW.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -91,7 +94,7 @@ public class Script {
      */
     public void viewAdmin() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_VIEW_ADMIN_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_VIEW_ADMIN.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -101,7 +104,7 @@ public class Script {
      */
     public void viewMemberRole() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_ROLE_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_ROLE.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -112,7 +115,7 @@ public class Script {
      */
     public void viewUser() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_VIEW_USER_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_VIEW_USER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -123,7 +126,7 @@ public class Script {
      */
     public void editMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_EDIT_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_EDIT.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -134,7 +137,7 @@ public class Script {
      */
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_MEMBER_PERMISSION_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_MEMBER_PERMISSION.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -145,7 +148,7 @@ public class Script {
      */
     public void deleteMember() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_DELETE_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_DELETE.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -156,7 +159,7 @@ public class Script {
      */
     public void manageUser() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.USER_MEMBER_MENU.getDescription())
+            .append(Menu.MENU_USER_MEMBER.getDescription())
             .append(Menu.MENU_SELECT.getDescription());
         print();
     }
@@ -202,7 +205,7 @@ public class Script {
      */
     public void getDepartment() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_DEPARTMENT_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_DEPARTMENT.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -212,7 +215,7 @@ public class Script {
      */
     public void getPosition() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_POSITION_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_POSITION.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -222,7 +225,7 @@ public class Script {
      */
     public void getRole() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Menu.ADMIN_ROLE_MENU.getDescription())
+            .append(Menu.MENU_ADMIN_ROLE.getDescription())
             .append(Menu.ROLE_SELECT.getDescription());
         print();
     }
@@ -294,48 +297,6 @@ public class Script {
      */
     public void adminList(AdminResponseDto response) {
         script.append(response.formatAdminList());
-        print();
-    }
-
-    /**
-     * 직원 상세 내역 조회
-     */
-    public void adminInfo(AdminResponseDto response) {
-        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.ADMIN_ID.getDescription()).append(response.getId()).append("\n")
-            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
-            .append(Member.ID.getDescription()).append(response.getAdminId()).append("\n")
-            .append(Member.ADMIN_COMPANY_EMAIL.getDescription()).append(response.getCompanyEmail()).append("\n")
-            .append(Member.DEPARTMENT.getDescription()).append(response.getDepartment()).append("\n")
-            .append(Member.POSITION.getDescription()).append(response.getPosition()).append("\n")
-            .append(Member.ROLE.getDescription()).append(response.getRole()).append("\n")
-            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
-            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
-            .append(Member.AUTHORIZER_ID.getDescription()).append(response.getAuthorizerId()).append("\n")
-            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
-        print();
-    }
-
-    /**
-     * 쇼핑몰 유저 상세 내역 조회
-     */
-    public void userInfo(UserResponseDto response) {
-        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Member.USER_ID.getDescription()).append(response.getId()).append("\n")
-            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
-            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
-            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
-            .append(Member.ID.getDescription()).append(response.getUserId()).append("\n")
-            .append(Member.EMAIL.getDescription()).append(response.getEmail()).append("\n")
-            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
-            .append(Member.ZIP_CODE.getDescription()).append(response.getZipCode()).append("\n")
-            .append(Member.ADDRESS.getDescription()).append(response.getAddress()).append("\n")
-            .append(Member.IS_UNREGISTER.getDescription()).append(response.getIsUnregister()).append("\n")
-            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
-            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n")
-            .append(Member.UPDATED_ADMIN_ID.getDescription()).append(response.getUpdatedAdminId()).append("\n")
-            .append(Member.UPDATED_ADMIN_AT.getDescription()).append(response.getUpdatedAdminAt()).append("\n")
-            .append(Member.UNREGISTERED_AT.getDescription()).append(response.getUnregisteredAt()).append("\n");
         print();
     }
 
@@ -418,5 +379,178 @@ public class Script {
         print();
     }
     public void cancelStockRequest(){
+    }
+
+    /**
+     * '고객 센터' 메뉴 선택
+     * 1. 공지사항 | 2. 게시글 | 3. 1 대 1 문의
+     */
+    public void supportMenu() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.MENU_SUPPORT.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제
+     */
+    public void showCRUDMenu() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.MENU_CRUD.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 1. 전체 조회 | 2. 상세 조회
+     */
+    public void showViewMenu() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Menu.MENU_VIEW.getDescription())
+            .append(Menu.MENU_SELECT.getDescription());
+        print();
+    }
+
+    /**
+     * 공지사항 & 게시글
+     */
+    public void getTitle() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.TITLE.getDescription());
+        print();
+    }
+
+    public void getContent() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.CONTENT.getDescription());
+        print();
+    }
+
+    public void getIsPrivate() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.IS_PRIVATE_SELECT.getDescription());
+        print();
+    }
+
+    public void getNoticeId() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.NOTICE_ID.getDescription());
+        print();
+    }
+
+    public void getBoardId() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.BOARD_ID.getDescription());
+        print();
+    }
+
+
+    /**
+     * 공지사항 내역 조회 title
+     */
+    public void boardListTitle() {
+        script.append(Board.BORDER_LINE.getDescription()).append("\n")
+            .append(Board.LIST.getDescription()).append("\n")
+            .append(Board.BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 공지사항 내역 조회 Border line
+     */
+    public void boardListBorder() {
+        script.append(Board.BORDER_LINE.getDescription());
+        print();
+    }
+
+    /**
+     * 공지시항 전체 내역 조회
+     */
+    public void noticeList(NoticeResponseDto response) {
+        script.append(response.formatNoticeList());
+        print();
+    }
+
+    /**
+     * 게시글 전체 내역 조회
+     */
+    public void boardList(BoardResponseDto response) {
+        script.append(response.formatBoardList());
+        print();
+    }
+
+    /**
+     * 상세 내역
+     */
+    /**
+     * 직원 상세 내역 조회
+     */
+    public void adminInfo(AdminResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.ADMIN_ID.getDescription()).append(response.getId()).append("\n")
+            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
+            .append(Member.ID.getDescription()).append(response.getAdminId()).append("\n")
+            .append(Member.ADMIN_COMPANY_EMAIL.getDescription()).append(response.getCompanyEmail()).append("\n")
+            .append(Member.DEPARTMENT.getDescription()).append(response.getDepartment()).append("\n")
+            .append(Member.POSITION.getDescription()).append(response.getPosition()).append("\n")
+            .append(Member.ROLE.getDescription()).append(response.getRole()).append("\n")
+            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.AUTHORIZER_ID.getDescription()).append(response.getAuthorizerId()).append("\n")
+            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 쇼핑몰 유저 상세 내역 조회
+     */
+    public void userInfo(UserResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Member.USER_ID.getDescription()).append(response.getId()).append("\n")
+            .append(Member.NAME.getDescription()).append(response.getName()).append("\n")
+            .append(Member.BUSINESS_NUMBER.getDescription()).append(response.getBusinessNumber()).append("\n")
+            .append(Member.COMPANY_NAME.getDescription()).append(response.getCompanyName()).append("\n")
+            .append(Member.ID.getDescription()).append(response.getUserId()).append("\n")
+            .append(Member.EMAIL.getDescription()).append(response.getEmail()).append("\n")
+            .append(Member.PHONE.getDescription()).append(response.getPhone()).append("\n")
+            .append(Member.ZIP_CODE.getDescription()).append(response.getZipCode()).append("\n")
+            .append(Member.ADDRESS.getDescription()).append(response.getAddress()).append("\n")
+            .append(Member.IS_UNREGISTER.getDescription()).append(response.getIsUnregister()).append("\n")
+            .append(Member.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Member.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n")
+            .append(Member.UPDATED_ADMIN_ID.getDescription()).append(response.getUpdatedAdminId()).append("\n")
+            .append(Member.UPDATED_ADMIN_AT.getDescription()).append(response.getUpdatedAdminAt()).append("\n")
+            .append(Member.UNREGISTERED_AT.getDescription()).append(response.getUnregisteredAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 공지사항 상세 내역 조회
+     */
+    public void noticeInfo(NoticeResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Board.AUTHOR.getDescription()).append(response.getAuthor()).append("\n")
+            .append(Board.TITLE.getDescription()).append(response.getTitle()).append("\n")
+            .append(Board.CONTENT.getDescription()).append(response.getContent()).append("\n")
+            .append(Board.VIEW_COUNT.getDescription()).append(response.getViewCount()).append("\n")
+            .append(Board.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Board.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 게시글 상세 내역 조회
+     */
+    public void boardInfo(BoardResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Board.AUTHOR.getDescription()).append(response.getAuthor()).append("\n")
+            .append(Board.IS_PRIVATE.getDescription()).append(response.isPrivate()).append("\n")
+            .append(Board.TITLE.getDescription()).append(response.getTitle()).append("\n")
+            .append(Board.CONTENT.getDescription()).append(response.getContent()).append("\n")
+            .append(Board.VIEW_COUNT.getDescription()).append(response.getViewCount()).append("\n")
+            .append(Board.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Board.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
+        print();
     }
 }

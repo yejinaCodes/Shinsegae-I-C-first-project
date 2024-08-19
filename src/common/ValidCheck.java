@@ -1,8 +1,10 @@
 package common;
 
 import exception.Exception;
+import java.util.InputMismatchException;
 
 public class ValidCheck {
+
     private static final String ID = "^[a-zA-Z0-9]{5,15}$";
     private static final String PASSWORD = "^[a-zA-Z0-9.!@#$%^]{8,20}$";
     private static final String EMAIL = "^(?=.{1,100}$)[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
@@ -18,6 +20,7 @@ public class ValidCheck {
 
     /**
      * 공백 입력 값 검사
+     *
      * @param input
      */
     public void isNull(String input) {
@@ -28,17 +31,21 @@ public class ValidCheck {
 
     /**
      * 숫자 유효성 검사
+     *
      * @param number
      */
-    public int validateNumber(String number) {
-        if (!(number.matches(NUMBER))) {
-            throw new Exception(ErrorCode.INVALID_NUMBER);
+    public int validateNumber(String number) throws NumberFormatException {
+        if (!number.matches(NUMBER)) {
+            throw new NumberFormatException(ErrorCode.INVALID_NUMBER.getError());
         }
         return Integer.parseInt(number);
+
+
     }
 
     /**
      * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 2)
      */
     public void validateMenuNumber1To2(String menu) {
@@ -51,6 +58,7 @@ public class ValidCheck {
 
     /**
      * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 3)
      */
     public void validateMenuNumber1To3(String menu) {
@@ -63,6 +71,7 @@ public class ValidCheck {
 
     /**
      * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 4)
      */
     public void validateMenuNumber1To4(String menu) {
@@ -75,6 +84,7 @@ public class ValidCheck {
 
     /**
      * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 5)
      */
     public void validateMenuNumber1To5(String menu) {
@@ -87,6 +97,7 @@ public class ValidCheck {
 
     /**
      * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 7)
      */
     public void validateMenuNumber1To7(String menu) {
@@ -99,6 +110,7 @@ public class ValidCheck {
 
     /**
      * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 8)
      */
     public void validateMenuNumber1To8(String menu) {
@@ -111,6 +123,7 @@ public class ValidCheck {
 
     /**
      * 입력값 길이 유효성 검사
+     *
      * @param input 입력값 (최대 길이: 10)
      */
     public String validateStringLength10(String input) {
@@ -124,6 +137,7 @@ public class ValidCheck {
 
     /**
      * 입력값 길이 유효성 검사
+     *
      * @param input 입력값 (최대 길이: 30)
      */
     public String validateStringLength30(String input) {
@@ -137,12 +151,13 @@ public class ValidCheck {
 
     /**
      * 입력값 길이 유효성 검사
+     *
      * @param input 입력값 (최대 길이: 50)
      */
     public String validateStringLength50(String input) {
         isNull(input);
 
-        if (input.length() >50) {
+        if (input.length() > 50) {
             throw new Exception(ErrorCode.INVALID_LENGTH_50);
         }
         return input;
@@ -150,6 +165,7 @@ public class ValidCheck {
 
     /**
      * ID 유효성 검사
+     *
      * @param id 입력값
      */
     public String validateId(String id) {
@@ -161,6 +177,7 @@ public class ValidCheck {
 
     /**
      * Password 유효성 검사
+     *
      * @param pw 입력값
      */
     public String validatePw(String pw) {
@@ -172,6 +189,7 @@ public class ValidCheck {
 
     /**
      * 이메일 유효성 검사
+     *
      * @param email 입력값
      */
     public String validateEmail(String email) {
@@ -183,6 +201,7 @@ public class ValidCheck {
 
     /**
      * 전화번호 유효성 검사
+     *
      * @param phone 입력값
      */
     public String validatePhone(String phone) {

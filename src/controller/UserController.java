@@ -29,18 +29,10 @@ public class UserController {
         validCheck.validateMenuNumber1To4(menu);
 
         switch (menu) {
-            case "1":
-                viewInfo();
-                break;
-            case "2":
-                editUser();
-                break;
-            case "3":
-                editPwd();
-                break;
-            case "4":
-                unregister();
-                break;
+            case "1" -> viewInfo();
+            case "2" -> editUser();
+            case "3" -> editPwd();
+            case "4" -> unregister();
         }
     }
 
