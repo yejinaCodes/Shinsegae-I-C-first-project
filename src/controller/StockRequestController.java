@@ -23,48 +23,64 @@ public class StockRequestController {
   ArrayList<StockRequestDto> StockRequestList = new ArrayList<StockRequestDto>();
   ArrayList<Integer> approvedList = new ArrayList<Integer>();
 
-  public void menu(){
+  public void userMenu(){
     try {
       while (!q) {
         System.out.println();
-        script.selectMenu();
+        script.selectUserMenu();
         String menu = br.readLine();
         //menu 유효성 검사하기 validation check 추가하기
         switch (menu) {
           case "1":
-            //유저만 가능
             createStockRequest();
             break;
           case "2":
             readByCondition();
             break;
           case "3":
-            //관리자만 가능
-            updateStatus();
-            //입고 반영
-            break;
-          case "4":
-            //입고요청서 수정. 유저만 가능
             updateRequest();
             break;
-          case "5":
-            //입고요청서 삭제. 유저만 가능
+          case "4":
             script.cancelStockRequest();
             deleteRequest();
             break;
-          case "6":
-            printRequestInstr();
-            break;
-          case "7":
-            //나가기
+          case "5":
             q = true;
             break;
         }
       }
-      } catch(IOException | SQLException e){
-        throw new RuntimeException(e);
-      }
+    } catch(IOException | SQLException e){
+      throw new RuntimeException(e);
+    }
   }
+
+  public void adminMenu(){
+    try {
+      while (!q) {
+        System.out.println();
+        script.selectAdminMenu();
+        String menu = br.readLine();
+        //menu 유효성 검사하기 validation check 추가하기
+        switch (menu) {
+          case "1":
+            readByCondition();
+            break;
+          case "2":
+            updateStatus();
+            break;
+          case "3":
+            printRequestInstr();
+            break;
+          case "4":
+            q = true;
+            break;
+        }
+      }
+    } catch(IOException | SQLException e){
+      throw new RuntimeException(e);
+    }
+  }
+
 
   public void printDB(ArrayList<StockRequestDto> list){
     StockRequestList.forEach(stockrequest -> System.out.println(

@@ -18,6 +18,7 @@ public class MainApplication {
     private static AuthController authController = new AuthController();
     private static AdminController adminController = new AdminController();
     private static UserController userController = new UserController();
+    private static StockRequestController poc = new StockRequestController()
     private static Script script = new Script();
     private static AuthResponseDto auth = null;
     private static String userType;
@@ -87,8 +88,7 @@ public class MainApplication {
                 break;
             case "4":
 //                4. 입고 관리
-                StockRequestController poc = new StockRequestController();
-                poc.menu();
+                poc.userMenu();
                 break;
             case "5":
 //                5. 출고 관리
@@ -128,8 +128,7 @@ public class MainApplication {
                 break;
             case "5":
 //                5. 입고 관리
-                StockRequestController poc = new StockRequestController();
-                poc.menu();
+                poc.adminMenu();
                 break;
             case "6":
 //                6. 출고 관리

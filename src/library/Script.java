@@ -399,8 +399,12 @@ public class Script {
             .append(Member.ID.getDescription()).append(response).append("\n");
         print();
     }
-    public void selectMenu(){
-        script.append(Menu.STOCKREQUESTMENUSELECT.getDescription());
+    public void selectUserMenu(){
+        script.append(Menu.USERMENUSELECT.getDescription());
+        print();
+    }
+    public void selectAdminMenu(){
+        script.append(Menu.ADMINMENUSELECT.getDescription());
         print();
     }
     public void readStockRequest(){

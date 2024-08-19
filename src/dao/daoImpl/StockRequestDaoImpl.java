@@ -7,6 +7,7 @@ import dao.StockRequestDao;
 import dto.StockRequestDto;
 import exception.Exception;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
 
   ArrayList<StockRequestDto> stockRequestDb = new ArrayList<StockRequestDto>();
   private static ResultSet rs = null;
+  private static StockRequestDto stockRequest = new StockRequestDto();
 
   @Override
   public void create(StockRequestDto stockRequest) {
@@ -66,7 +68,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       rs = pstmt.executeQuery();
       while (rs.next()) {
-        StockRequestDto stockRequest = new StockRequestDto();
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -108,7 +109,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
         System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
       }
       while (rs.next()) {
-        StockRequestDto stockRequest = new StockRequestDto();
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -147,7 +147,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
       if (!rs.next()){
         System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
       }
-      StockRequestDto stockRequest = new StockRequestDto();
       stockRequest.setId(rs.getInt("ID"));
       stockRequest.setProduct_id(rs.getString("productID"));
       stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -180,21 +179,22 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       pstmt.setString(1, createdDate);
       rs = pstmt.executeQuery();
-      if (!rs.next()){
-        System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
-      }
-      StockRequestDto stockRequest = new StockRequestDto();
-      stockRequest.setId(rs.getInt("ID"));
-      stockRequest.setProduct_id(rs.getString("productID"));
-      stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-      stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-      stockRequest.setCell_id(rs.getInt("cellID"));
-      stockRequest.setStatus(rs.getString("approvalStatus"));
-      stockRequest.setRemarks(rs.getString("remarks"));
-      stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-      stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+//      if (!rs.next()){
+//        System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
+//      }
+      while(rs.next()) {
+        stockRequest.setId(rs.getInt("ID"));
+        stockRequest.setProduct_id(rs.getString("productID"));
+        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
+        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
+        stockRequest.setCell_id(rs.getInt("cellID"));
+        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setRemarks(rs.getString("remarks"));
+        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
+        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
 
-      stockRequestDb.add(stockRequest);
+        stockRequestDb.add(stockRequest);
+      }
       pstmt.close();
       ConnectionFactory.getInstance().close();
     }catch (Exception | SQLException e) {
@@ -216,13 +216,13 @@ public class StockRequestDaoImpl implements StockRequestDao {
 
     try {
       PreparedStatement pstmt = connection.prepareStatement(query);
-      pstmt.setString(1, incomingDate);
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+      Date sqlDate = Date.valueOf(LocalDate.parse(incomingDate, formatter));
+      pstmt.setDate(1, sqlDate);
+      //pstmt.setString(1, incomingDate);
       rs = pstmt.executeQuery();
-      if (!rs.next()){
-        System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
-      }
+
       while(rs.next()) {
-        StockRequestDto stockRequest = new StockRequestDto();
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -239,10 +239,10 @@ public class StockRequestDaoImpl implements StockRequestDao {
       ConnectionFactory.getInstance().close();
     }catch (Exception | SQLException e) {
       System.err.println("DB 입고요청서 불러오기 실패");
+      System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
     }
     return stockRequestDb;
   }
-
 
   @Override
   public ArrayList<StockRequestDto> findByStatus(int status) {
@@ -260,7 +260,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
       pstmt.setString(1, status == 1 ? "PENDING" : "APPROVED");
       rs = pstmt.executeQuery();
       while (rs.next()) {
-        StockRequestDto stockRequest = new StockRequestDto();
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -280,7 +279,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
     }
     return stockRequestDb;
   }
-
 
   @Override
   public boolean updateStatus(ArrayList<Integer> updateList) {
@@ -316,7 +314,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
     }
     return result;
   }
-
 
   @Override
   public boolean updateForm(int formID, StockRequestDto updateForm) throws SQLException {
@@ -391,7 +388,6 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       rs = pstmt.executeQuery();
       while (rs.next()) {
-        StockRequestDto stockRequest = new StockRequestDto();
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setStock_request_id(Optional.ofNullable(rs.getInt("stockRequestID")));
         stockRequest.setBox_quantity(rs.getInt("boxUnit"));
