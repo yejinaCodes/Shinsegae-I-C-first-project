@@ -2,6 +2,7 @@ package controller;
 
 import common.ValidCheck;
 import dto.request.UserRequestDto;
+import dto.response.AuthResponseDto;
 import dto.response.UserResponseDto;
 import handler.MemberInputHandler;
 import java.io.BufferedReader;
@@ -17,13 +18,14 @@ public class UserController {
     private static ValidCheck validCheck = new ValidCheck();
     private static Script script = new Script();
     private static UserService userService = new UserServiceImpl();
-    private static int id = 1;// 🚨 로그인 유저 id로 변경 예정
+    private static AuthResponseDto auth = new AuthResponseDto();
 
     /**
      * '회원 관리' 메뉴 선택
      * 1. 정보 조회 | 2. 정보 수정 | 3. 비밀번호 변경 | 4. 탈퇴
      */
-    public void manageUser() throws IOException {
+    public void manageUser(AuthResponseDto user) throws IOException {
+        auth = user;
         script.manageUser();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To4(menu);
@@ -40,7 +42,7 @@ public class UserController {
      * '회원 관리 > 정보 조회'
      */
     private void viewInfo() {
-        UserResponseDto response = userService.findById(id);
+        UserResponseDto response = userService.findById(auth.getId());
         script.userInfo(response);
     }
 
@@ -48,7 +50,7 @@ public class UserController {
      * '회원 관리 > 정보 수정'
      */
     private void editUser() throws IOException {
-        userService.updateUser(id, memberInputHandler.updateUser());
+        userService.updateUser(auth.getId(), memberInputHandler.updateUser());
     }
 
     /**
@@ -72,7 +74,7 @@ public class UserController {
         switch (menu) {
             case "1":
                 UserRequestDto request = new UserRequestDto();
-                userService.unregister(id, request);
+                userService.unregister(auth.getId(), request);
                 break;
             case "2":
                 break;

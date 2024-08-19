@@ -283,7 +283,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateApprovalStatus(int id, UserApprovalRequestDto request) {
+    public void updateApprovalStatus(int auth, int id, UserApprovalRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("INSERT INTO UserApproval ")
@@ -293,7 +293,7 @@ public class UserDaoImpl implements UserDao {
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, id);
-            pstmt.setInt(2, request.getApproverId());
+            pstmt.setInt(2, auth);
             pstmt.setString(3, String.valueOf(request.getApprovalStatus()));
             pstmt.setString(4, request.getRejectionReason());
             pstmt.setString(5, request.getCreatedAt());
