@@ -30,52 +30,65 @@ public class AdminController {
 
 
     /**
-     * '회원 관리' 메뉴 선택
-     * 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제
+     * '회원 관리' 메뉴 선택 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제 | 5. 이전 메뉴
      */
     public void manageMember(AuthResponseDto user) throws IOException {
         auth = user;
-        script.manageMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To4(menu);
+        while (true) {
+            script.manageMember();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To5(menu);
 
-        switch (menu) {
-            case "1" -> viewMember();
-            case "2" -> editMember();
-            case "3" -> setMemberRole();
-            case "4" -> delete();
+            switch (menu) {
+                case "1" -> viewMember();
+                case "2" -> editMember();
+                case "3" -> setMemberRole();
+                case "4" -> delete();
+                case "5" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '회원 관리 > 조회' 메뉴 선택
-     * 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회
+     * '회원 관리 > 조회' 메뉴 선택 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회 | 3. 이전 메뉴
      */
-    private void viewMember() throws IOException{
-        script.viewMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+    private void viewMember() throws IOException {
 
-        switch (menu) {
-            case "1" -> viewAdmin();
-            case "2" -> viewUser();
+        while (true) {
+            script.viewMember();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1" -> viewAdmin();
+                case "2" -> viewUser();
+                case "3" -> {
+                    return;
+                }
+            }
         }
 
     }
 
     /**
-     * '회원 관리 > 조회 > 직원 조회' 메뉴 선택
-     * 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회
+     * '회원 관리 > 조회 > 직원 조회' 메뉴 선택 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회 | 4. 이전 메뉴
      */
-    private void viewAdmin() throws IOException{
-        script.viewAdmin();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
+    private void viewAdmin() throws IOException {
+        while (true) {
+            script.viewAdmin();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To4(menu);
 
-        switch (menu) {
-            case "1" -> viewAdminDetail();
-            case "2" -> viewAllAdmin();
-            case "3" -> viewAdminByRole();
+            switch (menu) {
+                case "1" -> viewAdminDetail();
+                case "2" -> viewAllAdmin();
+                case "3" -> viewAdminByRole();
+                case "4" -> {
+                    return;
+                }
+            }
         }
     }
 
@@ -106,8 +119,7 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 조회 > 직원 조회 > 권한별 직원 조회' 메뉴 선택
-     * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
+     * '회원 관리 > 조회 > 직원 조회 > 권한별 직원 조회' 메뉴 선택 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
      */
     private void viewAdminByRole() throws IOException {
         script.viewMemberRole();
@@ -129,18 +141,24 @@ public class AdminController {
 
 
     /**
-     * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택
-     * 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회
+     * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회 | 4. 이전
+     * 메뉴
      */
     private void viewUser() throws IOException {
-        script.viewUser();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> viewUserDetail();
-            case "2" -> viewAllUser();
-            case "3" -> viewPendingApproval();
+        while (true) {
+            script.viewUser();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1" -> viewUserDetail();
+                case "2" -> viewAllUser();
+                case "3" -> viewPendingApproval();
+                case "4" -> {
+                    return;
+                }
+            }
         }
     }
 
@@ -165,17 +183,22 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 수정' 메뉴 선택
-     * 1. 회원 정보 수정 | 2. 비밀번호 수정
+     * '회원 관리 > 수정' 메뉴 선택 1. 회원 정보 수정 | 2. 비밀번호 수정 | 3. 이전 메뉴
      */
     private void editMember() throws IOException {
-        script.editMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
 
-        switch (menu) {
-            case "1" -> editAdmin();
-            case "2" -> editPwd();
+        while (true) {
+            script.editMember();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1" -> editAdmin();
+                case "2" -> editPwd();
+                case "3" -> {
+                    return;
+                }
+            }
         }
     }
 
@@ -195,29 +218,33 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 권한 설정' 메뉴 선택
-     * 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 권한 승인
+     * '회원 관리 > 권한 설정' 메뉴 선택 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 가입 승인 | 4. 이전 메뉴
      */
     private void setMemberRole() throws IOException {
-        script.setMemberPermission();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> setAdminRole();
-            case "2" -> setDeptAndPosition();
-            case "3" -> approveUser();
+        while (true) {
+            script.setMemberPermission();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To4(menu);
+
+            switch (menu) {
+                case "1" -> setAdminRole();
+                case "2" -> setDeptAndPosition();
+                case "3" -> approveUser();
+                case "4" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '회원 관리 > 권한 설정 > 직원 권한' 권한 선택
-     * 입력값: 사원 번호, 권한
-     * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
+     * '회원 관리 > 권한 설정 > 직원 권한' 권한 선택 입력값: 사원 번호, 권한 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
      */
     private void setAdminRole() throws IOException {
         int targetEmployeeId = memberInputHandler.getAdminIdInput();
-        adminService.updateRole(auth.getId(), targetEmployeeId, memberInputHandler.updateAdminRole());
+        adminService.updateRole(auth.getId(), targetEmployeeId,
+            memberInputHandler.updateAdminRole());
     }
 
     /**
@@ -225,7 +252,8 @@ public class AdminController {
      */
     private void setDeptAndPosition() throws IOException {
         int targetEmployeeId = memberInputHandler.getAdminIdInput();
-        adminService.updateAdminDeptPos(auth.getId(), targetEmployeeId, memberInputHandler.updateAdminDeptPos());
+        adminService.updateAdminDeptPos(auth.getId(), targetEmployeeId,
+            memberInputHandler.updateAdminDeptPos());
     }
 
     /**
@@ -233,21 +261,27 @@ public class AdminController {
      */
     private void approveUser() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
-        userService.updateApprovalStatus(auth.getId(), targetUserId, memberInputHandler.updateApprovalStatus());
+        userService.updateApprovalStatus(auth.getId(), targetUserId,
+            memberInputHandler.updateApprovalStatus());
     }
 
     /**
-     * '회원 관리 > 삭제' 메뉴 선택
-     * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제
+     * '회원 관리 > 삭제' 메뉴 선택 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제 | 3. 이전 메뉴
      */
     private void delete() throws IOException {
-        script.deleteMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
 
-        switch (menu) {
-            case "1" -> deleteAdmin();
-            case "2" -> deleteUser();
+        while (true) {
+            script.deleteMember();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1" -> deleteAdmin();
+                case "2" -> deleteUser();
+                case "3" -> {
+                    return;
+                }
+            }
         }
     }
 

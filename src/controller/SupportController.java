@@ -29,122 +29,167 @@ public class SupportController {
 
 
     /**
-     * [직원] '고객 센터' 메뉴 선택 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역
+     * [직원] '고객 센터' 메뉴 선택 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역 | 4. 이전 메뉴
      */
     public void handleSupportMenu(AuthResponseDto admin) throws IOException {
         auth = admin;
-        script.supportMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> handleNoticeMenu();
-            case "2" -> viewBoard();
-            case "3" -> viewBoardPrivateAdmin();
+        while (true) {
+            script.supportMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To4(menu);
+
+            switch (menu) {
+                case "1" -> handleNoticeMenu();
+                case "2" -> viewBoard();
+                case "3" -> viewBoardPrivateAdmin();
+                case "4" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * [직원] '고객 센터 > 공지사항' 메뉴 선택 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제
+     * [직원] '고객 센터 > 공지사항' 메뉴 선택 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제 | 5. 이전 메뉴
      */
     private void handleNoticeMenu() throws IOException {
-        script.showCRUDMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To4(menu);
 
-        switch (menu) {
-            case "1" -> createNotice();
-            case "2" -> viewNotice();
-            case "3" -> updateNotice();
-            case "4" -> deleteNotice();
+        while (true) {
+            script.showCRUDMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To5(menu);
+
+            switch (menu) {
+                case "1" -> createNotice();
+                case "2" -> viewNotice();
+                case "3" -> updateNotice();
+                case "4" -> deleteNotice();
+                case "5" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * [쇼핑몰 회원] '고객 센터' 메뉴 선택 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역
+     * [쇼핑몰 회원] '고객 센터' 메뉴 선택 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역 | 4. 이전 메뉴
      */
     public void handleUserSupportMenu(AuthResponseDto user) throws IOException {
         auth = user;
-        script.supportMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> viewNotice();
-            case "2" -> handleBoardMenu();
-            case "3" -> viewBoardPrivateUser();
+        while (true) {
+            script.supportMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To4(menu);
+
+            switch (menu) {
+                case "1" -> viewNotice();
+                case "2" -> handleBoardMenu();
+                case "3" -> viewBoardPrivateUser();
+                case "4" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * [쇼핑몰 회원] '고객 센터 > 게시판' 메뉴 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제
+     * [쇼핑몰 회원] '고객 센터 > 게시판' 메뉴 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제 | 5. 이전 메뉴
      */
     private void handleBoardMenu() throws IOException {
-        script.showCRUDMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To4(menu);
 
-        switch (menu) {
-            case "1" -> createBoard();
-            case "2" -> viewBoard();
-            case "3" -> updateBoard();
-            case "4" -> deleteBoard();
+        while (true) {
+            script.showCRUDMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To5(menu);
+
+            switch (menu) {
+                case "1" -> createBoard();
+                case "2" -> viewBoard();
+                case "3" -> updateBoard();
+                case "4" -> deleteBoard();
+                case "5" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회
+     * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
     private void viewNotice() throws IOException {
-        script.showViewMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+        while (true) {
+            script.showViewMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> viewNoticeList();
-            case "2" -> viewNoticeDetail();
+            switch (menu) {
+                case "1" -> viewNoticeList();
+                case "2" -> viewNoticeDetail();
+                case "3" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '고객 센터 > 게시판 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회
+     * '고객 센터 > 게시판 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
     private void viewBoard() throws IOException {
-        script.showViewMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+        while (true) {
+            script.showViewMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> viewBoardList();
-            case "2" -> viewBoardDetail();
+            switch (menu) {
+                case "1" -> viewBoardList();
+                case "2" -> viewBoardDetail();
+                case "3" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회
+     * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
     private void viewBoardPrivateAdmin() throws IOException {
-        script.showViewMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+        while (true) {
+            script.showViewMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
 
-        switch (menu) {
-            case "1" -> viewAdminPrivateInquiry();
-            case "2" -> viewBoardDetail();
+            switch (menu) {
+                case "1" -> viewAdminPrivateInquiry();
+                case "2" -> viewBoardDetail();
+                case "3" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회
+     * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
     private void viewBoardPrivateUser() throws IOException {
-        script.showViewMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
 
-        switch (menu) {
-            case "1" -> viewUserPrivateInquiry();
-            case "2" -> viewBoardDetail();
+        while (true) {
+            script.showViewMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To3(menu);
+
+            switch (menu) {
+                case "1" -> viewUserPrivateInquiry();
+                case "2" -> viewBoardDetail();
+                case "3" -> {
+                    return;
+                }
+            }
         }
     }
 
