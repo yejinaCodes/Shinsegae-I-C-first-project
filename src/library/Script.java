@@ -1,10 +1,11 @@
 package library;
 
+import common.Board;
 import common.Member;
 import common.Menu;
-import common.Notice;
 import common.ResponseMessage;
 import dto.response.AdminResponseDto;
+import dto.response.BoardResponseDto;
 import dto.response.NoticeResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
@@ -412,23 +413,35 @@ public class Script {
     }
 
     /**
-     * 공지사항
+     * 공지사항 & 게시글
      */
     public void getTitle() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Notice.TITLE.getDescription());
+            .append(Board.TITLE.getDescription());
         print();
     }
 
     public void getContent() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Notice.CONTENT.getDescription());
+            .append(Board.CONTENT.getDescription());
+        print();
+    }
+
+    public void getIsPrivate() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.IS_PRIVATE_SELECT.getDescription());
         print();
     }
 
     public void getNoticeId() {
         script.append(Menu.BORDER_LINE.getDescription())
-            .append(Notice.ID.getDescription());
+            .append(Board.NOTICE_ID.getDescription());
+        print();
+    }
+
+    public void getBoardId() {
+        script.append(Menu.BORDER_LINE.getDescription())
+            .append(Board.BOARD_ID.getDescription());
         print();
     }
 
@@ -436,18 +449,18 @@ public class Script {
     /**
      * 공지사항 내역 조회 title
      */
-    public void noticeListTitle() {
-        script.append(Notice.BORDER_LINE.getDescription()).append("\n")
-            .append(Notice.NOTICE_LIST.getDescription()).append("\n")
-            .append(Notice.BORDER_LINE.getDescription());
+    public void boardListTitle() {
+        script.append(Board.BORDER_LINE.getDescription()).append("\n")
+            .append(Board.LIST.getDescription()).append("\n")
+            .append(Board.BORDER_LINE.getDescription());
         print();
     }
 
     /**
      * 공지사항 내역 조회 Border line
      */
-    public void noticeListBorder() {
-        script.append(Notice.BORDER_LINE.getDescription());
+    public void boardListBorder() {
+        script.append(Board.BORDER_LINE.getDescription());
         print();
     }
 
@@ -456,6 +469,14 @@ public class Script {
      */
     public void noticeList(NoticeResponseDto response) {
         script.append(response.formatNoticeList());
+        print();
+    }
+
+    /**
+     * 게시글 전체 내역 조회
+     */
+    public void boardList(BoardResponseDto response) {
+        script.append(response.formatBoardList());
         print();
     }
 
@@ -509,12 +530,27 @@ public class Script {
      */
     public void noticeInfo(NoticeResponseDto response) {
         script.append(Menu.BORDER_LINE.getDescription()).append("\n")
-            .append(Notice.AUTHOR.getDescription()).append(response.getAuthor()).append("\n")
-            .append(Notice.TITLE.getDescription()).append(response.getTitle()).append("\n")
-            .append(Notice.CONTENT.getDescription()).append(response.getContent()).append("\n")
-            .append(Notice.VIEW_COUNT.getDescription()).append(response.getViewCount()).append("\n")
-            .append(Notice.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
-            .append(Notice.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
+            .append(Board.AUTHOR.getDescription()).append(response.getAuthor()).append("\n")
+            .append(Board.TITLE.getDescription()).append(response.getTitle()).append("\n")
+            .append(Board.CONTENT.getDescription()).append(response.getContent()).append("\n")
+            .append(Board.VIEW_COUNT.getDescription()).append(response.getViewCount()).append("\n")
+            .append(Board.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Board.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
+        print();
+    }
+
+    /**
+     * 게시글 상세 내역 조회
+     */
+    public void boardInfo(BoardResponseDto response) {
+        script.append(Menu.BORDER_LINE.getDescription()).append("\n")
+            .append(Board.AUTHOR.getDescription()).append(response.getAuthor()).append("\n")
+            .append(Board.IS_PRIVATE.getDescription()).append(response.isPrivate()).append("\n")
+            .append(Board.TITLE.getDescription()).append(response.getTitle()).append("\n")
+            .append(Board.CONTENT.getDescription()).append(response.getContent()).append("\n")
+            .append(Board.VIEW_COUNT.getDescription()).append(response.getViewCount()).append("\n")
+            .append(Board.CREATED_AT.getDescription()).append(response.getCreatedAt()).append("\n")
+            .append(Board.UPDATED_AT.getDescription()).append(response.getUpdatedAt()).append("\n");
         print();
     }
 }

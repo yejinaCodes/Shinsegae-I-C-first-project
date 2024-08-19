@@ -8,18 +8,19 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class NoticeResponseDto {
+public class BoardResponseDto {
     private int id;
     private String author;
     private String title;
     private String content;
+    private boolean isPrivate;
     private int viewCount;
     private String createdAt;
     private String updatedAt;
 
     private static ResultSetReader rsr = new ResultSetReader();
 
-    public NoticeResponseDto(ResultSet rs) {
+    public BoardResponseDto(ResultSet rs) {
         try {
             this.id = rs.getInt("id");
             this.author = rs.getString("author");
@@ -33,17 +34,18 @@ public class NoticeResponseDto {
         }
     }
 
-    public NoticeResponseDto(int id, String author, String title, String content, int viewCount, String createdAt, String updatedAt) {
+    public BoardResponseDto(int id, String author, String title, String content, boolean isPrivate, int viewCount, String createdAt, String updatedAt) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.content = content;
+        this.isPrivate = isPrivate;
         this.viewCount = viewCount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public String formatNoticeList() {
+    public String formatBoardList() {
         return String.format("| %2d | %-9s\t| %-20s \t| %10d\t| %-20s\t|",
             id,
             author,

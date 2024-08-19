@@ -1,26 +1,15 @@
 package handler;
 
-import common.Department;
-import common.Member;
-import common.Position;
-import common.Role;
-import common.Status;
 import common.ValidCheck;
-import dao.UserDao;
-import dao.daoImpl.UserDaoImpl;
-import dto.request.AdminRequestDto;
-import dto.request.AuthRequestDto;
+import dto.request.BoardRequestDto;
 import dto.request.NoticeRequestDto;
-import dto.request.UserApprovalRequestDto;
-import dto.request.UserRequestDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import library.Script;
-import security.Encrypt;
 
-public class NoticeInputHandler {
+public class BoardInputHandler {
 
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static Script script = new Script();
@@ -33,6 +22,15 @@ public class NoticeInputHandler {
 
     public NoticeRequestDto updateNotice() throws IOException {
         return new NoticeRequestDto(getTitleInput(), getContentInput());
+    }
+
+    public BoardRequestDto createBoard(int author) throws IOException {
+        BoardRequestDto board = new BoardRequestDto(author, getTitleInput(), getContentInput(), getPrivateInput());
+        return board;
+    }
+
+    public BoardRequestDto updateBoard() throws IOException {
+        return new BoardRequestDto(getTitleInput(), getContentInput(), getPrivateInput());
     }
 
 
@@ -55,6 +53,30 @@ public class NoticeInputHandler {
     }
 
 
+    public boolean getPrivateInput() throws IOException {
+        boolean isPrivate = false;
+        while (true) {
+            try {
+                script.getIsPrivate();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To2(menu);
+
+                switch (menu) {
+                    case "1" -> {
+                        return !isPrivate;
+                    }
+                    case "2" -> {
+                        return isPrivate;
+                    }
+
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
     public int getNoticeIdInput() throws IOException {
         try {
             script.getNoticeId();
@@ -62,6 +84,17 @@ public class NoticeInputHandler {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getNoticeIdInput();
+        }
+    }
+
+
+    public int getBoardIdInput() throws IOException {
+        try {
+            script.getBoardId();
+            return validCheck.validateNumber(br.readLine());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getBoardIdInput();
         }
     }
 }
