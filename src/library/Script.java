@@ -283,6 +283,78 @@ public class Script {
     }
 
     /**
+     * 탈퇴
+     */
+    public void unregister() {
+        script.append(ResponseMessage.UNREGISTER.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 생성 성공
+     */
+    public void createSuccess() {
+        script.append(ResponseMessage.CREATE_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 생성 실패
+     */
+    public void createFailure() {
+        script.append(ResponseMessage.CREATE_FAILURE.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 조회 성공
+     */
+    public void viewSuccess() {
+        script.append(ResponseMessage.VIEW_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 조회 실패
+     */
+    public void viewFailure() {
+        script.append(ResponseMessage.VIEW_FAILURE.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 수정 성공
+     */
+    public void updateSuccess() {
+        script.append(ResponseMessage.UPDATE_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 수정 실패
+     */
+    public void updateFailure() {
+        script.append(ResponseMessage.UPDATE_FAILURE.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 삭제 성공
+     */
+    public void deleteSuccess() {
+        script.append(ResponseMessage.DELETE_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 삭제 실패
+     */
+    public void deleteFailure() {
+        script.append(ResponseMessage.DELETE_FAILURE.getMessage());
+        print();
+    }
+
+    /**
      * 직원 내역 조회 title
      */
     public void adminListTitle() {

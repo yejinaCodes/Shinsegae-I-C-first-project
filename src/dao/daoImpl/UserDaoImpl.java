@@ -135,7 +135,13 @@ public class UserDaoImpl implements UserDao {
             .append(
                 "SELECT u.id AS user_id, u.company_name, u.business_number, u.name, ua.approval_status, u.created_at ")
             .append("FROM User u ")
-            .append("LEFT JOIN UserApproval ua ON u.id = ua.user_id ")
+            .append("JOIN (SELECT ua.user_id, ua.approval_status, ua.rejection_reason ")
+            .append("FROM UserApproval ua ")
+            .append("JOIN (SELECT user_id, MAX(created_at) AS created_at ")
+            .append("FROM UserApproval ")
+            .append("GROUP BY user_id) latest ")
+            .append("ON latest.created_at = ua.created_at AND latest.user_id = ua.user_id) ua ")
+            .append("ON u.id = ua.user_id ")
             .append("WHERE ua.approval_status = 'PENDING'").toString();
 
         try {
