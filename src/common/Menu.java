@@ -49,12 +49,13 @@ public enum Menu {
   INSERTCREATEDDATE("읽을 요청서의 생성날짜를 입력하시오"),
   INSERTINCOMINGDATE("읽을 요청서의 입고날짜를 입력하시오"),
   FINDSTATUSWMS("1. PENDING | 2. APPROVED"), //wms관리자
-  STOCKREQUESTCOLUMN("요청서ID\t물건ID\t박스수량\t박스사이즈\t입고상태\t입고예정일\t입고서생성일\t비고"),
+  STOCKREQUESTCOLUMN("요청ID\t물건ID\t\t박스수량\t박스사이즈\t\t입고상태\t\t\t\t입고예정일\t\t\t\t\t입고서생성일\t\t\t\t\t비고"
+      + "\n-------------------------------------------------------------------------------------------"),
   INSTRUCOLUMN("지시서ID\t요청서ID\t박스수량\t입고서생성일\t적재방법\t비고"),
   UPDATESTATUS("승인할 요청서ID 입력 | 더 이상 입력하지 않을 경우 Enter를 치시오"),
-  UPDATEREQUEST("PENDING 상태 중 수정할 요청서ID 입력하시오."),
-  DELETEWARNING("입고요청서 취소 메뉴입니다."),
-  DELETEREQUEST("PENDING 상태 중 취소할 요청서ID를 입력하시오."),
+  UPDATEREQUEST("\n**PENDING 상태 중 수정할 요청서ID 입력하시오**"),
+  DELETEWARNING("\n**입고요청서 취소 메뉴입니다**"),
+  DELETEREQUEST("\n**PENDING 상태 중 취소할 요청서ID를 입력하시오**"),
   PRINTINSTRC("입고지시서 출력 메뉴입니다.");
   private final String description;
 

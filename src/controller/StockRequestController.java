@@ -24,6 +24,7 @@ public class StockRequestController {
   ArrayList<Integer> approvedList = new ArrayList<Integer>();
 
   public void userMenu(){
+    System.out.println("**회원전용 메뉴 화면입니다**");
     try {
       while (!q) {
         System.out.println();
@@ -55,6 +56,7 @@ public class StockRequestController {
   }
 
   public void adminMenu(){
+    System.out.println("**관리자 전용 메뉴입니다**");
     try {
       while (!q) {
         System.out.println();
@@ -81,13 +83,13 @@ public class StockRequestController {
     }
   }
 
-
   public void printDB(ArrayList<StockRequestDto> list){
+    System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
     StockRequestList.forEach(stockrequest -> System.out.println(
-        stockrequest.getId() + "\t" + stockrequest.getProduct_id() + "\t"
-            + stockrequest.getBox_quantity() + "\t" + stockrequest.getBox_size() + "\t"
-            + stockrequest.getStatus() + "\t" + stockrequest.getIncoming_date() + "\t"
-            + stockrequest.getCreated_at() + "\t" + stockrequest.getRemarks()));
+        stockrequest.getId() + "\t\t\t" + stockrequest.getProduct_id() + "\t\t\t"
+            + stockrequest.getBox_quantity() + "\t\t\t" + stockrequest.getBox_size() + "\t\t\t\t"
+            + stockrequest.getStatus() + "\t\t\t" + stockrequest.getIncoming_date() + "\t\t\t"
+            + stockrequest.getCreated_at() + "\t\t\t" + stockrequest.getRemarks()));
   }
 
   public StockRequestDto getFormInput() throws IOException {
@@ -122,7 +124,6 @@ public class StockRequestController {
     switch (condition){
       case "1": //findAll
         StockRequestList = stockRequestService.findByAll();
-        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
         printDB(StockRequestList);
         break;
       case "2": //findById
@@ -137,16 +138,14 @@ public class StockRequestController {
         break;
       case "3": //findByStatus
         script.readStockRequestStatus(); //wms 관리자 용.delete항목이 없음
-        int status = br.read();
+        int status = Integer.parseInt(br.readLine());
         StockRequestList = stockRequestService.findByStatus(status);
-        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
         printDB(StockRequestList);
         break;
       case "4": //findByCreatedDate
         System.out.println(Menu.INSERTCREATEDDATE.getDescription());
         String createdDate = br.readLine();
         StockRequestList = stockRequestService.findByCreatedDate(createdDate);
-        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
         printDB(StockRequestList);
         break;
       case "5": //findByProductId
@@ -163,7 +162,6 @@ public class StockRequestController {
         System.out.println(Menu.INSERTINCOMINGDATE.getDescription());
         String incomingDate = br.readLine();
         StockRequestList = stockRequestService.findByIncomingDate(incomingDate);
-        System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
         printDB(StockRequestList);
         break;
     }
@@ -173,7 +171,6 @@ public class StockRequestController {
     //창고관리자용
     //pending list만 보여주기
     StockRequestList = stockRequestService.findByStatus(1);
-    System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
     printDB(StockRequestList);
   }
 
@@ -220,7 +217,6 @@ public class StockRequestController {
   public void updateRequest(){
     //pending list만 보여주기
     StockRequestList = stockRequestService.findByStatus(1);
-    System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
     printDB(StockRequestList);
     try{
         script.updateRequestForm();
@@ -241,7 +237,6 @@ public class StockRequestController {
 
     //pending list 보여주기
     StockRequestList = stockRequestService.findByStatus(1);
-    System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
     printDB(StockRequestList);
 
     System.out.println(Menu.DELETEREQUEST.getDescription());

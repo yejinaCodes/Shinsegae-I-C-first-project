@@ -7,7 +7,7 @@ public class StockRequestMain {
       StockRequestController poc = new StockRequestController();
 
       //로그인 정보에 따라 진행. 사용자 아이디 보내주기.
-      poc.userMenu();
+      //poc.userMenu();
       poc.adminMenu();
 
     } catch (Exception e) {

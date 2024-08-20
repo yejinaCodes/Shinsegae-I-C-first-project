@@ -37,7 +37,7 @@ public class StockRequestDto {
   }
 
   public void setIncoming_date(String date){ //오전, 오후 추가
-    LocalDate time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+    LocalDate time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     this.incoming_date = time;
   }
   public void setIncoming_date(LocalDate date){

@@ -21,7 +21,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
 
   ArrayList<StockRequestDto> stockRequestDb = new ArrayList<StockRequestDto>();
   private static ResultSet rs = null;
-  private static StockRequestDto stockRequest = new StockRequestDto();
+
 
   @Override
   public void create(StockRequestDto stockRequest) {
@@ -48,9 +48,10 @@ public class StockRequestDaoImpl implements StockRequestDao {
       pstmt.executeUpdate();
       pstmt.close();
       ConnectionFactory.getInstance().close();
+      System.out.println("\n**요청서 입력 완료**");
 
     } catch (Exception | SQLException e) {
-      System.out.println("입고 요청서 DB 전송 실패");
+      System.err.println("입고 요청서 DB 전송 실패");
     }
     ConnectionFactory.getInstance().close();
   }
@@ -68,6 +69,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       rs = pstmt.executeQuery();
       while (rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -79,13 +81,14 @@ public class StockRequestDaoImpl implements StockRequestDao {
         stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
 
         stockRequestDb.add(stockRequest);
+        stockRequest = null;
       }
 
       pstmt.close();
       ConnectionFactory.getInstance().close();
 
     } catch (Exception e) {
-      System.out.println("입고 요청서 DB list 받기 실패");
+      System.err.println("입고 요청서 DB list 받기 실패");
     }
     ConnectionFactory.getInstance().close();
     return stockRequestDb;
@@ -103,12 +106,11 @@ public class StockRequestDaoImpl implements StockRequestDao {
 
     try {
       PreparedStatement pstmt = connection.prepareStatement(query);
-      pstmt.setString(1, String.valueOf(requestId));
+      pstmt.setInt(1, requestId);
       rs = pstmt.executeQuery();
-      if (!rs.next()){
-        System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
-      }
       while (rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
+
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -125,6 +127,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
       ConnectionFactory.getInstance().close();
     }catch (Exception | SQLException e) {
       System.err.println("DB 입고요청서 불러오기 실패");
+      System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
+
     }
     return stockRequestDb;
   }
@@ -142,24 +146,25 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       pstmt.setString(1, productId);
 
-
       rs = pstmt.executeQuery();
-      if (!rs.next()){
-        System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
-      }
-      stockRequest.setId(rs.getInt("ID"));
-      stockRequest.setProduct_id(rs.getString("productID"));
-      stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-      stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-      stockRequest.setCell_id(rs.getInt("cellID"));
-      stockRequest.setStatus(rs.getString("approvalStatus"));
-      stockRequest.setRemarks(rs.getString("remarks"));
-      stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-      stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+      while(rs.next()){
+        StockRequestDto stockRequest = new StockRequestDto();
+
+        stockRequest.setId(rs.getInt("ID"));
+        stockRequest.setProduct_id(rs.getString("productID"));
+        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
+        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
+        stockRequest.setCell_id(rs.getInt("cellID"));
+        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setRemarks(rs.getString("remarks"));
+        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
+        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
 
         stockRequestDb.add(stockRequest);
+      }
       pstmt.close();
       ConnectionFactory.getInstance().close();
+
     }catch (Exception | SQLException e) {
       System.err.println("DB 입고요청서 불러오기 실패");
     }
@@ -179,10 +184,10 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       pstmt.setString(1, createdDate);
       rs = pstmt.executeQuery();
-//      if (!rs.next()){
-//        System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
-//      }
+
       while(rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
+
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -223,6 +228,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
       rs = pstmt.executeQuery();
 
       while(rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
+
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -260,6 +267,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
       pstmt.setString(1, status == 1 ? "PENDING" : "APPROVED");
       rs = pstmt.executeQuery();
       while (rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
+
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setProduct_id(rs.getString("productID"));
         stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
@@ -331,16 +340,17 @@ public class StockRequestDaoImpl implements StockRequestDao {
       pstmt.setString(1, String.valueOf(updateForm.getProduct_id()));
       pstmt.setString(2, String.valueOf(updateForm.getBox_quantity()));
       pstmt.setString(3, String.valueOf(updateForm.getBox_size()));
-      pstmt.setString(4, String.valueOf(updateForm.getIncoming_date()));
+      pstmt.setDate(4, Date.valueOf(updateForm.getIncoming_date()));
       pstmt.setString(5, String.valueOf(updateForm.getCell_id()));
       pstmt.setString(6, String.valueOf(updateForm.getRemarks()));
       pstmt.setString(7, String.valueOf(formID));
 
       pstmt.executeUpdate();
+      System.out.println("\n**수정 완료**");
       pstmt.close();
       ConnectionFactory.getInstance().close();
     } catch (RuntimeException e) {
-      System.out.println(e.getMessage());
+      System.err.println(e.getMessage());
       return false;
     }
     return true;
@@ -365,7 +375,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
       if (rowsAffected == 0) {
         System.err.println(ErrorCode.NOREQUESTAVAILABLE.getMessage());
       } else {
-        System.out.println("Cancel Successful");
+        System.out.println("**취소 완료**");
       }
     } catch (SQLException e) {
       if ("02000".equals(e.getSQLState())) {
@@ -388,6 +398,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
       PreparedStatement pstmt = connection.prepareStatement(query);
       rs = pstmt.executeQuery();
       while (rs.next()) {
+        StockRequestDto stockRequest = new StockRequestDto();
+
         stockRequest.setId(rs.getInt("ID"));
         stockRequest.setStock_request_id(Optional.ofNullable(rs.getInt("stockRequestID")));
         stockRequest.setBox_quantity(rs.getInt("boxUnit"));

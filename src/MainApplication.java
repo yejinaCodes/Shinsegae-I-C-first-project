@@ -18,7 +18,7 @@ public class MainApplication {
     private static AuthController authController = new AuthController();
     private static AdminController adminController = new AdminController();
     private static UserController userController = new UserController();
-    private static StockRequestController poc = new StockRequestController()
+    private static StockRequestController poc = new StockRequestController();
     private static Script script = new Script();
     private static AuthResponseDto auth = null;
     private static String userType;
