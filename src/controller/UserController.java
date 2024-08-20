@@ -4,6 +4,7 @@ import common.ValidCheck;
 import dto.request.UserRequestDto;
 import dto.response.AuthResponseDto;
 import dto.response.UserResponseDto;
+import exception.Exception;
 import handler.MemberInputHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,23 +48,44 @@ public class UserController {
      * '회원 관리 > 정보 조회'
      */
     private void viewInfo() {
-        UserResponseDto response = userService.findById(auth.getId());
-        script.userInfo(response);
+        try {
+            UserResponseDto response = userService.findById(auth.getId());
+            script.userInfo(response);
+            script.viewSuccess();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            script.viewFailure();
+        }
     }
 
     /**
      * '회원 관리 > 정보 수정'
      */
-    private void editUser() throws IOException {
-        userService.updateUser(auth.getId(), memberInputHandler.updateUser());
+    private void editUser() {
+        try {
+            userService.updateUser(auth.getId(), memberInputHandler.updateUser());
+            script.updateSuccess();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            script.updateFailure();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            script.updateFailure();
+        }
     }
 
     /**
      * '회원 관리 > 비밀번호 수정'
      */
     public void editPwd() throws IOException {
-        String bizNo = memberInputHandler.getBusinessNumberInput();
-        userService.updateUserPwd(bizNo, memberInputHandler.updateUserPwd());
+        try {
+            String bizNo = memberInputHandler.getBusinessNumberInput();
+            userService.updateUserPwd(bizNo, memberInputHandler.updateUserPwd());
+            script.updateSuccess();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            script.updateFailure();
+        }
     }
 
     /**
@@ -78,6 +100,7 @@ public class UserController {
             case "1":
                 UserRequestDto request = new UserRequestDto();
                 userService.unregister(auth.getId(), request);
+                script.unregister();
                 break;
             case "2":
                 break;

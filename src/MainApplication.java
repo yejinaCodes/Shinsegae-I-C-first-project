@@ -6,6 +6,7 @@ import controller.StockRequestController;
 import controller.SupportController;
 import controller.UserController;
 import dto.response.AuthResponseDto;
+import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -67,22 +68,28 @@ public class MainApplication {
     /**
      * 회원(쇼핑몰) 페이지 메뉴 선택 1. 회원 관리 | 2. 창고 관리 | 3. 재고 관리 4. 입고 관리 | 5. 출고 관리 | 6. 고객 센터 7. 로그아웃
      */
-    private static void userMainMenu() throws IOException {
-        script.userMainMenu();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To7(menu);
+    private static void userMainMenu() {
+        try {
+            script.userMainMenu();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To7(menu);
 
-        switch (menu) {
-            case "1" -> userController.manageUser(auth); // 1. 회원 관리
-//            case "2" ->  // 2. 창고 관리
-//            case "3" ->  // 3. 재고 관리
-            case "4" -> poc.menu(); //  4. 입고 관리
-//            case "5" ->  // 5. 출고 관리
-            case "6" -> supportController.handleUserSupportMenu(auth); // 6. 고객 센터
-            case "7" -> {
-                isQuit = !isQuit; // 7. 로그아웃
-                script.logout();
+            switch (menu) {
+                case "1" -> userController.manageUser(auth); // 1. 회원 관리
+    //            case "2" ->  // 2. 창고 관리
+    //            case "3" ->  // 3. 재고 관리
+                case "4" -> poc.menu(); //  4. 입고 관리
+    //            case "5" ->  // 5. 출고 관리
+                case "6" -> supportController.handleUserSupportMenu(auth); // 6. 고객 센터
+                case "7" -> {
+                    isQuit = !isQuit; // 7. 로그아웃
+                    script.logout();
+                }
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

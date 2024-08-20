@@ -4,6 +4,7 @@ import dto.request.UserRequestDto;
 import dto.response.AuthResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
+import exception.Exception;
 import handler.MemberInputHandler;
 import common.Role;
 import dto.response.AdminResponseDto;
@@ -57,16 +58,25 @@ public class AdminController {
     private void viewMember() throws IOException {
 
         while (true) {
-            script.viewMember();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.viewMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> viewAdmin();
-                case "2" -> viewUser();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewAdmin();
+                    case "2" -> viewUser();
+                    case "3" -> {
+                        return;
+                    }
                 }
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
         }
 
@@ -77,17 +87,26 @@ public class AdminController {
      */
     private void viewAdmin() throws IOException {
         while (true) {
-            script.viewAdmin();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To4(menu);
+            try {
+                script.viewAdmin();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
 
-            switch (menu) {
-                case "1" -> viewAdminDetail();
-                case "2" -> viewAllAdmin();
-                case "3" -> viewAdminByRole();
-                case "4" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewAdminDetail();
+                    case "2" -> viewAllAdmin();
+                    case "3" -> viewAdminByRole();
+                    case "4" -> {
+                        return;
+                    }
                 }
+
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
         }
     }
@@ -144,24 +163,31 @@ public class AdminController {
      * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회 | 4. 이전
      * 메뉴
      */
-    private void viewUser() throws IOException {
+    private void viewUser() {
 
         while (true) {
-            script.viewUser();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.viewUser();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
 
-            switch (menu) {
-                case "1" -> viewUserDetail();
-                case "2" -> viewAllUser();
-                case "3" -> viewPendingApproval();
-                case "4" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewUserDetail();
+                    case "2" -> viewAllUser();
+                    case "3" -> viewPendingApproval();
+                    case "4" -> {
+                        return;
+                    }
                 }
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
         }
     }
-
     private void viewUserDetail() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
         UserResponseDto response = userService.findById(targetUserId);
@@ -185,19 +211,28 @@ public class AdminController {
     /**
      * '회원 관리 > 수정' 메뉴 선택 1. 회원 정보 수정 | 2. 비밀번호 수정 | 3. 이전 메뉴
      */
-    private void editMember() throws IOException {
+    private void editMember() {
 
         while (true) {
-            script.editMember();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.editMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> editAdmin();
-                case "2" -> editPwd();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> editAdmin();
+                    case "2" -> editPwd();
+                    case "3" -> {
+                        return;
+                    }
                 }
+                script.updateSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
             }
         }
     }
@@ -220,20 +255,29 @@ public class AdminController {
     /**
      * '회원 관리 > 권한 설정' 메뉴 선택 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 가입 승인 | 4. 이전 메뉴
      */
-    private void setMemberRole() throws IOException {
+    private void setMemberRole() {
 
         while (true) {
-            script.setMemberPermission();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To4(menu);
+            try {
+                script.setMemberPermission();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
 
-            switch (menu) {
-                case "1" -> setAdminRole();
-                case "2" -> setDeptAndPosition();
-                case "3" -> approveUser();
-                case "4" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> setAdminRole();
+                    case "2" -> setDeptAndPosition();
+                    case "3" -> approveUser();
+                    case "4" -> {
+                        return;
+                    }
                 }
+                script.updateSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
             }
         }
     }
@@ -271,16 +315,26 @@ public class AdminController {
     private void delete() throws IOException {
 
         while (true) {
-            script.deleteMember();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.deleteMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> deleteAdmin();
-                case "2" -> deleteUser();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> deleteAdmin();
+                    case "2" -> deleteUser();
+                    case "3" -> {
+                        return;
+                    }
                 }
+
+                script.deleteSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.deleteFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.deleteFailure();
             }
         }
     }

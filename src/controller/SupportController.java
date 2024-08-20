@@ -6,6 +6,7 @@ import dto.request.NoticeRequestDto;
 import dto.response.AuthResponseDto;
 import dto.response.BoardResponseDto;
 import dto.response.NoticeResponseDto;
+import exception.Exception;
 import handler.BoardInputHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -119,37 +120,58 @@ public class SupportController {
     /**
      * '고객 센터 > 공지사항 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
-    private void viewNotice() throws IOException {
+    private void viewNotice() {
         while (true) {
-            script.showViewMenu();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.showViewMenu();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> viewNoticeList();
-                case "2" -> viewNoticeDetail();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewNoticeList();
+                    case "2" -> viewNoticeDetail();
+                    case "3" -> {
+                        return;
+                    }
                 }
+
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
+
         }
     }
 
     /**
      * '고객 센터 > 게시판 > 조회' 메뉴 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
-    private void viewBoard() throws IOException {
+    private void viewBoard() {
         while (true) {
-            script.showViewMenu();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.showViewMenu();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> viewBoardList();
-                case "2" -> viewBoardDetail();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewBoardList();
+                    case "2" -> viewBoardDetail();
+                    case "3" -> {
+                        return;
+                    }
                 }
+
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
         }
     }
@@ -159,16 +181,25 @@ public class SupportController {
      */
     private void viewBoardPrivateAdmin() throws IOException {
         while (true) {
-            script.showViewMenu();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.showViewMenu();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> viewAdminPrivateInquiry();
-                case "2" -> viewBoardDetail();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewAdminPrivateInquiry();
+                    case "2" -> viewBoardDetail();
+                    case "3" -> {
+                        return;
+                    }
                 }
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
         }
     }
@@ -179,16 +210,25 @@ public class SupportController {
     private void viewBoardPrivateUser() throws IOException {
 
         while (true) {
-            script.showViewMenu();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To3(menu);
+            try {
+                script.showViewMenu();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
 
-            switch (menu) {
-                case "1" -> viewUserPrivateInquiry();
-                case "2" -> viewBoardDetail();
-                case "3" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewUserPrivateInquiry();
+                    case "2" -> viewBoardDetail();
+                    case "3" -> {
+                        return;
+                    }
                 }
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
             }
         }
     }
@@ -199,10 +239,11 @@ public class SupportController {
     private void createNotice() {
         try {
             NoticeRequestDto notice = inputHandler.createNotice(auth.getId());
-
             noticeService.createNotice(notice);
+            script.createSuccess();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            script.createFailure();
         }
     }
 
@@ -236,8 +277,13 @@ public class SupportController {
         try {
             int targetNotice = inputHandler.getNoticeIdInput();
             noticeService.update(targetNotice, inputHandler.updateNotice());
+            script.updateSuccess();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            script.updateFailure();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            script.updateFailure();
         }
     }
 
@@ -260,10 +306,13 @@ public class SupportController {
                     break;
             }
 
+            script.deleteSuccess();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            script.deleteFailure();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            script.deleteFailure();
         }
     }
 
@@ -273,10 +322,14 @@ public class SupportController {
     private void createBoard() {
         try {
             BoardRequestDto board = inputHandler.createBoard(auth.getId());
-
             boardService.createBoard(board);
+            script.createSuccess();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            script.createFailure();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            script.createFailure();
         }
     }
 
@@ -310,8 +363,13 @@ public class SupportController {
         try {
             int targetBoard = inputHandler.getBoardIdInput();
             boardService.update(targetBoard, inputHandler.updateBoard());
+            script.updateSuccess();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            script.updateFailure();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            script.updateFailure();
         }
     }
 
@@ -334,10 +392,13 @@ public class SupportController {
                     break;
             }
 
+            script.deleteSuccess();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            script.deleteFailure();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            script.deleteFailure();
         }
     }
 
