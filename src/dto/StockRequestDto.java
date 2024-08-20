@@ -2,12 +2,13 @@ package dto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import lombok.Data;
 
 @Data
 public class StockRequestDto {
   private int id;
-  private int  cell_id;
+  private int cell_id;
   private String product_id;
   private int supplier_id;
   private LocalDate incoming_date;
@@ -16,6 +17,8 @@ public class StockRequestDto {
   private char box_size;
   private String status;
   private String remarks;
+  private Optional<String> loading_instr;
+  private Optional<Integer> stock_request_id;
 
   public StockRequestDto() {
   }
@@ -34,7 +37,7 @@ public class StockRequestDto {
   }
 
   public void setIncoming_date(String date){ //오전, 오후 추가
-    LocalDate time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+    LocalDate time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     this.incoming_date = time;
   }
   public void setIncoming_date(LocalDate date){

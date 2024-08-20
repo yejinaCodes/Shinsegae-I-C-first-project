@@ -440,9 +440,12 @@ public class Script {
             .append(Member.ID.getDescription()).append(response).append("\n");
         print();
     }
-
-    public void selectMenu(){
-        script.append(Menu.STOCKREQUESTMENUSELECT.getDescription());
+    public void selectUserMenu(){
+        script.append(Menu.USERMENUSELECT.getDescription());
+        print();
+    }
+    public void selectAdminMenu(){
+        script.append(Menu.ADMINMENUSELECT.getDescription());
         print();
     }
     public void readStockRequest(){
@@ -453,12 +456,23 @@ public class Script {
         script.append(Menu.FINDSTATUSWMS.getDescription());
         print();
     }
-
     public void updateStockRequest(){
         script.append(Menu.UPDATESTATUS.getDescription());
         print();
     }
+    public void updateRequestForm(){
+        script.append(Menu.UPDATEREQUEST.getDescription());
+        print();
+    }
+
     public void cancelStockRequest(){
+        script.append(Menu.DELETEWARNING.getDescription());
+        print();
+    }
+
+    public void printInstruc(){
+        script.append(Menu.PRINTINSTRC.getDescription());
+        print();
     }
 
     /**

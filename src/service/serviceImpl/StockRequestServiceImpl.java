@@ -19,13 +19,50 @@ public class StockRequestServiceImpl implements StockRequestService {
   }
 
   @Override
-  public ArrayList<StockRequestDto> findByStatus(){
-    return po.findByStatus();
+  public ArrayList<StockRequestDto> findById(int requestId){
+    return po.findById(requestId);
+  }
+
+  @Override
+  public ArrayList<StockRequestDto> findByProductId(String productId){
+    return po.findByProductId(productId);
+  }
+
+  @Override
+  public ArrayList<StockRequestDto> findByCreatedDate(String createdDate){
+    return po.findByCreatedDate(createdDate);
+  }
+
+  @Override
+  public ArrayList<StockRequestDto> findByIncomingDate(String incomingDate){
+    return po.findByIncomingDate(incomingDate);
+  }
+
+
+  @Override
+  public ArrayList<StockRequestDto> findByStatus(int status){
+    return po.findByStatus(status);
   }
 
   @Override
   public boolean updateStatus(ArrayList<Integer> updateList){
     return po.updateStatus(updateList);
   }
+
+
+  @Override
+  public boolean updateForm(int formID, StockRequestDto form) throws SQLException {
+    return po.updateForm(formID, form);
+  }
+  @Override
+  public void delete(int formID){
+    po.delete(formID);
+  }
+
+  @Override
+  public ArrayList<StockRequestDto> printInstr(){
+    return po.printInstr();
+  }
+
 
 }
