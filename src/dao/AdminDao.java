@@ -18,13 +18,13 @@ public interface AdminDao {
 
     AuthResponseDto findAuth(String userId);
 
-    void updateAdmin(AdminRequestDto request);
+    void updateAdmin(int auth, AdminRequestDto request);
 
     void updatePwd(String adminId, AdminRequestDto request);
 
-    void updateRole(int targetEmployeeId, AdminRequestDto request);
+    void updateRole(int auth, int targetEmployeeId, AdminRequestDto request);
 
-    void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request);
+    void updateAdminDeptPos(int auth, int targetEmployeeId, AdminRequestDto request);
 
     void deleteAdmin(int targetEmployeeId);
 }

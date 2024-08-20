@@ -135,7 +135,13 @@ public class UserDaoImpl implements UserDao {
             .append(
                 "SELECT u.id AS user_id, u.company_name, u.business_number, u.name, ua.approval_status, u.created_at ")
             .append("FROM User u ")
-            .append("LEFT JOIN UserApproval ua ON u.id = ua.user_id ")
+            .append("JOIN (SELECT ua.user_id, ua.approval_status, ua.rejection_reason ")
+            .append("FROM UserApproval ua ")
+            .append("JOIN (SELECT user_id, MAX(created_at) AS created_at ")
+            .append("FROM UserApproval ")
+            .append("GROUP BY user_id) latest ")
+            .append("ON latest.created_at = ua.created_at AND latest.user_id = ua.user_id) ua ")
+            .append("ON u.id = ua.user_id ")
             .append("WHERE ua.approval_status = 'PENDING'").toString();
 
         try {
@@ -283,7 +289,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateApprovalStatus(int id, UserApprovalRequestDto request) {
+    public void updateApprovalStatus(int auth, int id, UserApprovalRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("INSERT INTO UserApproval ")
@@ -293,7 +299,7 @@ public class UserDaoImpl implements UserDao {
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, id);
-            pstmt.setInt(2, request.getApproverId());
+            pstmt.setInt(2, auth);
             pstmt.setString(3, String.valueOf(request.getApprovalStatus()));
             pstmt.setString(4, request.getRejectionReason());
             pstmt.setString(5, request.getCreatedAt());

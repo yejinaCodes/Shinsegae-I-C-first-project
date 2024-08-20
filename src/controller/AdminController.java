@@ -1,8 +1,10 @@
 package controller;
 
 import dto.request.UserRequestDto;
+import dto.response.AuthResponseDto;
 import dto.response.UserApprovalResponseDto;
 import dto.response.UserResponseDto;
+import exception.Exception;
 import handler.MemberInputHandler;
 import common.Role;
 import dto.response.AdminResponseDto;
@@ -25,82 +27,104 @@ public class AdminController {
     private static Script script = new Script();
     private static AdminService adminService = new AdminServiceImpl();
     private static UserService userService = new UserServiceImpl();
+    private static AuthResponseDto auth = new AuthResponseDto();
 
 
     /**
-     * '회원 관리' 메뉴 선택
-     * 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제
+     * '회원 관리' 메뉴 선택 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제 | 5. 이전 메뉴
      */
-    public void manageMember() throws IOException {
-        script.manageMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To4(menu);
+    public void manageMember(AuthResponseDto user) throws IOException {
+        auth = user;
+        while (true) {
+            script.manageMember();
+            String menu = br.readLine().trim();
+            validCheck.validateMenuNumber1To5(menu);
 
-        switch (menu) {
-            case "1":
-                viewMember();
-                break;
-            case "2":
-                editMember();
-                break;
-            case "3":
-                setMemberRole();
-                break;
-            case "4":
-                delete();
+            switch (menu) {
+                case "1" -> viewMember();
+                case "2" -> editMember();
+                case "3" -> setMemberRole();
+                case "4" -> delete();
+                case "5" -> {
+                    return;
+                }
+            }
         }
     }
 
     /**
-     * '회원 관리 > 조회' 메뉴 선택
-     * 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회
+     * '회원 관리 > 조회' 메뉴 선택 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회 | 3. 이전 메뉴
      */
-    private void viewMember() throws IOException{
-        script.viewMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+    private void viewMember() throws IOException {
 
-        switch (menu) {
-            case "1":
-                viewAdmin();
-                break;
-            case "2":
-                viewUser();
-                break;
+        while (true) {
+            try {
+                script.viewMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
+
+                switch (menu) {
+                    case "1" -> viewAdmin();
+                    case "2" -> viewUser();
+                    case "3" -> {
+                        return;
+                    }
+                }
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            }
         }
 
     }
 
     /**
-     * '회원 관리 > 조회 > 직원 조회' 메뉴 선택
-     * 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회
+     * '회원 관리 > 조회 > 직원 조회' 메뉴 선택 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회 | 4. 이전 메뉴
      */
-    private void viewAdmin() throws IOException{
-        script.viewAdmin();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
+    private void viewAdmin() throws IOException {
+        while (true) {
+            try {
+                script.viewAdmin();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
 
-        switch (menu) {
-            case "1":
-                viewAdminDetail();
-                break;
-            case "2":
-                viewAllAdmin();
-                break;
-            case "3":
-                viewAdminByRole();
-                break;
+                switch (menu) {
+                    case "1" -> viewAdminDetail();
+                    case "2" -> viewAllAdmin();
+                    case "3" -> viewAdminByRole();
+                    case "4" -> {
+                        return;
+                    }
+                }
+
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            }
         }
     }
 
     /**
      * '회원 관리 > 조회 > 직원 조회 > 직원 상세 조회'
      */
-    private void viewAdminDetail() throws IOException {
-        script.getAdminId();
-        int id = validCheck.validateNumber(br.readLine());
-        AdminResponseDto response = adminService.findById(id);
-        script.adminInfo(response);
+    private void viewAdminDetail() {
+        try {
+            script.getAdminId();
+            int id = validCheck.validateNumber(br.readLine());
+            AdminResponseDto response = adminService.findById(id);
+            script.adminInfo(response);
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -114,8 +138,7 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 조회 > 직원 조회 > 권한별 직원 조회' 메뉴 선택
-     * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
+     * '회원 관리 > 조회 > 직원 조회 > 권한별 직원 조회' 메뉴 선택 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
      */
     private void viewAdminByRole() throws IOException {
         script.viewMemberRole();
@@ -124,15 +147,9 @@ public class AdminController {
         String role = "";
 
         switch (menu) {
-            case "1":
-                role = Role.SUPER_ADMIN.toString();
-                break;
-            case "2":
-                role = Role.ADMIN.toString();
-                break;
-            case "3":
-                role = Role.EMPLOYEE.toString();
-                break;
+            case "1" -> role = Role.SUPER_ADMIN.toString();
+            case "2" -> role = Role.ADMIN.toString();
+            case "3" -> role = Role.EMPLOYEE.toString();
         }
 
         List<AdminResponseDto> list = adminService.findByRole(role);
@@ -143,27 +160,34 @@ public class AdminController {
 
 
     /**
-     * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택
-     * 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회
+     * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회 | 4. 이전
+     * 메뉴
      */
-    private void viewUser() throws IOException {
-        script.viewUser();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
+    private void viewUser() {
 
-        switch (menu) {
-            case "1":
-                viewUserDetail();
-                break;
-            case "2":
-                viewAllUser();
-                break;
-            case "3":
-                viewPendingApproval();
-                break;
+        while (true) {
+            try {
+                script.viewUser();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
+
+                switch (menu) {
+                    case "1" -> viewUserDetail();
+                    case "2" -> viewAllUser();
+                    case "3" -> viewPendingApproval();
+                    case "4" -> {
+                        return;
+                    }
+                }
+                script.viewSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.viewFailure();
+            }
         }
     }
-
     private void viewUserDetail() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
         UserResponseDto response = userService.findById(targetUserId);
@@ -185,21 +209,31 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 수정' 메뉴 선택
-     * 1. 회원 정보 수정 | 2. 비밀번호 수정
+     * '회원 관리 > 수정' 메뉴 선택 1. 회원 정보 수정 | 2. 비밀번호 수정 | 3. 이전 메뉴
      */
-    private void editMember() throws IOException {
-        script.editMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
+    private void editMember() {
 
-        switch (menu) {
-            case "1":
-                editAdmin();
-                break;
-            case "2":
-                editPwd();
-                break;
+        while (true) {
+            try {
+                script.editMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
+
+                switch (menu) {
+                    case "1" -> editAdmin();
+                    case "2" -> editPwd();
+                    case "3" -> {
+                        return;
+                    }
+                }
+                script.updateSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
+            }
         }
     }
 
@@ -207,7 +241,7 @@ public class AdminController {
      * '회원 관리 > 수정 > 회원 정보 수정'
      */
     private void editAdmin() throws IOException {
-        adminService.updateAdmin(memberInputHandler.updateAdmin());
+        adminService.updateAdmin(auth.getId(), memberInputHandler.updateAdmin());
     }
 
     /**
@@ -219,35 +253,42 @@ public class AdminController {
     }
 
     /**
-     * '회원 관리 > 권한 설정' 메뉴 선택
-     * 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 권한 승인
+     * '회원 관리 > 권한 설정' 메뉴 선택 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 가입 승인 | 4. 이전 메뉴
      */
-    private void setMemberRole() throws IOException {
-        script.setMemberPermission();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To3(menu);
+    private void setMemberRole() {
 
-        switch (menu) {
-            case "1":
-                setAdminRole();
-                break;
-            case "2":
-                setDeptAndPosition();
-                break;
-            case "3":
-                approveUser();
-                break;
+        while (true) {
+            try {
+                script.setMemberPermission();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
+
+                switch (menu) {
+                    case "1" -> setAdminRole();
+                    case "2" -> setDeptAndPosition();
+                    case "3" -> approveUser();
+                    case "4" -> {
+                        return;
+                    }
+                }
+                script.updateSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.updateFailure();
+            }
         }
     }
 
     /**
-     * '회원 관리 > 권한 설정 > 직원 권한' 권한 선택
-     * 입력값: 사원 번호, 권한
-     * 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
+     * '회원 관리 > 권한 설정 > 직원 권한' 권한 선택 입력값: 사원 번호, 권한 1. 총 관리자 | 2. 창고 관리자 | 3. 일반
      */
     private void setAdminRole() throws IOException {
         int targetEmployeeId = memberInputHandler.getAdminIdInput();
-        adminService.updateRole(targetEmployeeId, memberInputHandler.updateAdminRole());
+        adminService.updateRole(auth.getId(), targetEmployeeId,
+            memberInputHandler.updateAdminRole());
     }
 
     /**
@@ -255,7 +296,8 @@ public class AdminController {
      */
     private void setDeptAndPosition() throws IOException {
         int targetEmployeeId = memberInputHandler.getAdminIdInput();
-        adminService.updateAdminDeptPos(targetEmployeeId, memberInputHandler.updateAdminDeptPos());
+        adminService.updateAdminDeptPos(auth.getId(), targetEmployeeId,
+            memberInputHandler.updateAdminDeptPos());
     }
 
     /**
@@ -263,25 +305,37 @@ public class AdminController {
      */
     private void approveUser() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
-        userService.updateApprovalStatus(targetUserId, memberInputHandler.updateApprovalStatus());
+        userService.updateApprovalStatus(auth.getId(), targetUserId,
+            memberInputHandler.updateApprovalStatus());
     }
 
     /**
-     * '회원 관리 > 삭제' 메뉴 선택
-     * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제
+     * '회원 관리 > 삭제' 메뉴 선택 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제 | 3. 이전 메뉴
      */
     private void delete() throws IOException {
-        script.deleteMember();
-        String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To2(menu);
 
-        switch (menu) {
-            case "1":
-                deleteAdmin();
-                break;
-            case "2":
-                deleteUser();
-                break;
+        while (true) {
+            try {
+                script.deleteMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To3(menu);
+
+                switch (menu) {
+                    case "1" -> deleteAdmin();
+                    case "2" -> deleteUser();
+                    case "3" -> {
+                        return;
+                    }
+                }
+
+                script.deleteSuccess();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                script.deleteFailure();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                script.deleteFailure();
+            }
         }
     }
 

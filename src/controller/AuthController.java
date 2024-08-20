@@ -39,51 +39,40 @@ public class AuthController {
      */
     public AuthResponseDto handleAuth(String userType) throws IOException {
         AuthResponseDto result = null;
-        while (!isQuit)
-        try {
-            script.selectLoginOrRegister();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To4(menu);
+        while (!isQuit) {
+            try {
+                script.selectLoginOrRegister();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To4(menu);
 
-            switch (userType) {
-                case "1":
-                    switch (menu) {
-                        case "1":
-                            registerUser();
-                            break;
-                        case "2":
-                            result = loginUser();
-                            isQuit = !isQuit;
-                            break;
-                        case "3":
-                            findUserId();
-                            break;
-                        case "4":
-                            resetUserPassword();
-                            break;
+                switch (userType) {
+                    case "1" -> {
+                        switch (menu) {
+                            case "1" -> registerUser();
+                            case "2" -> {
+                                result = loginUser();
+                                isQuit = !isQuit;
+                            }
+                            case "3" -> findUserId();
+                            case "4" -> resetUserPassword();
+                        }
                     }
-                    break;
-                case "2":
-                    switch (menu) {
-                        case "1":
-                            registerAdmin();
-                            break;
-                        case "2":
-                            result = loginAdmin();
-                            isQuit = !isQuit;
-                            break;
-                        case "3":
-                            findAdminId();
-                            break;
-                        case "4":
-                            resetAdminPassword();
-                            break;
+                    case "2" -> {
+                        switch (menu) {
+                            case "1" -> registerAdmin();
+                            case "2" -> {
+                                result = loginAdmin();
+                                isQuit = !isQuit;
+                            }
+                            case "3" -> findAdminId();
+                            case "4" -> resetAdminPassword();
+                        }
                     }
-                    break;
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                handleAuth(userType);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            handleAuth(userType);
         }
         return result;
     }

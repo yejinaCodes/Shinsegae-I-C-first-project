@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateApprovalStatus(int id, UserApprovalRequestDto request) {
-        userDao.updateApprovalStatus(id, request);
+    public void updateApprovalStatus(int auth, int id, UserApprovalRequestDto request) {
+        userDao.updateApprovalStatus(auth, id, request);
     }
 
     @Override

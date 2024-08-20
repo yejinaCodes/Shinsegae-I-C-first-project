@@ -192,21 +192,11 @@ public class MemberInputHandler {
             validCheck.validateMenuNumber1To5(menu);
 
             switch (menu) {
-                case "1":
-                    department = Department.valueOf("HR");
-                    break;
-                case "2":
-                    department = Department.valueOf("WAREHOUSE");
-                    break;
-                case "3":
-                    department = Department.valueOf("DELIVERY");
-                    break;
-                case "4":
-                    department = Department.valueOf("DEVELOPMENT");
-                    break;
-                case "5":
-                    department = Department.valueOf("ACCOUNTING");
-                    break;
+                case "1" -> department = Department.valueOf("HR");
+                case "2" -> department = Department.valueOf("WAREHOUSE");
+                case "3" -> department = Department.valueOf("DELIVERY");
+                case "4" -> department = Department.valueOf("DEVELOPMENT");
+                case "5" -> department = Department.valueOf("ACCOUNTING");
             }
             return department;
         } catch (Exception e) {
