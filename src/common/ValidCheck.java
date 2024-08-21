@@ -235,4 +235,22 @@ public class ValidCheck {
         return bNumber;
     }
 
+    /**
+     * 총 관리자 접근 권한
+     */
+    public void accessSuperAdmin(Role role) {
+        if (!role.equals(Role.SUPER_ADMIN)) {
+            throw new Exception(ErrorCode.ACCESS_DENIED);
+        }
+    }
+
+    /**
+     * 총 관리자 & 관리자 접근 권한
+     */
+    public void accessAdmin(Role role) {
+        if (!(role.equals(Role.SUPER_ADMIN)||role.equals(Role.ADMIN))) {
+            throw new Exception(ErrorCode.ACCESS_DENIED);
+        }
+    }
+
 }

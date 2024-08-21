@@ -36,18 +36,22 @@ public class AdminController {
     public void manageMember(AuthResponseDto user) throws IOException {
         auth = user;
         while (true) {
-            script.manageMember();
-            String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To5(menu);
+            try {
+                script.manageMember();
+                String menu = br.readLine().trim();
+                validCheck.validateMenuNumber1To5(menu);
 
-            switch (menu) {
-                case "1" -> viewMember();
-                case "2" -> editMember();
-                case "3" -> setMemberRole();
-                case "4" -> delete();
-                case "5" -> {
-                    return;
+                switch (menu) {
+                    case "1" -> viewMember();
+                    case "2" -> editMember();
+                    case "3" -> setMemberRole();
+                    case "4" -> delete();
+                    case "5" -> {
+                        return;
+                    }
                 }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -94,8 +98,14 @@ public class AdminController {
 
                 switch (menu) {
                     case "1" -> viewAdminDetail();
-                    case "2" -> viewAllAdmin();
-                    case "3" -> viewAdminByRole();
+                    case "2" -> {
+                        validCheck.accessAdmin(auth.getRole());
+                        viewAllAdmin();
+                    }
+                    case "3" -> {
+                        validCheck.accessAdmin(auth.getRole());
+                        viewAdminByRole();
+                    }
                     case "4" -> {
                         return;
                     }
@@ -174,7 +184,10 @@ public class AdminController {
                 switch (menu) {
                     case "1" -> viewUserDetail();
                     case "2" -> viewAllUser();
-                    case "3" -> viewPendingApproval();
+                    case "3" -> {
+                        validCheck.accessAdmin(auth.getRole());
+                        viewPendingApproval();
+                    }
                     case "4" -> {
                         return;
                     }
@@ -188,6 +201,7 @@ public class AdminController {
             }
         }
     }
+
     private void viewUserDetail() throws IOException {
         int targetUserId = memberInputHandler.getUserIdInput();
         UserResponseDto response = userService.findById(targetUserId);
@@ -259,6 +273,7 @@ public class AdminController {
 
         while (true) {
             try {
+                validCheck.accessAdmin(auth.getRole());
                 script.setMemberPermission();
                 String menu = br.readLine().trim();
                 validCheck.validateMenuNumber1To4(menu);
@@ -266,7 +281,10 @@ public class AdminController {
                 switch (menu) {
                     case "1" -> setAdminRole();
                     case "2" -> setDeptAndPosition();
-                    case "3" -> approveUser();
+                    case "3" -> {
+                        validCheck.accessSuperAdmin(auth.getRole());
+                        approveUser();
+                    }
                     case "4" -> {
                         return;
                     }
