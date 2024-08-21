@@ -10,7 +10,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
   @Override
   public void create(PurchaseOrderDto purchaseOrder) throws IOException, SQLException {
     PurchaseOrderDaoImpl po = new PurchaseOrderDaoImpl();
-    //testDao po = new testDao();
     po.create(purchaseOrder);
+
   }
 }

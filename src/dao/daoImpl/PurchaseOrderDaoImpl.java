@@ -9,11 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
-  Connection connection = null;
 
   @Override
   public void create(PurchaseOrderDto purchaseOrder) throws IOException, SQLException {
-    connection = ConnectionFactory.getInstance().open();
+    Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
         .append("INSERT INTO purchaseOrder (purchaseOrderID, productID, quantity, cellID, deliveryDate, status, creationDate) ")
@@ -29,15 +28,15 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
       pstmt.setString(4, String.valueOf(purchaseOrder.getCell_id()));
       pstmt.setString(5, purchaseOrder.getDeliver_date());
       pstmt.setString(6, purchaseOrder.getApproval_status());
-      pstmt.setString(7, String.valueOf(purchaseOrder.getCreated_at()));
+      pstmt.setString(7, purchaseOrder.getCreated_at());
 
       pstmt.executeUpdate();
       pstmt.close();
-      ConnectionFactory.getInstance().close();
+      connection.close();
 
     }catch(Exception e){
       System.out.println("DB insert중 에러 발생");
     }
-    //connection.close();
+    connection.close();
   }
 }
