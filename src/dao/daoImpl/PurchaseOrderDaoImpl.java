@@ -33,7 +33,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
 
       pstmt.executeUpdate();
       pstmt.close();
-      connection.close();
+      ConnectionFactory.getInstance().close();
 
     }catch(Exception e){
       System.out.println("DB insert중 에러 발생");

@@ -8,7 +8,7 @@ import lombok.Data;
 public class PurchaseOrderDto {
   private int purchaseOrderNo;
   private int cell_id;
-  private int product_id;
+  private int product_id; //product_id String으로 바꾸기?
   private int product_quantity;
   //private char box_size;
   private String deliver_date;
