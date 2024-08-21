@@ -47,10 +47,8 @@ public class MainApplication {
             validCheck.validateMenuNumber1To2(userType);
 
             auth = authController.handleAuth(userType);
-            script.loginSuccess();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            script.loginFailure();
             selectUserType();
         }
     }

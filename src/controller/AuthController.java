@@ -49,10 +49,7 @@ public class AuthController {
                     case "1" -> {
                         switch (menu) {
                             case "1" -> registerUser();
-                            case "2" -> {
-                                result = loginUser();
-                                isQuit = !isQuit;
-                            }
+                            case "2" -> result = loginUser();
                             case "3" -> findUserId();
                             case "4" -> resetUserPassword();
                         }
@@ -60,10 +57,7 @@ public class AuthController {
                     case "2" -> {
                         switch (menu) {
                             case "1" -> registerAdmin();
-                            case "2" -> {
-                                result = loginAdmin();
-                                isQuit = !isQuit;
-                            }
+                            case "2" -> result = loginAdmin();
                             case "3" -> findAdminId();
                             case "4" -> resetAdminPassword();
                         }
@@ -71,7 +65,6 @@ public class AuthController {
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                handleAuth(userType);
             }
         }
         return result;
@@ -80,7 +73,7 @@ public class AuthController {
     /**
      * 유저 회원 가입
      */
-    private void registerUser() throws IOException {
+    private void registerUser() {
         try {
 
             UserRequestDto user = memberInputHandler.createUser();
@@ -94,7 +87,7 @@ public class AuthController {
     /**
      * 유저 로그인
      */
-    private AuthResponseDto loginUser() throws IOException {
+    private AuthResponseDto loginUser() {
 
         boolean loginSuccessful = false;
         int maxAttempts = 3;
@@ -107,6 +100,8 @@ public class AuthController {
                 auth = authService.loginUser(user);
                 if (auth != null) {
                     loginSuccessful = true;
+                    isQuit = !isQuit;
+                    script.loginSuccess();
                 }
             } catch (IOException e) {
                 System.out.println(ErrorCode.INVALID_VALUE.getMessage());
@@ -119,7 +114,7 @@ public class AuthController {
 
         if (!loginSuccessful) {
             System.out.println(ErrorCode.FAILURE_LOGIN.getMessage());
-            handleAuth("1");
+            script.loginFailure();
         }
         return auth;
     }
@@ -159,7 +154,7 @@ public class AuthController {
     /**
      * 직원 로그인
      */
-    private AuthResponseDto loginAdmin() throws IOException {
+    private AuthResponseDto loginAdmin() {
         boolean loginSuccessful = false;
         int maxAttempts = 3;
         int attempts = 0;
@@ -171,6 +166,8 @@ public class AuthController {
                 AuthRequestDto user = memberInputHandler.login();
                 auth = authService.loginAdmin(user);
                 loginSuccessful = true;
+                isQuit = !isQuit;
+                script.loginSuccess();
             } catch (IOException e) {
                 System.out.println(ErrorCode.INVALID_VALUE.getMessage());
                 attempts++;
@@ -182,7 +179,7 @@ public class AuthController {
 
         if (!loginSuccessful) {
             System.out.println(ErrorCode.FAILURE_LOGIN.getMessage());
-            handleAuth("2");
+            script.loginFailure();
         }
         return auth;
     }
