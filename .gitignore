@@ -34,3 +34,4 @@ bin/
 *.lib/
 *.idea
 Shinsegae-I-C-first-project.iml
+.idea/dbnavigator.xml

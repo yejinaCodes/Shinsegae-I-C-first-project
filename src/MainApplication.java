@@ -2,6 +2,7 @@ import common.ErrorCode;
 import common.ValidCheck;
 import controller.AdminController;
 import controller.AuthController;
+import controller.PurchaseOrderController;
 import controller.StockRequestController;
 import controller.SupportController;
 import controller.UserController;
@@ -21,6 +22,7 @@ public class MainApplication {
     private static AdminController adminController = new AdminController();
     private static UserController userController = new UserController();
     private static StockRequestController poc = new StockRequestController();
+    private static PurchaseOrderController po = new PurchaseOrderController();
     private static SupportController supportController = new SupportController();
     private static Script script = new Script();
     private static AuthResponseDto auth = null;
@@ -72,17 +74,18 @@ public class MainApplication {
         try {
             script.userMainMenu();
             String menu = br.readLine().trim();
-            validCheck.validateMenuNumber1To7(menu);
+            validCheck.validateMenuNumber1To8(menu);
 
             switch (menu) {
                 case "1" -> userController.manageUser(auth); // 1. 회원 관리
     //            case "2" ->  // 2. 창고 관리
     //            case "3" ->  // 3. 재고 관리
-                case "4" -> poc.userMenu(); //  4. 입고 관리
-    //            case "5" ->  // 5. 출고 관리
-                case "6" -> supportController.handleUserSupportMenu(auth); // 6. 고객 센터
-                case "7" -> {
-                    isQuit = !isQuit; // 7. 로그아웃
+                case "4" -> po.insert_order(); // 4. 주문 관리
+                case "5" -> poc.userMenu(); // 5. 입고 관리
+    //            case "6" ->  // 6. 출고 관리
+                case "7" -> supportController.handleUserSupportMenu(auth); // 7. 고객 센터
+                case "8" -> {
+                    isQuit = !isQuit; // 8. 로그아웃
                     script.logout();
                 }
             }
@@ -101,18 +104,19 @@ public class MainApplication {
     private static void adminMainMenu() throws IOException {
         script.adminMainMenu();
         String menu = br.readLine().trim();
-        validCheck.validateMenuNumber1To8(menu);
+        validCheck.validateMenuNumber1To9(menu);
 
         switch (menu) {
             case "1" -> adminController.manageMember(auth); // 1. 회원 관리
 //            case "2" -> // 2. 재무 관리
 //            case "3" -> //3. 창고 관리
 //            case "4" -> //4. 재고 관리
-            case "5" -> poc.adminMenu(); // 5. 입고 관리
-//            case "6" -> // 6. 출고 관리
-            case "7" -> supportController.handleSupportMenu(auth); // 7. 고객 센터
-            case "8" -> {
-                isQuit = !isQuit; // 8. 로그아웃
+            case "5" -> po.insert_order(); // 5. 주문 관리
+            case "6" -> poc.adminMenu(); // 6. 입고 관리
+//            case "7" -> // 7. 출고 관리
+            case "8" -> supportController.handleSupportMenu(auth); // 8. 고객 센터
+            case "9" -> {
+                isQuit = !isQuit; // 9. 로그아웃
                 script.logout();
             }
         }

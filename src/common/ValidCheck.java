@@ -18,6 +18,7 @@ public class ValidCheck {
     private static final String MENU_RANGE_1_TO_6 = "^[1-6]";
     private static final String MENU_RANGE_1_TO_7 = "^[1-7]";
     private static final String MENU_RANGE_1_TO_8 = "^[1-8]";
+    private static final String MENU_RANGE_1_TO_9 = "^[1-9]";
 
     /**
      * 공백 입력 값 검사
@@ -131,6 +132,19 @@ public class ValidCheck {
         validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_8))) {
+            throw new Exception(ErrorCode.INVALID_MENU_OPTION);
+        }
+    }
+
+    /**
+     * 메뉴 번호 유효성 검사
+     *
+     * @param menu 메뉴 번호 (1 ~ 9)
+     */
+    public void validateMenuNumber1To9(String menu) {
+        validateNumber(menu);
+
+        if (!(menu.matches(MENU_RANGE_1_TO_9))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
         }
     }
