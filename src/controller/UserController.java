@@ -14,12 +14,12 @@ import service.UserService;
 import service.serviceImpl.UserServiceImpl;
 
 public class UserController {
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static MemberInputHandler memberInputHandler = new MemberInputHandler();
-    private static ValidCheck validCheck = new ValidCheck();
-    private static Script script = new Script();
-    private static UserService userService = new UserServiceImpl();
-    private static AuthResponseDto auth = new AuthResponseDto();
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final MemberInputHandler memberInputHandler = new MemberInputHandler();
+    private final ValidCheck validCheck = new ValidCheck();
+    private final Script script = new Script();
+    private final UserService userService = new UserServiceImpl();
+    private AuthResponseDto auth = new AuthResponseDto();
 
     /**
      * '회원 관리' 메뉴 선택 1. 정보 조회 | 2. 정보 수정 | 3. 비밀번호 변경 | 4. 탈퇴 | 5. 이전 메뉴

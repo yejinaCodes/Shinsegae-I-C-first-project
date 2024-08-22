@@ -20,13 +20,13 @@ import service.serviceImpl.NoticeServiceImpl;
 
 public class SupportController {
 
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static BoardInputHandler inputHandler = new BoardInputHandler();
-    private static ValidCheck validCheck = new ValidCheck();
-    private static Script script = new Script();
-    private static BoardService boardService = new BoardServiceImpl();
-    private static NoticeService noticeService = new NoticeServiceImpl();
-    private static AuthResponseDto auth = new AuthResponseDto();
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final BoardInputHandler inputHandler = new BoardInputHandler();
+    private final ValidCheck validCheck = new ValidCheck();
+    private final Script script = new Script();
+    private final BoardService boardService = new BoardServiceImpl();
+    private final NoticeService noticeService = new NoticeServiceImpl();
+    private AuthResponseDto auth = new AuthResponseDto();
 
 
     /**

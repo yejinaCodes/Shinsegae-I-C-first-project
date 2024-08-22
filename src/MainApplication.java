@@ -15,7 +15,6 @@ import library.Script;
 
 public class MainApplication {
 
-    private static boolean isQuit = false;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static ValidCheck validCheck = new ValidCheck();
     private static AuthController authController = new AuthController();
@@ -25,6 +24,7 @@ public class MainApplication {
     private static PurchaseOrderController po = new PurchaseOrderController();
     private static SupportController supportController = new SupportController();
     private static Script script = new Script();
+    private static boolean isQuit = false;
     private static AuthResponseDto auth = null;
     private static String userType;
 
@@ -49,10 +49,8 @@ public class MainApplication {
             validCheck.validateMenuNumber1To2(userType);
 
             auth = authController.handleAuth(userType);
-            script.loginSuccess();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            script.loginFailure();
             selectUserType();
         }
     }
