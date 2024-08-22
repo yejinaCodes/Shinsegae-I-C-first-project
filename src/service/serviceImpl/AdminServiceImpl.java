@@ -9,7 +9,7 @@ import service.AdminService;
 
 public class AdminServiceImpl implements AdminService {
 
-    private static AdminDao adminDao = new AdminDaoImpl();
+    private final AdminDao adminDao = new AdminDaoImpl();
     @Override
     public void createAdmin(AdminRequestDto request) {
         adminDao.createAdmin(request);

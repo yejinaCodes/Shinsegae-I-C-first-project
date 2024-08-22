@@ -21,13 +21,13 @@ import service.serviceImpl.UserServiceImpl;
 
 public class AdminController {
 
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static MemberInputHandler memberInputHandler = new MemberInputHandler();
-    private static ValidCheck validCheck = new ValidCheck();
-    private static Script script = new Script();
-    private static AdminService adminService = new AdminServiceImpl();
-    private static UserService userService = new UserServiceImpl();
-    private static AuthResponseDto auth = new AuthResponseDto();
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final MemberInputHandler memberInputHandler = new MemberInputHandler();
+    private final ValidCheck validCheck = new ValidCheck();
+    private final Script script = new Script();
+    private final AdminService adminService = new AdminServiceImpl();
+    private final UserService userService = new UserServiceImpl();
+    private AuthResponseDto auth = new AuthResponseDto();
 
 
     /**

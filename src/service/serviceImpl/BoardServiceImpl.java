@@ -9,7 +9,7 @@ import service.BoardService;
 
 public class BoardServiceImpl implements BoardService {
 
-    private static BoardDao boardDao = new BoardDaoImpl();
+    private final BoardDao boardDao = new BoardDaoImpl();
 
     @Override
     public void createBoard(BoardRequestDto request) {

@@ -14,7 +14,6 @@ import library.Script;
 
 public class MainApplication {
 
-    private static boolean isQuit = false;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static ValidCheck validCheck = new ValidCheck();
     private static AuthController authController = new AuthController();
@@ -23,6 +22,7 @@ public class MainApplication {
     private static StockRequestController poc = new StockRequestController();
     private static SupportController supportController = new SupportController();
     private static Script script = new Script();
+    private static boolean isQuit = false;
     private static AuthResponseDto auth = null;
     private static String userType;
 

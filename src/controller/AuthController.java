@@ -23,14 +23,14 @@ import service.serviceImpl.UserServiceImpl;
 public class AuthController {
 
 
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static ValidCheck validCheck = new ValidCheck();
-    private static Script script = new Script();
-    private static MemberInputHandler memberInputHandler = new MemberInputHandler();
-    private static AuthService authService = new AuthServiceImpl();
-    private static AdminService adminService = new AdminServiceImpl();
-    private static UserService userService = new UserServiceImpl();
-    private static boolean isQuit = false;
+    final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    final ValidCheck validCheck = new ValidCheck();
+    final Script script = new Script();
+    final MemberInputHandler memberInputHandler = new MemberInputHandler();
+    final AuthService authService = new AuthServiceImpl();
+    final AdminService adminService = new AdminServiceImpl();
+    final UserService userService = new UserServiceImpl();
+    private boolean isQuit = false;
 
     /**
      * 메뉴 선택 1. 회원 가입 | 2. 로그인 | 3. 아이디 찾기 | 4. 비밀번호 재설정
