@@ -43,9 +43,8 @@ public class Script {
 
     /**
      * 회원(쇼핑몰) 페이지 메뉴 선택
-     * 1. 회원 관리 | 2. 창고 관리 | 3. 재고 관리
-     * 4. 입고 관리 | 5. 출고 관리 | 6. 고객 센터
-     * 7. 로그아웃
+     * 1. 회원 관리 | 2. 창고 관리 | 3. 재고 관리 | 4. 주문 관리
+     * 5. 입고 관리 | 6. 출고 관리 | 7. 고객 센터 | 8. 로그아웃
      */
     public void userMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())

@@ -8,18 +8,18 @@ import lombok.Data;
 @Data
 public class PurchaseOrderDto {
   private int purchaseOrderNo = 0;
-  private int cell_id;
-  private int product_id;
-  private int product_quantity;
+  private int cellId;
+  private int productId;
+  private int productQuantity;
   //private char box_size;
-  private String deliver_date;
-  private String created_at;
-  private String approval_status;
+  private String deliverDate;
+  private String createdAt;
+  private String approvalStatus;
 //  public void setDeliver_date(){
 //    this.deliver_date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 //  }
-  public void setCreated_at(){
-    this.created_at = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+  public void setCreatedAt(){
+    this.createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
   }
   public void setPurchaseOrderNo(){
     this.purchaseOrderNo = this.purchaseOrderNo + 1;

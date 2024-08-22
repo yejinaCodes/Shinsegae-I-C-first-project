@@ -22,21 +22,21 @@ public class PurchaseOrderController {
         order.setPurchaseOrderNo();
         System.out.print("Product id 입력: ");
         int product = Integer.parseInt(br.readLine());
-        order.setProduct_id(product);
+        order.setProductId(product);
         System.out.print("Product quantity (상품 수량): ");
         int quantity = Integer.parseInt(br.readLine());
-        order.setProduct_quantity(quantity);
+        order.setProductQuantity(quantity);
         System.out.print("Select cell (창고 셀 선택하기): ");
         //db에서 선택 가능한 Cell 가지고 오기!!!
 
 
         int cell = Integer.parseInt(br.readLine());
-        order.setCell_id(cell);
+        order.setCellId(cell);
         System.out.print("Desired delivery date (납입날짜) YYYYMMdd 포맷으로 입력: ");
-        String deliver_date = br.readLine();
-        order.setDeliver_date(deliver_date);
-        order.setCreated_at();
-        order.setApproval_status("PENDING"); //default로 pending 저장
+        String deliverDate = br.readLine();
+        order.setDeliverDate(deliverDate);
+        order.setCreatedAt();
+        order.setApprovalStatus("PENDING"); //default로 pending 저장
 
         poService.create(order);
 

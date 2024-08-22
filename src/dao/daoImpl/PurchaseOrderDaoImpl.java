@@ -23,12 +23,12 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
       //injection 코드 작성하기
       PreparedStatement pstmt = connection.prepareStatement(query);
       pstmt.setString(1, String.valueOf(purchaseOrder.getPurchaseOrderNo()));
-      pstmt.setString(2, String.valueOf(purchaseOrder.getProduct_id()));
-      pstmt.setString(3, String.valueOf(purchaseOrder.getProduct_quantity()));
-      pstmt.setString(4, String.valueOf(purchaseOrder.getCell_id()));
-      pstmt.setString(5, purchaseOrder.getDeliver_date());
-      pstmt.setString(6, purchaseOrder.getApproval_status());
-      pstmt.setString(7, purchaseOrder.getCreated_at());
+      pstmt.setString(2, String.valueOf(purchaseOrder.getProductId()));
+      pstmt.setString(3, String.valueOf(purchaseOrder.getProductQuantity()));
+      pstmt.setString(4, String.valueOf(purchaseOrder.getCellId()));
+      pstmt.setString(5, purchaseOrder.getDeliverDate());
+      pstmt.setString(6, purchaseOrder.getApprovalStatus());
+      pstmt.setString(7, purchaseOrder.getCreatedAt());
 
       pstmt.executeUpdate();
       pstmt.close();
