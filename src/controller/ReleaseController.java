@@ -41,11 +41,22 @@ public class ReleaseController {
                             createRelease();
                             break;
                         case 2:
-                            System.out.println("1. 전체 조회 2. 요청 승인 조회 3. 요청 거절 조회");
+                            System.out.println("1. 전체 조회 2. 요청 승인 조회 3. 요청 거절 조회 4.나가기");
                             switch (Integer.parseInt(br.readLine())) {
-                                case 1 -> readReleaseAll();
-                                case 2 -> readReleaseApproval();
-                                case 3 -> readReleaseReject();
+                                case 1:
+                                    readReleaseAll();
+                                    break;
+                                case 2 :
+                                    readReleaseApproval();
+                                    break;
+                                case 3:
+                                    readReleaseReject();
+                                    break;
+                                case 4:
+                                    break;
+                                default:
+                                    System.out.println("다시 입력하세요.");
+                                    break;
                             }
                             break;
                         case 3:
