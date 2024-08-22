@@ -55,8 +55,8 @@ public class Script {
 
     /**
      * 어드민 페이지 메뉴 선택
-     * 1. 회원 관리 | 2. 재무 관리 | 3. 창고 관리 | 4. 재고 관리
-     * 5. 입고 관리 | 6. 출고 관리 | 7. 고객 센터 | 8. 로그아웃
+     * 1. 회원 관리 | 2. 재무 관리 | 3. 창고 관리 | 4. 재고 관리 | 5. 주문 관리
+     * 6. 입고 관리 | 7. 출고 관리 | 8. 고객 센터 | 9. 로그아웃
      */
     public void adminMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
