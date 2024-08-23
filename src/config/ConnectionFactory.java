@@ -16,7 +16,7 @@ public class ConnectionFactory {
 
     private static final ConnectionFactory instance = new ConnectionFactory();
 
-    private ConnectionFactory() {
+    public ConnectionFactory() {
         try {
             properties.load(new FileInputStream("src/config/db.properties"));
 

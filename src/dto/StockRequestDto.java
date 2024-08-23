@@ -20,8 +20,7 @@ public class StockRequestDto {
   private Optional<String> loadingInstr;
   private Optional<Integer> stockRequestId;
 
-  public StockRequestDto() {
-  }
+  public StockRequestDto() {}
 
   public StockRequestDto(String product_id, int box_quantity, char box_size,
       String incoming_date, int cell_id, int supplier_id, String remarks) {

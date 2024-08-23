@@ -6,11 +6,14 @@ import controller.PurchaseOrderController;
 import controller.StockRequestController;
 import controller.SupportController;
 import controller.UserController;
+import controller.ReleaseController;
 import dto.response.AuthResponseDto;
 import exception.Exception;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
+
 import library.Script;
 
 public class MainApplication {
@@ -23,6 +26,7 @@ public class MainApplication {
     private static StockRequestController poc = new StockRequestController();
     private static PurchaseOrderController po = new PurchaseOrderController();
     private static SupportController supportController = new SupportController();
+    private static ReleaseController releaseController = new ReleaseController();
     private static Script script = new Script();
     private static boolean isQuit = false;
     private static AuthResponseDto auth = null;
@@ -34,7 +38,7 @@ public class MainApplication {
             while (!isQuit) {
                 selectMainMenu();
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             System.out.println(ErrorCode.INVALID_VALUE.getMessage());
         }
     }
@@ -58,7 +62,7 @@ public class MainApplication {
     /**
      * 서비스 이용자 타입별 메뉴 출력
      */
-    private static void selectMainMenu() throws IOException {
+    private static void selectMainMenu() throws IOException, SQLException {
         switch (userType) {
             case "1" -> userMainMenu();
             case "2" -> adminMainMenu();
@@ -80,7 +84,7 @@ public class MainApplication {
     //            case "3" ->  // 3. 재고 관리
                 case "4" -> po.insertOrder(); // 4. 주문 관리
                 case "5" -> poc.userMenu(); // 5. 입고 관리
-    //            case "6" ->  // 6. 출고 관리
+                case "6" ->  releaseController.releaseEmployeeMenu(); // 6. 출고 관리
                 case "7" -> supportController.handleUserSupportMenu(auth); // 7. 고객 센터
                 case "8" -> {
                     isQuit = !isQuit; // 8. 로그아웃
@@ -99,7 +103,7 @@ public class MainApplication {
      * 어드민 페이지 메뉴 선택 1. 회원 관리 | 2. 재무 관리 | 3. 창고 관리 | 4. 재고 관리 5. 입고 관리 | 6. 출고 관리 | 7. 고객 센터 | 8.
      * 로그아웃
      */
-    private static void adminMainMenu() throws IOException {
+    private static void adminMainMenu() throws IOException, SQLException {
         script.adminMainMenu();
         String menu = br.readLine().trim();
         validCheck.validateMenuNumber1To9(menu);
@@ -111,7 +115,7 @@ public class MainApplication {
 //            case "4" -> //4. 재고 관리
             case "5" -> po.insertOrder(); // 5. 주문 관리
             case "6" -> poc.adminMenu(); // 6. 입고 관리
-//            case "7" -> // 7. 출고 관리
+            case "7" -> releaseController.releaseAdminMenu(); // 7. 출고 관리
             case "8" -> supportController.handleSupportMenu(auth); // 8. 고객 센터
             case "9" -> {
                 isQuit = !isQuit; // 9. 로그아웃
