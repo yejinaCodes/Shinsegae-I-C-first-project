@@ -28,22 +28,22 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("INSERT INTO stockRequest (supplierID, productID, boxQuantity, boxSize, "
-            + "incomingDate, cellID, approvalStatus, remarks, createdAt)")
+        .append("INSERT INTO StockRequest (supplier_id, product_id, box_quantity, box_size, "
+            + "incoming_date, cell_id, approval_status, remarks, created_at)")
         .append("VALUES(?,?,?,?,?,?,?,?,?)")
         .toString();
 
     try {
       PreparedStatement pstmt = connection.prepareStatement(query);
-      pstmt.setString(1, String.valueOf(stockRequest.getSupplier_id()));
-      pstmt.setString(2, stockRequest.getProduct_id());
-      pstmt.setString(3, String.valueOf(stockRequest.getBox_quantity()));
-      pstmt.setString(4, String.valueOf(stockRequest.getBox_size()));
-      pstmt.setString(5, String.valueOf(stockRequest.getIncoming_date()));
-      pstmt.setString(6, String.valueOf(stockRequest.getCell_id()));
+      pstmt.setString(1, String.valueOf(stockRequest.getSupplierId()));
+      pstmt.setString(2, stockRequest.getProductId());
+      pstmt.setString(3, String.valueOf(stockRequest.getBoxQuantity()));
+      pstmt.setString(4, String.valueOf(stockRequest.getBoxSize()));
+      pstmt.setString(5, String.valueOf(stockRequest.getIncomingDate()));
+      pstmt.setString(6, String.valueOf(stockRequest.getCellId()));
       pstmt.setString(7, stockRequest.getStatus());
       pstmt.setString(8, stockRequest.getRemarks());
-      pstmt.setString(9, String.valueOf(stockRequest.getCreated_at()));
+      pstmt.setString(9, String.valueOf(stockRequest.getCreatedAt()));
 
       pstmt.executeUpdate();
       pstmt.close();
@@ -62,7 +62,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("SELECT * from stockRequest")
+        .append("SELECT * from StockRequest")
         .toString();
 
     try {
@@ -70,15 +70,15 @@ public class StockRequestDaoImpl implements StockRequestDao {
       rs = pstmt.executeQuery();
       while (rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setProduct_id(rs.getString("productID"));
-        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-        stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setProductId(rs.getString("product_id"));
+        stockRequest.setBoxQuantity(rs.getInt("box_quantity"));
+        stockRequest.setBoxSize(rs.getString("box_size").charAt(0));
+        stockRequest.setCellId(rs.getInt("cell_id"));
+        stockRequest.setStatus(rs.getString("approva_status"));
         stockRequest.setRemarks(rs.getString("remarks"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
+        stockRequest.setIncomingDate(LocalDate.parse(rs.getString("incoming_date")));
 
         stockRequestDb.add(stockRequest);
         stockRequest = null;
@@ -100,8 +100,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("SELECT * from stockRequest ")
-        .append("WHERE ID = ?")
+        .append("SELECT * from StockRequest ")
+        .append("WHERE id = ?")
         .toString();
 
     try {
@@ -111,15 +111,15 @@ public class StockRequestDaoImpl implements StockRequestDao {
       while (rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
 
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setProduct_id(rs.getString("productID"));
-        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-        stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setProductId(rs.getString("product_id"));
+        stockRequest.setBoxQuantity(rs.getInt("box_quantity"));
+        stockRequest.setBoxSize(rs.getString("box_size").charAt(0));
+        stockRequest.setCellId(rs.getInt("cell_id"));
+        stockRequest.setStatus(rs.getString("approval_status"));
         stockRequest.setRemarks(rs.getString("remarks"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
+        stockRequest.setIncomingDate(LocalDate.parse(rs.getString("incoming_date")));
 
         stockRequestDb.add(stockRequest);
       }
@@ -139,8 +139,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("SELECT * from stockRequest ")
-        .append("WHERE productID = ?")
+        .append("SELECT * from StockRequest ")
+        .append("WHERE product_id = ?")
         .toString();
     try {
       PreparedStatement pstmt = connection.prepareStatement(query);
@@ -150,15 +150,15 @@ public class StockRequestDaoImpl implements StockRequestDao {
       while(rs.next()){
         StockRequestDto stockRequest = new StockRequestDto();
 
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setProduct_id(rs.getString("productID"));
-        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-        stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setProductId(rs.getString("product_id"));
+        stockRequest.setBoxQuantity(rs.getInt("box_quantity"));
+        stockRequest.setBoxSize(rs.getString("box_size").charAt(0));
+        stockRequest.setCellId(rs.getInt("cell_id"));
+        stockRequest.setStatus(rs.getString("approval_status"));
         stockRequest.setRemarks(rs.getString("remarks"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
+        stockRequest.setIncomingDate(LocalDate.parse(rs.getString("incoming_date")));
 
         stockRequestDb.add(stockRequest);
       }
@@ -177,8 +177,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("SELECT * from stockRequest ")
-        .append("WHERE createdAt = ?")
+        .append("SELECT * from StockRequest ")
+        .append("WHERE created_at = ?")
         .toString();
     try {
       PreparedStatement pstmt = connection.prepareStatement(query);
@@ -188,15 +188,15 @@ public class StockRequestDaoImpl implements StockRequestDao {
       while(rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
 
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setProduct_id(rs.getString("productID"));
-        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-        stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setProductId(rs.getString("product_id"));
+        stockRequest.setBoxQuantity(rs.getInt("box_quantity"));
+        stockRequest.setBoxSize(rs.getString("box_size").charAt(0));
+        stockRequest.setCellId(rs.getInt("cell_id"));
+        stockRequest.setStatus(rs.getString("approval_status"));
         stockRequest.setRemarks(rs.getString("remarks"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
+        stockRequest.setIncomingDate(LocalDate.parse(rs.getString("incoming_date")));
 
         stockRequestDb.add(stockRequest);
       }
@@ -215,8 +215,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("SELECT * from stockRequest ")
-        .append("WHERE incomingDate = ?")
+        .append("SELECT * from StockRequest ")
+        .append("WHERE incoming_date = ?")
         .toString();
 
     try {
@@ -224,21 +224,20 @@ public class StockRequestDaoImpl implements StockRequestDao {
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
       Date sqlDate = Date.valueOf(LocalDate.parse(incomingDate, formatter));
       pstmt.setDate(1, sqlDate);
-      //pstmt.setString(1, incomingDate);
       rs = pstmt.executeQuery();
 
       while(rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
 
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setProduct_id(rs.getString("productID"));
-        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-        stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setProductId(rs.getString("product_id"));
+        stockRequest.setBoxQuantity(rs.getInt("box_quantity"));
+        stockRequest.setBoxSize(rs.getString("box_size").charAt(0));
+        stockRequest.setCellId(rs.getInt("cell_id"));
+        stockRequest.setStatus(rs.getString("approval_status"));
         stockRequest.setRemarks(rs.getString("remarks"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
+        stockRequest.setIncomingDate(LocalDate.parse(rs.getString("incoming_date")));
 
         stockRequestDb.add(stockRequest);
       }
@@ -257,9 +256,9 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("SELECT * from stockRequest ")
-        .append("WHERE approvalStatus like ? ")
-        .append("ORDER BY createdAt asc")
+        .append("SELECT * from StockRequest ")
+        .append("WHERE approval_status like ? ")
+        .append("ORDER BY created_at asc")
         .toString();
 
     try {
@@ -269,15 +268,15 @@ public class StockRequestDaoImpl implements StockRequestDao {
       while (rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
 
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setProduct_id(rs.getString("productID"));
-        stockRequest.setBox_quantity(rs.getInt("boxQuantity"));
-        stockRequest.setBox_size(rs.getString("boxSize").charAt(0));
-        stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setStatus(rs.getString("approvalStatus"));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setProductId(rs.getString("product_id"));
+        stockRequest.setBoxQuantity(rs.getInt("box_quantity"));
+        stockRequest.setBoxSize(rs.getString("box_size").charAt(0));
+        stockRequest.setCellId(rs.getInt("cell_id"));
+        stockRequest.setStatus(rs.getString("approval_status"));
         stockRequest.setRemarks(rs.getString("remarks"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
-        stockRequest.setIncoming_date(LocalDate.parse(rs.getString("incomingDate")));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
+        stockRequest.setIncomingDate(LocalDate.parse(rs.getString("incoming_date")));
 
         stockRequestDb.add(stockRequest);
       }
@@ -296,9 +295,9 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("UPDATE stockRequest ")
-        .append("SET approvalStatus = 'APPROVED' ")
-        .append("WHERE approvalStatus = 'PENDING' and ID = ?")
+        .append("UPDATE StockRequest ")
+        .append("SET approval_status = 'APPROVED' ")
+        .append("WHERE approval_status = 'PENDING' and id = ?")
         .toString();
 
     try {
@@ -329,19 +328,19 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("UPDATE stockRequest ")
-        .append("SET productID = ?, boxQuantity = ?, boxSize = ?, "
-            + "incomingDate = ?, cellID = ?, remarks = ? ")
-        .append("WHERE ID = ?")
+        .append("UPDATE StockRequest ")
+        .append("SET product_id = ?, box_quantity = ?, box_size = ?, "
+            + "incoming_date = ?, cell_id = ?, remarks = ? ")
+        .append("WHERE id = ?")
         .toString();
 
     try {
       PreparedStatement pstmt = connection.prepareStatement(query);
-      pstmt.setString(1, String.valueOf(updateForm.getProduct_id()));
-      pstmt.setString(2, String.valueOf(updateForm.getBox_quantity()));
-      pstmt.setString(3, String.valueOf(updateForm.getBox_size()));
-      pstmt.setDate(4, Date.valueOf(updateForm.getIncoming_date()));
-      pstmt.setString(5, String.valueOf(updateForm.getCell_id()));
+      pstmt.setString(1, String.valueOf(updateForm.getProductId()));
+      pstmt.setString(2, String.valueOf(updateForm.getBoxQuantity()));
+      pstmt.setString(3, String.valueOf(updateForm.getBoxSize()));
+      pstmt.setDate(4, Date.valueOf(updateForm.getIncomingDate()));
+      pstmt.setString(5, String.valueOf(updateForm.getCellId()));
       pstmt.setString(6, String.valueOf(updateForm.getRemarks()));
       pstmt.setString(7, String.valueOf(formID));
 
@@ -361,8 +360,8 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("DELETE FROM stockRequest ")
-        .append("WHERE ID = ?")
+        .append("DELETE FROM StockRequest ")
+        .append("WHERE id = ?")
         .toString();
 
     try {
@@ -391,7 +390,7 @@ public class StockRequestDaoImpl implements StockRequestDao {
     Connection connection = ConnectionFactory.getInstance().open();
     stockRequestDb.clear();
     String query = new StringBuilder()
-        .append("SELECT * FROM receivingInstructions") //CellID도 가지고 와야 함.
+        .append("SELECT * FROM ReceivingInstructions") //CellID도 가지고 와야 함.
         .toString();
 
     try {
@@ -400,12 +399,12 @@ public class StockRequestDaoImpl implements StockRequestDao {
       while (rs.next()) {
         StockRequestDto stockRequest = new StockRequestDto();
 
-        stockRequest.setId(rs.getInt("ID"));
-        stockRequest.setStock_request_id(Optional.ofNullable(rs.getInt("stockRequestID")));
-        stockRequest.setBox_quantity(rs.getInt("boxUnit"));
-        stockRequest.setCreated_at(LocalDate.parse(rs.getString("createdAt")));
+        stockRequest.setId(rs.getInt("id"));
+        stockRequest.setStockRequestId(Optional.ofNullable(rs.getInt("stock_request_id")));
+        stockRequest.setBoxQuantity(rs.getInt("box_unit"));
+        stockRequest.setCreatedAt(LocalDate.parse(rs.getString("created_at")));
         //stockRequest.setCell_id(rs.getInt("cellID"));
-        stockRequest.setLoading_instr(Optional.ofNullable(rs.getString("loadingInstrc")));
+        stockRequest.setLoadingInstr(Optional.ofNullable(rs.getString("loading_instrc")));
         stockRequest.setRemarks(rs.getString("remarks"));;
 
         stockRequestDb.add(stockRequest);
