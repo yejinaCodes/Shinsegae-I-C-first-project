@@ -82,7 +82,7 @@ public class MainApplication {
                 case "1" -> userController.manageUser(auth); // 1. 회원 관리
     //            case "2" ->  // 2. 창고 관리
     //            case "3" ->  // 3. 재고 관리
-                case "4" -> po.insert_order(); // 4. 주문 관리
+                case "4" -> po.insertOrder(); // 4. 주문 관리
                 case "5" -> poc.userMenu(); // 5. 입고 관리
                 case "6" ->  releaseController.releaseEmployeeMenu(); // 6. 출고 관리
                 case "7" -> supportController.handleUserSupportMenu(auth); // 7. 고객 센터
@@ -113,7 +113,7 @@ public class MainApplication {
 //            case "2" -> // 2. 재무 관리
 //            case "3" -> //3. 창고 관리
 //            case "4" -> //4. 재고 관리
-            case "5" -> po.insert_order(); // 5. 주문 관리
+            case "5" -> po.insertOrder(); // 5. 주문 관리
             case "6" -> poc.adminMenu(); // 6. 입고 관리
             case "7" -> releaseController.releaseAdminMenu(); // 7. 출고 관리
             case "8" -> supportController.handleSupportMenu(auth); // 8. 고객 센터

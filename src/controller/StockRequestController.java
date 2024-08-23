@@ -15,8 +15,8 @@ import library.Script;
 import service.serviceImpl.StockRequestServiceImpl;
 
 public class StockRequestController {
-  public static int supplier_id = 1; //나중에 userDto.getID하기
-  public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  public final int supplier_id = 1; //나중에 userDto.getID하기
+  public final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   Script script = new Script();
   StockRequestServiceImpl stockRequestService = new StockRequestServiceImpl();
   public static boolean q = false;
@@ -83,7 +83,7 @@ public class StockRequestController {
     }
   }
 
-  public void printDB(ArrayList<StockRequestDto> list){
+  private void printDB(ArrayList<StockRequestDto> list){
     System.out.println(Menu.STOCKREQUESTCOLUMN.getDescription());
     StockRequestList.forEach(stockrequest -> System.out.println(
         stockrequest.getId() + "\t\t\t" + stockrequest.getProductId() + "\t\t\t"
@@ -92,7 +92,7 @@ public class StockRequestController {
             + stockrequest.getCreatedAt() + "\t\t\t" + stockrequest.getRemarks()));
   }
 
-  public StockRequestDto getFormInput() throws IOException {
+  private StockRequestDto getFormInput() throws IOException {
     System.out.print(Form.PRODUCTID.getDescription());
     String productID = br.readLine();
     System.out.print(Form.BOXQUANTITY.getDescription());
@@ -112,12 +112,12 @@ public class StockRequestController {
     return stockRequest;
   }
 
-  public void createStockRequest() throws IOException, SQLException {
+  private void createStockRequest() throws IOException, SQLException {
     //handler에서 처리하지 않아도 될 것 같음.
     stockRequestService.create(getFormInput());
   }
 
-  public void readByCondition() throws IOException, SQLException {
+  private void readByCondition() throws IOException, SQLException {
     script.readStockRequest();
     String condition = br.readLine();
     StockRequestList.clear();
@@ -167,14 +167,14 @@ public class StockRequestController {
     }
   }
 
-  public void readByCondition(int status){
+  private void readByCondition(int status){
     //창고관리자용
     //pending list만 보여주기
     StockRequestList = stockRequestService.findByStatus(1);
     printDB(StockRequestList);
   }
 
-  public void updateStatus() throws IOException, SQLException {
+  private void updateStatus() throws IOException, SQLException {
     //pending인 요청서만 read
     readByCondition(1); //3번 케이스로 가야함.
 
@@ -214,7 +214,7 @@ public class StockRequestController {
     }
   }
 
-  public void updateRequest(){
+  private void updateRequest(){
     //pending list만 보여주기
     StockRequestList = stockRequestService.findByStatus(1);
     printDB(StockRequestList);
@@ -233,7 +233,7 @@ public class StockRequestController {
     }
   }
 
-  public void deleteRequest() throws IOException {
+  private void deleteRequest() throws IOException {
 
     //pending list 보여주기
     StockRequestList = stockRequestService.findByStatus(1);
@@ -251,7 +251,7 @@ public class StockRequestController {
   }
 
   //입고 지시서는 입고 승인후 작성됨.
-  public void printRequestInstr(){
+  private void printRequestInstr(){
     script.printInstruc();
     StockRequestList.clear();
 

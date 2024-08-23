@@ -15,7 +15,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
     Connection connection = ConnectionFactory.getInstance().open();
 
     String query = new StringBuilder()
-        .append("INSERT INTO purchaseOrder (purchaseOrderID, productID, quantity, cellID, deliveryDate, status, creationDate) ")
+        .append("INSERT INTO PurchaseOrder (purchase_order_id, product_id, quantity, cell_id, delivery_date, status, creation_date) ")
         .append("VALUES(?,?,?,?,?,?,?)")
         .toString();
 
