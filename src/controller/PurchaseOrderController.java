@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import service.serviceImpl.PurchaseOrderServiceImpl;
 
 public class PurchaseOrderController {
-  public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  public final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-  public void insert_order() throws IOException {
+  public void insertOrder() throws IOException {
     PurchaseOrderServiceImpl poService = new PurchaseOrderServiceImpl();
 
     while(true){
