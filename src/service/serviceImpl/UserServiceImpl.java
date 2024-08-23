@@ -13,10 +13,8 @@ import service.UserService;
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao = new UserDaoImpl();
-    private Encrypt encrypt = new Encrypt();
     @Override
     public void createUser(UserRequestDto request) {
-//        encrypt.getEncrypt(request.getPassword());
         request.getPassword();
         userDao.createUser(request);
     }
@@ -52,8 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateApprovalStatus(int id, UserApprovalRequestDto request) {
-        userDao.updateApprovalStatus(id, request);
+    public void updateApprovalStatus(int auth, int id, UserApprovalRequestDto request) {
+        userDao.updateApprovalStatus(auth, id, request);
     }
 
     @Override

@@ -15,8 +15,10 @@ public class ValidCheck {
     private static final String MENU_RANGE_1_TO_3 = "^[1-3]";
     private static final String MENU_RANGE_1_TO_4 = "^[1-4]";
     private static final String MENU_RANGE_1_TO_5 = "^[1-5]";
+    private static final String MENU_RANGE_1_TO_6 = "^[1-6]";
     private static final String MENU_RANGE_1_TO_7 = "^[1-7]";
     private static final String MENU_RANGE_1_TO_8 = "^[1-8]";
+    private static final String MENU_RANGE_1_TO_9 = "^[1-9]";
 
     /**
      * 공백 입력 값 검사
@@ -98,6 +100,19 @@ public class ValidCheck {
     /**
      * 메뉴 번호 유효성 검사
      *
+     * @param menu 메뉴 번호 (1 ~ 6)
+     */
+    public void validateMenuNumber1To6(String menu) {
+        validateNumber(menu);
+
+        if (!(menu.matches(MENU_RANGE_1_TO_6))) {
+            throw new Exception(ErrorCode.INVALID_MENU_OPTION);
+        }
+    }
+
+    /**
+     * 메뉴 번호 유효성 검사
+     *
      * @param menu 메뉴 번호 (1 ~ 7)
      */
     public void validateMenuNumber1To7(String menu) {
@@ -117,6 +132,19 @@ public class ValidCheck {
         validateNumber(menu);
 
         if (!(menu.matches(MENU_RANGE_1_TO_8))) {
+            throw new Exception(ErrorCode.INVALID_MENU_OPTION);
+        }
+    }
+
+    /**
+     * 메뉴 번호 유효성 검사
+     *
+     * @param menu 메뉴 번호 (1 ~ 9)
+     */
+    public void validateMenuNumber1To9(String menu) {
+        validateNumber(menu);
+
+        if (!(menu.matches(MENU_RANGE_1_TO_9))) {
             throw new Exception(ErrorCode.INVALID_MENU_OPTION);
         }
     }
@@ -219,6 +247,24 @@ public class ValidCheck {
             throw new Exception(ErrorCode.INVALID_BIZ_NO);
         }
         return bNumber;
+    }
+
+    /**
+     * 총 관리자 접근 권한
+     */
+    public void accessSuperAdmin(Role role) {
+        if (!role.equals(Role.SUPER_ADMIN)) {
+            throw new Exception(ErrorCode.ACCESS_DENIED);
+        }
+    }
+
+    /**
+     * 총 관리자 & 관리자 접근 권한
+     */
+    public void accessAdmin(Role role) {
+        if (!(role.equals(Role.SUPER_ADMIN)||role.equals(Role.ADMIN))) {
+            throw new Exception(ErrorCode.ACCESS_DENIED);
+        }
     }
 
 }

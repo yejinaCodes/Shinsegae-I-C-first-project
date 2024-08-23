@@ -68,7 +68,7 @@ public class AdminResponseDto {
     }
 
     public String formatAdminList() {
-        return String.format("| %-2d | %-12s\t| %-10s\t| %-8s\t| %-4s\t|",
+        return String.format("| %-2d | %-12s\t| %-10s\t| %-10s\t| %-10s\t|",
             id,
             name,
             department,

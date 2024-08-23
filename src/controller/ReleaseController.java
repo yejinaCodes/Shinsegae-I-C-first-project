@@ -28,7 +28,7 @@ public class ReleaseController {
     private final StringBuilder waybill = new StringBuilder();
     private int id = 0;
 
-    public void releaseEmployeeMenu() throws IOException, SQLException {
+    public void releaseEmployeeMenu() throws IOException{
         boolean loop = true;
         while (loop) {
             System.out.println("1. 출고 요청서 작성 2. 출고 조회 3. 출고 취소 4. 나가기");
@@ -69,7 +69,7 @@ public class ReleaseController {
         }
     }
 
-    public void releaseAdminMenu() throws SQLException, IOException {
+    public void releaseAdminMenu() throws IOException {
         //deliveryService.schedulerOn();
         boolean loop = true;
         while (loop) {
@@ -180,14 +180,14 @@ public class ReleaseController {
         releaseService.createRelease(releaseDto); //service로 전달
     }
 
-    public void updateReleaseCancel() throws IOException, SQLException {
+    public void updateReleaseCancel() throws IOException{
         System.out.println("출고 취소할 아이디 입력 (뒤로 가기 : 0) : ");
         id = Integer.parseInt(br.readLine());
         if (id != 0)
             releaseService.updateRelease(id, 3);
     }
 
-    public void updateReleaseApproval() throws IOException, SQLException {
+    public void updateReleaseApproval() throws IOException{
         System.out.println("출고 승인할 아이디 입력 (뒤로 가기 : 0) : ");
         id = Integer.parseInt(br.readLine());
         if (id != 0) {
@@ -208,7 +208,7 @@ public class ReleaseController {
         }
     }
 
-    public void updateReleaseReject() throws IOException, SQLException {
+    public void updateReleaseReject() throws IOException{
         System.out.println("출고 거절할 아이디 입력 (뒤로 가기 : 0) : ");
         id = Integer.parseInt(br.readLine());
         if (id != 0) {

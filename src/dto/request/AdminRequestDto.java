@@ -41,8 +41,6 @@ public class AdminRequestDto {
      * 정보 수정
      */
     public AdminRequestDto(String name, String adminId, String phone) {
-        // 🚨 로그인 유저 id로 변경 예정
-        this.id = 1;
         this.name = name;
         this.adminId = adminId;
         this.companyEmail = adminId + "@clap.co.kr";
@@ -63,8 +61,6 @@ public class AdminRequestDto {
      * 권한 수정
      */
     public AdminRequestDto(Role role) {
-        // 🚨 로그인 유저 id로 변경 예정
-        this.id = 1;
         this.role = role;
         this.updatedAt = LocalDateTime.getTime();
     }
@@ -73,8 +69,6 @@ public class AdminRequestDto {
      * 부서 및 직급 수정
      */
     public AdminRequestDto(Department department, Position position) {
-        // 🚨 로그인 유저 id로 변경 예정
-        this.id = 1;
         this.department = department;
         this.position = position;
         this.updatedAt = LocalDateTime.getTime();

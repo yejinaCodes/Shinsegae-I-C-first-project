@@ -9,7 +9,7 @@ import service.NoticeService;
 
 public class NoticeServiceImpl implements NoticeService {
 
-    private static NoticeDao noticeDao = new NoticeDaoImpl();
+    private final NoticeDao noticeDao = new NoticeDaoImpl();
 
     @Override
     public void createNotice(NoticeRequestDto request) {

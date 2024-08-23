@@ -203,7 +203,7 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public void updateAdmin(AdminRequestDto request) {
+    public void updateAdmin(int auth, AdminRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("UPDATE Admin ")
@@ -219,7 +219,7 @@ public class AdminDaoImpl implements AdminDao {
             pstmt.setString(3, request.getCompanyEmail());
             pstmt.setString(4, request.getPhone());
             pstmt.setString(5, request.getUpdatedAt());
-            pstmt.setInt(6, request.getId());
+            pstmt.setInt(6, auth);
 
             pstmt.executeUpdate();
             pstmt.close();
@@ -256,7 +256,7 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public void updateRole(int targetEmployeeId, AdminRequestDto request) {
+    public void updateRole(int auth, int targetEmployeeId, AdminRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("UPDATE Admin ")
@@ -268,7 +268,7 @@ public class AdminDaoImpl implements AdminDao {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, request.getRole().toString());
             pstmt.setString(2, request.getUpdatedAt());
-            pstmt.setInt(3, request.getId());
+            pstmt.setInt(3, auth);
             pstmt.setInt(4, targetEmployeeId);
 
             pstmt.executeUpdate();
@@ -281,7 +281,7 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request) {
+    public void updateAdminDeptPos(int auth, int targetEmployeeId, AdminRequestDto request) {
         connection = ConnectionFactory.getInstance().open();
         String query = new StringBuilder()
             .append("UPDATE Admin ")
@@ -294,7 +294,7 @@ public class AdminDaoImpl implements AdminDao {
             pstmt.setString(1, request.getDepartment().toString());
             pstmt.setString(2, request.getPosition().toString());
             pstmt.setString(3, request.getUpdatedAt());
-            pstmt.setInt(4, request.getId());
+            pstmt.setInt(4, auth);
             pstmt.setInt(5, targetEmployeeId);
 
             pstmt.executeUpdate();

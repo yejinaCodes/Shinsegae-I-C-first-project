@@ -43,9 +43,8 @@ public class Script {
 
     /**
      * 회원(쇼핑몰) 페이지 메뉴 선택
-     * 1. 회원 관리 | 2. 창고 관리 | 3. 재고 관리
-     * 4. 입고 관리 | 5. 출고 관리 | 6. 고객 센터
-     * 7. 로그아웃
+     * 1. 회원 관리 | 2. 창고 관리 | 3. 재고 관리 | 4. 주문 관리
+     * 5. 입고 관리 | 6. 출고 관리 | 7. 고객 센터 | 8. 로그아웃
      */
     public void userMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -56,8 +55,8 @@ public class Script {
 
     /**
      * 어드민 페이지 메뉴 선택
-     * 1. 회원 관리 | 2. 재무 관리 | 3. 창고 관리 | 4. 재고 관리
-     * 5. 입고 관리 | 6. 출고 관리 | 7. 고객 센터 | 8. 로그아웃
+     * 1. 회원 관리 | 2. 재무 관리 | 3. 창고 관리 | 4. 재고 관리 | 5. 주문 관리
+     * 6. 입고 관리 | 7. 출고 관리 | 8. 고객 센터 | 9. 로그아웃
      */
     public void adminMainMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -68,7 +67,7 @@ public class Script {
 
     /**
      * '회원 관리' 메뉴 선택
-     * 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제
+     * 1. 조회 | 2. 수정 | 3. 권한 설정 | 4. 삭제 | 5. 이전 메뉴
      */
     public void manageMember() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -79,7 +78,7 @@ public class Script {
 
     /**
      * '회원 관리 > 조회' 메뉴 선택
-     * 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회
+     * 1. 직원 조회 | 2. 쇼핑몰 사업자 회원 조회 | 3. 이전 메뉴
      */
     public void viewMember() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -90,7 +89,7 @@ public class Script {
 
     /**
      * '회원 관리 > 조회 > 직원 조회' 메뉴 선택
-     * 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회
+     * 1. 직원 상세 조회 | 2. 직원 전체 조회 | 3. 권한별 직원 조회 | 4. 이전 메뉴
      */
     public void viewAdmin() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -111,7 +110,7 @@ public class Script {
 
     /**
      * '회원 관리 > 조회 > 쇼핑몰 사업자 회원 조회' 메뉴 선택
-     * 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회
+     * 1. 쇼핑몰 회원 상세 조회 | 2. 쇼핑몰 회원 전체 조회 | 3. 승인 대기자 조회 | 4. 이전 메뉴
      */
     public void viewUser() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -122,7 +121,7 @@ public class Script {
 
     /**
      * '회원 관리 > 수정' 메뉴 선택
-     * 1. 회원 정보 수정 | 2. 비밀번호 수정
+     * 1. 회원 정보 수정 | 2. 비밀번호 수정 | 3. 이전 메뉴
      */
     public void editMember() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -133,7 +132,7 @@ public class Script {
 
     /**
      * '회원 관리 > 권한 설정' 메뉴 선택
-     * 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 권한 승인
+     * 1. 직원 권한 | 2. 직원 부서 및 직급 | 3. 쇼핑몰 사업자 가입 승인 | 4. 이전 메뉴
      */
     public void setMemberPermission() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -144,7 +143,7 @@ public class Script {
 
     /**
      * '회원 관리 > 삭제' 메뉴 선택
-     * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제
+     * 1. 직원 삭제 | 2. 쇼핑몰 사업자 회원 삭제 | 3. 이전 메뉴
      */
     public void deleteMember() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -155,7 +154,7 @@ public class Script {
 
     /**
      * '회원 관리' 메뉴 선택
-     * 1. 정보 조회 | 2. 정보 수정 | 3. 비밀번호 변경 | 4. 탈퇴
+     * 1. 정보 조회 | 2. 정보 수정 | 3. 비밀번호 변경 | 4. 탈퇴 | 5. 이전 메뉴
      */
     public void manageUser() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -275,6 +274,86 @@ public class Script {
     }
 
     /**
+     * 로그아웃
+     */
+    public void logout() {
+        script.append(ResponseMessage.LOGOUT.getMessage());
+        print();
+    }
+
+    /**
+     * 탈퇴
+     */
+    public void unregister() {
+        script.append(ResponseMessage.UNREGISTER.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 생성 성공
+     */
+    public void createSuccess() {
+        script.append(ResponseMessage.CREATE_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 생성 실패
+     */
+    public void createFailure() {
+        script.append(ResponseMessage.CREATE_FAILURE.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 조회 성공
+     */
+    public void viewSuccess() {
+        script.append(ResponseMessage.VIEW_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 조회 실패
+     */
+    public void viewFailure() {
+        script.append(ResponseMessage.VIEW_FAILURE.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 수정 성공
+     */
+    public void updateSuccess() {
+        script.append(ResponseMessage.UPDATE_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 수정 실패
+     */
+    public void updateFailure() {
+        script.append(ResponseMessage.UPDATE_FAILURE.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 삭제 성공
+     */
+    public void deleteSuccess() {
+        script.append(ResponseMessage.DELETE_SUCCESS.getMessage());
+        print();
+    }
+
+    /**
+     * 정보 삭제 실패
+     */
+    public void deleteFailure() {
+        script.append(ResponseMessage.DELETE_FAILURE.getMessage());
+        print();
+    }
+
+    /**
      * 직원 내역 조회 title
      */
     public void adminListTitle() {
@@ -360,9 +439,12 @@ public class Script {
             .append(Member.ID.getDescription()).append(response).append("\n");
         print();
     }
-
-    public void selectMenu(){
-        script.append(Menu.STOCKREQUESTMENUSELECT.getDescription());
+    public void selectUserMenu(){
+        script.append(Menu.USERMENUSELECT.getDescription());
+        print();
+    }
+    public void selectAdminMenu(){
+        script.append(Menu.ADMINMENUSELECT.getDescription());
         print();
     }
     public void readStockRequest(){
@@ -373,17 +455,28 @@ public class Script {
         script.append(Menu.FINDSTATUSWMS.getDescription());
         print();
     }
-
     public void updateStockRequest(){
         script.append(Menu.UPDATESTATUS.getDescription());
         print();
     }
+    public void updateRequestForm(){
+        script.append(Menu.UPDATEREQUEST.getDescription());
+        print();
+    }
+
     public void cancelStockRequest(){
+        script.append(Menu.DELETEWARNING.getDescription());
+        print();
+    }
+
+    public void printInstruc(){
+        script.append(Menu.PRINTINSTRC.getDescription());
+        print();
     }
 
     /**
      * '고객 센터' 메뉴 선택
-     * 1. 공지사항 | 2. 게시글 | 3. 1 대 1 문의
+     * 1. 공지사항 | 2. 게시글 | 3. 1:1 문의 내역 | 4. 이전 메뉴
      */
     public void supportMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -393,7 +486,7 @@ public class Script {
     }
 
     /**
-     * 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제
+     * 1. 생성 | 2. 조회 | 3. 수정 | 4. 삭제 | 5. 이전 메뉴
      */
     public void showCRUDMenu() {
         script.append(Menu.BORDER_LINE.getDescription())
@@ -403,7 +496,7 @@ public class Script {
     }
 
     /**
-     * 1. 전체 조회 | 2. 상세 조회
+     * 1. 전체 조회 | 2. 상세 조회 | 3. 이전 메뉴
      */
     public void showViewMenu() {
         script.append(Menu.BORDER_LINE.getDescription())

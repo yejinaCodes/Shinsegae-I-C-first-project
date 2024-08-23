@@ -9,7 +9,7 @@ import service.AdminService;
 
 public class AdminServiceImpl implements AdminService {
 
-    private static AdminDao adminDao = new AdminDaoImpl();
+    private final AdminDao adminDao = new AdminDaoImpl();
     @Override
     public void createAdmin(AdminRequestDto request) {
         adminDao.createAdmin(request);
@@ -36,8 +36,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateAdmin(AdminRequestDto request) {
-        adminDao.updateAdmin(request);
+    public void updateAdmin(int auth, AdminRequestDto request) {
+        adminDao.updateAdmin(auth, request);
     }
 
     @Override
@@ -46,14 +46,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateRole(int targetEmployeeId, AdminRequestDto request) {
-        adminDao.updateRole(targetEmployeeId, request);
+    public void updateRole(int auth, int targetEmployeeId, AdminRequestDto request) {
+        adminDao.updateRole(auth, targetEmployeeId, request);
 
     }
 
     @Override
-    public void updateAdminDeptPos(int targetEmployeeId, AdminRequestDto request) {
-        adminDao.updateAdminDeptPos(targetEmployeeId, request);
+    public void updateAdminDeptPos(int auth, int targetEmployeeId, AdminRequestDto request) {
+        adminDao.updateAdminDeptPos(auth, targetEmployeeId, request);
     }
 
     @Override

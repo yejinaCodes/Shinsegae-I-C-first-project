@@ -19,7 +19,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         return releaseDao.findAll();
     }
 
-    public void updateRelease(int id, int select) throws SQLException {
+    public void updateRelease(int id, int select){
         releaseDao.updateRelease(id,select);
     }
 
