@@ -41,7 +41,7 @@ public class WarehouseController {
                         for (SectionDto sectionDto : sectionAll) {
                             System.out.printf("|\t%d\t|\t%d\t|\t%.1f\t|\n",
                                     sectionDto.getId(),
-                                    sectionDto.getWarehouse_id(),
+                                    sectionDto.getWarehouseId(),
                                     sectionDto.getSize());
                         }
                         break;
@@ -51,10 +51,10 @@ public class WarehouseController {
                         for (CellDto cellDto : cellAll) {
                             System.out.printf("|\t%d\t|\t%d\t|\t%.1f\t|\t%d\t|\t%d\t|\n",
                                     cellDto.getId(),
-                                    cellDto.getSection_id(),
+                                    cellDto.getSectionId(),
                                     cellDto.getSize(),
-                                    cellDto.getTotal_capacity(),
-                                    cellDto.getAvailable_capacity());
+                                    cellDto.getTotalCapacity(),
+                                    cellDto.getAvailableCapacity());
                         }
                         break;
                     case 4:

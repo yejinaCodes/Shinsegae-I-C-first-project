@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShippingInstructionDto {
     private int id;
-    private int release_id;
-    private int delivery_id;
-    private String created_at;
+    private int releaseId;
+    private int deliveryId;
+    private String createdAt;
 }

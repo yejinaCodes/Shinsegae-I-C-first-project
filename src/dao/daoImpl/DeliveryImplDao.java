@@ -22,7 +22,7 @@ public class DeliveryImplDao implements DeliveryDao {
     @Override
     public void createDelivery(DeliveryDto dto){
         ReleaseImplDao releaseImplDao = new ReleaseImplDao();
-        boolean decide = existenceByRelease(dto.getRelease_id());
+        boolean decide = existenceByRelease(dto.getReleaseId());
 
         if(decide) {
             waitDeliveryMan = waitDeliveryMan();
@@ -49,14 +49,14 @@ public class DeliveryImplDao implements DeliveryDao {
                         DateTimeFormatter end = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         String end_date = dateTime.format(end);
                         pstmt.setString(3, end_date);
-                        pstmt.setInt(4, dto.getRelease_id());
+                        pstmt.setInt(4, dto.getReleaseId());
                         pstmt.setString(5, dto.getRemarks());
                         dateTime = dateTime.minusDays(1);
                         DateTimeFormatter start = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         String start_date = dateTime.format(start);
                         pstmt.setString(6, start_date);
                         pstmt.setString(7, DeliveryStatus.WAIT.toString());
-                        pstmt.setInt(8, releaseImplDao.findById(dto.getRelease_id()).getUser_id());
+                        pstmt.setInt(8, releaseImplDao.findById(dto.getReleaseId()).getUserId());
                         pstmt.setInt(9, 1);
                         pstmt.executeUpdate();
                         pstmt.close();
@@ -239,7 +239,7 @@ public class DeliveryImplDao implements DeliveryDao {
         List<DeliveryDto> deliveryAll = findByAll(); //전체 배송 아이디
         List<Integer> deliveryManAll = deliveryManAll();//모든 배송기사
 
-        //전체 배송리스트를 받아와 배송중인 배송기사는 빼주고 나머지 인원은 오래있는 순서대로 queue에 저장한다.
+        //전체 배송리스트를 받아와 배송중인 배송기사는 빼주고 나머지 인원은 오래있는 순서대로 Deque에 저장한다.
         waitDeliveryMan = new LinkedList<>(deliveryManAll);
 
         if(!deliveryAll.isEmpty()) {
@@ -248,12 +248,12 @@ public class DeliveryImplDao implements DeliveryDao {
                     if (waitDeliveryMan.size() > deliveryAll.size())
                         continue;
                     else
-                        waitDeliveryMan.add(deliveryDto.getAdmin_id());
+                        waitDeliveryMan.add(deliveryDto.getAdminId());
                 }
                 else if(deliveryDto.getDeliveryStatus().toString().equals("CANCEL"))
                     continue;
                 else
-                    waitDeliveryMan.remove(deliveryDto.getAdmin_id());
+                    waitDeliveryMan.remove(deliveryDto.getAdminId());
             }
         }
 

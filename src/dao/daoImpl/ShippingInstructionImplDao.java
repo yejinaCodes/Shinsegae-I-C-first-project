@@ -1,17 +1,13 @@
 package dao.daoImpl;
 
-import common.ReleaseStatus;
 import config.ConnectionFactory;
 import dao.ShippingInstructionDao;
-import dto.ReleaseDto;
 import dto.ShippingInstructionDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +25,8 @@ public class ShippingInstructionImplDao implements ShippingInstructionDao {
                 "AFTER INSERT ON delivery " +
                 "FOR EACH ROW " +
                 "BEGIN " +
-                "    INSERT INTO shippinginstruction (release_id, delivery_id, created_at) " +
-                "    VALUES (NEW.release_id, NEW.id, NOW()); " +
+                "    INSERT INTO shippinginstruction (releaseId, deliveryId, created_at) " +
+                "    VALUES (NEW.releaseId, NEW.id, NOW()); " +
                 "END;";
         try {
             pstmt = con.prepareStatement(query);
@@ -56,8 +52,8 @@ public class ShippingInstructionImplDao implements ShippingInstructionDao {
 
             while(rs.next()){
                 int id = rs.getInt("id");
-                int delivery_id = rs.getInt("delivery_id");
-                int release_id = rs.getInt("release_id");
+                int delivery_id = rs.getInt("deliveryId");
+                int release_id = rs.getInt("releaseId");
                 String created_at = rs.getString("created_at");
 
                 ShippingInstructionDto dto = new ShippingInstructionDto(id, delivery_id, release_id, created_at);

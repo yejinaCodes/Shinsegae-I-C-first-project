@@ -28,7 +28,7 @@ public class WaybillImplDao implements WaybillDao {
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1,dto.getId());
-            pstmt.setInt(2,dto.getDelivery_id());
+            pstmt.setInt(2,dto.getDeliveryId());
             LocalDateTime dateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             String created_at = dateTime.format(formatter);
@@ -40,7 +40,7 @@ public class WaybillImplDao implements WaybillDao {
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
-        deliveryImplDao.updateDelivery(dto.getDelivery_id(),3);
+        deliveryImplDao.updateDelivery(dto.getDeliveryId(),3);
         System.out.println("운송장이 등록되었습니다.");
     }
 

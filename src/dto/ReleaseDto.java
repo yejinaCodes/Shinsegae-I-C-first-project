@@ -1,6 +1,6 @@
 package dto;
 
-import common.ReleaseStatus;
+import common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,23 +11,23 @@ import lombok.NoArgsConstructor;
 public class ReleaseDto {
 
     private int id;
-    private int user_id;
-    private String product_id;
-    private String customer_name;
-    private String customer_address;
+    private int userId;
+    private String productId;
+    private String customerName;
+    private String customerAddress;
     private int amount;
-    private ReleaseStatus releaseStatus;
+    private Status releaseStatus;
     private String remarks;
     //시간 받기
-    private String created_at;
-    private String updated_at;
+    private String createdAt;
+    private String updatedAt;
 
-    public ReleaseDto(String customer_name, String customer_address, int amount, String product_id, String remarks){
-        this.customer_name = customer_name;
-        this.customer_address = customer_address;
+    public ReleaseDto(String customerName, String customerAddress, int amount, String productId, String remarks){
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
         this.amount = amount;
-        this.product_id = product_id;
-        this.releaseStatus = ReleaseStatus.PENDING;
+        this.productId = productId;
+        this.releaseStatus = Status.PENDING;
         this.remarks = remarks;
     }
 }

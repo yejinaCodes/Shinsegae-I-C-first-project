@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WaybillDto {
     private String id;
-    private int delivery_id;
-    private String created_at;
+    private int deliveryId;
+    private String createdAt;
 
-    public WaybillDto(String id, int delivery_id){
+    public WaybillDto(String id, int deliveryId){
         this.id = id;
-        this.delivery_id = delivery_id;
+        this.deliveryId = deliveryId;
     }
 }

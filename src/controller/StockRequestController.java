@@ -21,6 +21,7 @@ public class StockRequestController {
   ArrayList<StockRequestDto> StockRequestList = new ArrayList<StockRequestDto>();
   ArrayList<Integer> approvedList = new ArrayList<Integer>();
 
+
   public void menu(){
     try {
       while (!q) {

@@ -1,6 +1,6 @@
 package controller;
 
-import common.ReleaseStatus;
+import common.Status;
 import dao.daoImpl.DeliveryImplDao;
 import dto.DeliveryDto;
 import dto.ReleaseDto;
@@ -20,142 +20,141 @@ import service.serviceImpl.ShippingInstructionServiceImpl;
 import service.serviceImpl.WaybillServiceImpl;
 
 public class ReleaseController {
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final ReleaseServiceImpl releaseService = new ReleaseServiceImpl();
+    private final DeliveryServiceImpl deliveryService = new DeliveryServiceImpl();
+    private final WaybillServiceImpl waybillService = new WaybillServiceImpl();
+    private final ShippingInstructionServiceImpl shippingInstructionService = new ShippingInstructionServiceImpl();
+    private final StringBuilder waybill = new StringBuilder();
+    private int id = 0;
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static ReleaseServiceImpl releaseService = new ReleaseServiceImpl();
-    static DeliveryServiceImpl deliveryService = new DeliveryServiceImpl();
-    static WaybillServiceImpl waybillService = new WaybillServiceImpl();
-    static ShippingInstructionServiceImpl shippingInstructionService = new ShippingInstructionServiceImpl();
-    static StringBuilder waybill = new StringBuilder();
-    static int id = 0;
-
-    public static void main(String[] args) throws IOException, SQLException {
+    public void releaseEmployeeMenu() throws IOException, SQLException {
         boolean loop = true;
-        while(loop) {
-            int role = 2;
-            switch (role) {
-                case 1/*EMPLOYEE*/:
-                    System.out.println("1. 출고 요청서 작성 2. 출고 조회 3. 출고 취소 4. 나가기");
+        while (loop) {
+            System.out.println("1. 출고 요청서 작성 2. 출고 조회 3. 출고 취소 4. 나가기");
+            switch (Integer.parseInt(br.readLine())) {
+                case 1:
+                    createRelease();
+                    break;
+                case 2:
+                    System.out.println("1. 전체 조회 2. 요청 승인 조회 3. 요청 거절 조회 4.나가기");
                     switch (Integer.parseInt(br.readLine())) {
                         case 1:
-                            createRelease();
+                            readReleaseAll();
                             break;
                         case 2:
-                            System.out.println("1. 전체 조회 2. 요청 승인 조회 3. 요청 거절 조회 4.나가기");
-                            switch (Integer.parseInt(br.readLine())) {
-                                case 1:
-                                    readReleaseAll();
-                                    break;
-                                case 2 :
-                                    readReleaseApproval();
-                                    break;
-                                case 3:
-                                    readReleaseReject();
-                                    break;
-                                case 4:
-                                    break;
-                                default:
-                                    System.out.println("다시 입력하세요.");
-                                    break;
-                            }
+                            readReleaseApproval();
                             break;
                         case 3:
-                            updateReleaseCancel();
-                            System.out.println("취소 완료");
+                            readReleaseReject();
                             break;
                         case 4:
-                            loop = false;
                             break;
                         default:
                             System.out.println("다시 입력하세요.");
                             break;
                     }
                     break;
-                case 2/*ADMIN*/:
-                case 3/*SUPER_ADMIN*/:
-                    //deliveryService.schedulerOn();
-                    System.out.println("1. 출고 관리 2. 배송 관리 3. 운송장 관리 4. 나가기");
+                case 3:
+                    updateReleaseCancel();
+                    System.out.println("취소 완료");
+                    break;
+                case 4:
+                    loop = false;
+                    break;
+                default:
+                    System.out.println("다시 입력하세요.");
+                    break;
+            }
+        }
+    }
+
+    public void releaseAdminMenu() throws SQLException, IOException {
+        //deliveryService.schedulerOn();
+        boolean loop = true;
+        while (loop) {
+            System.out.println("1. 출고 관리 2. 배송 관리 3. 운송장 관리 4. 나가기");
+            switch (Integer.parseInt(br.readLine())) {
+                case 1:
+                    System.out.println("1. 전체 조회 2. 요청 승인 조회 3. 요청 거절 조회 4. 출고 승인 5. 출고 거절 6. 출고 지시서 조회 7. 뒤로");
                     switch (Integer.parseInt(br.readLine())) {
                         case 1:
-                            System.out.println("1. 전체 조회 2. 요청 승인 조회 3. 요청 거절 조회 4. 출고 승인 5. 출고 거절 6. 출고 지시서 조회 7. 뒤로");
-                            switch (Integer.parseInt(br.readLine())) {
-                                case 1:
-                                    readReleaseAll();
-                                    break;
-                                case 2:
-                                    readReleaseApproval();
-                                    break;
-                                case 3:
-                                    readReleaseReject();
-                                    break;
-                                case 4:
-                                    updateReleaseApproval();
-                                    break;
-                                case 5:
-                                    updateReleaseReject();
-                                    break;
-                                case 6:
-                                    readAllShip();
-                                    break;
-                                case 7:
-                                    break;
-                                default:
-                                    System.out.println("다시 입력하세요.");
-                                    break;
-                            }
+                            readReleaseAll();
                             break;
-                        case 2://배송
-                            System.out.println("1. 배차 등록 2. 배차 취소 3. 배차 조회 4. 배차 취소 조회 5. 대기 중인 배송기사 조회 6. 나가기");
-                            switch (Integer.parseInt(br.readLine())) {
-                                case 1:
-                                    createDelivery();
-                                    break;
-                                case 2:
-                                    cancelDelivery();
-                                    break;
-                                case 3:
-                                    readDeliveryAll();
-                                    break;
-                                case 4://1분을 1일로 바꿔라
-                                    readDeliveryCancel();
-                                    break;
-                                case 5:
-                                    readDeliveryMan();
-                                    break;
-                                case 6:
-                                    break;
-                                default:
-                                    System.out.println("다시 입력하세요.");
-                                    break;
-                            }
+                        case 2:
+                            readReleaseApproval();
                             break;
-                        case 3://운송장
-                            System.out.println("1. 운송장 등록 2. 운송장 조회 3. 운송장 전체 조회 4. 나가기");
-                            switch (Integer.parseInt(br.readLine())) {
-                                case 1:
-                                    createWaybill();
-                                    break;
-                                case 2:
-                                    readWaybillId();
-                                    break;
-                                case 3:
-                                    readWaybillAll();
-                                    break;
-                                case 4:
-                                    break;
-                            }
+                        case 3:
+                            readReleaseReject();
                             break;
                         case 4:
-                            loop = false;
+                            updateReleaseApproval();
+                            break;
+                        case 5:
+                            updateReleaseReject();
+                            break;
+                        case 6:
+                            readAllShip();
+                            break;
+                        case 7:
                             break;
                         default:
                             System.out.println("다시 입력하세요.");
                             break;
                     }
+                    break;
+                case 2://배송
+                    System.out.println("1. 배차 등록 2. 배차 취소 3. 배차 조회 4. 배차 취소 조회 5. 대기 중인 배송기사 조회 6. 나가기");
+                    switch (Integer.parseInt(br.readLine())) {
+                        case 1:
+                            createDelivery();
+                            break;
+                        case 2:
+                            cancelDelivery();
+                            break;
+                        case 3:
+                            readDeliveryAll();
+                            break;
+                        case 4://1분을 1일로 바꿔라
+                            readDeliveryCancel();
+                            break;
+                        case 5:
+                            readDeliveryMan();
+                            break;
+                        case 6:
+                            break;
+                        default:
+                            System.out.println("다시 입력하세요.");
+                            break;
+                    }
+                    break;
+                case 3://운송장
+                    System.out.println("1. 운송장 등록 2. 운송장 조회 3. 운송장 전체 조회 4. 나가기");
+                    switch (Integer.parseInt(br.readLine())) {
+                        case 1:
+                            createWaybill();
+                            break;
+                        case 2:
+                            readWaybillId();
+                            break;
+                        case 3:
+                            readWaybillAll();
+                            break;
+                        case 4:
+                            break;
+                    }
+                    break;
+                case 4:
+                    loop = false;
+                    break;
+                default:
+                    System.out.println("다시 입력하세요.");
+                    break;
             }
         }
     }
-    public static void createRelease() throws IOException {
+
+    public void createRelease() throws IOException {
         System.out.printf("수령인 이름 : ");
         String customer_name = br.readLine();
 
@@ -181,14 +180,14 @@ public class ReleaseController {
         releaseService.createRelease(releaseDto); //service로 전달
     }
 
-    public static void updateReleaseCancel() throws IOException, SQLException {
+    public void updateReleaseCancel() throws IOException, SQLException {
         System.out.println("출고 취소할 아이디 입력 (뒤로 가기 : 0) : ");
         id = Integer.parseInt(br.readLine());
         if (id != 0)
             releaseService.updateRelease(id, 3);
     }
 
-    public static void updateReleaseApproval() throws IOException, SQLException {
+    public void updateReleaseApproval() throws IOException, SQLException {
         System.out.println("출고 승인할 아이디 입력 (뒤로 가기 : 0) : ");
         id = Integer.parseInt(br.readLine());
         if (id != 0) {
@@ -209,7 +208,7 @@ public class ReleaseController {
         }
     }
 
-    public static void updateReleaseReject() throws IOException, SQLException {
+    public void updateReleaseReject() throws IOException, SQLException {
         System.out.println("출고 거절할 아이디 입력 (뒤로 가기 : 0) : ");
         id = Integer.parseInt(br.readLine());
         if (id != 0) {
@@ -218,19 +217,19 @@ public class ReleaseController {
         }
     }
 
-    public static void readAllShip(){
+    public void readAllShip() {
         List<ShippingInstructionDto> findAll = shippingInstructionService.getAll();
         System.out.println("출고 지시서 아이디 | 배송 아이디 | 출고 아이디 | 등록 날짜 |");
         for (ShippingInstructionDto dto : findAll) {
             System.out.printf("\t%d\t|\t%d\t|\t%d\t|\t%s\t|\n",
                     dto.getId(),
-                    dto.getDelivery_id(),
-                    dto.getRelease_id(),
-                    dto.getCreated_at());
+                    dto.getDeliveryId(),
+                    dto.getReleaseId(),
+                    dto.getCreatedAt());
         }
     }
 
-    public static void createDelivery() throws IOException {
+    public void createDelivery() throws IOException {
         System.out.println("출고 아이디 입력(0 : 나가기) :");
         id = Integer.parseInt(br.readLine());
         if (id != 0) {
@@ -246,7 +245,7 @@ public class ReleaseController {
         }
     }
 
-    public static void cancelDelivery() throws IOException {
+    public void cancelDelivery() throws IOException {
         System.out.println("취소할 배차 아이디 입력(0 : 나가기) :");
         id = Integer.parseInt(br.readLine());
         if (id != 0) {
@@ -259,51 +258,51 @@ public class ReleaseController {
         }
     }
 
-    public static void readDeliveryAll(){
+    public void readDeliveryAll() {
         List<DeliveryDto> deliveryAll = deliveryService.getAll();
 
-        if(deliveryAll.isEmpty())
+        if (deliveryAll.isEmpty())
             System.out.println("배차 리스트가 비어있습니다.");
         else {
             System.out.println("배차 아이디 | 출고 아이디 | 배송 기사 아이디 | 창고 아이디 | 쇼핑몰 아이디 | 배차 등록 날짜 | 배차 수정 날짜 | 배송 출발 날짜 | 배송 완료 예정 날짜 | 요청 사항 | 배송 상태");
             for (DeliveryDto dto : deliveryAll) {
-                String updated_at = Optional.ofNullable(dto.getUpdated_at()).orElse("");
+                String updated_at = Optional.ofNullable(dto.getUpdatedAt()).orElse("");
                 System.out.printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|\t%d\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\n",
                         dto.getId(),
-                        dto.getRelease_id(),
-                        dto.getAdmin_id(),
-                        dto.getWarehouse_id(),
-                        dto.getUser_id(),
-                        dto.getCreated_at(),
+                        dto.getReleaseId(),
+                        dto.getAdminId(),
+                        dto.getWarehouseId(),
+                        dto.getUserId(),
+                        dto.getCreatedAt(),
                         updated_at,
-                        dto.getStart_date(),
-                        dto.getEnd_date(),
+                        dto.getStartDate(),
+                        dto.getEndDate(),
                         dto.getRemarks(),
                         dto.getDeliveryStatus().toString());
             }
         }
     }
 
-    public static void readDeliveryCancel(){
+    public void readDeliveryCancel() {
         List<DeliveryDto> deliveryCancel = deliveryService.getAll();
 
-        if(deliveryCancel.isEmpty())
+        if (deliveryCancel.isEmpty())
             System.out.println("배차 취소 리스트가 비어있습니다.");
         else {
             System.out.println("배차 아이디 | 출고 아이디 | 배송 기사 아이디 | 창고 아이디 | 쇼핑몰 아이디 | 배차 등록 날짜 | 배차 수정 날짜 | 배송 출발 날짜 | 배송 완료 예정 날짜 | 요청 사항 | 배송 상태");
             for (DeliveryDto dto : deliveryCancel) {
-                if(dto.getDeliveryStatus().toString().equals("CANCEL")) {
-                    String updated_at = Optional.ofNullable(dto.getUpdated_at()).orElse("");
+                if (dto.getDeliveryStatus().toString().equals("CANCEL")) {
+                    String updated_at = Optional.ofNullable(dto.getUpdatedAt()).orElse("");
                     System.out.printf("\t%d\t|\t%d\t|\t%d\t|\t%d\t|\t%d\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\t%s\t|\n",
                             dto.getId(),
-                            dto.getRelease_id(),
-                            dto.getAdmin_id(),
-                            dto.getWarehouse_id(),
-                            dto.getUser_id(),
-                            dto.getCreated_at(),
+                            dto.getReleaseId(),
+                            dto.getAdminId(),
+                            dto.getWarehouseId(),
+                            dto.getUserId(),
+                            dto.getCreatedAt(),
                             updated_at,
-                            dto.getStart_date(),
-                            dto.getEnd_date(),
+                            dto.getStartDate(),
+                            dto.getEndDate(),
                             dto.getRemarks(),
                             dto.getDeliveryStatus().toString());
                 }
@@ -311,15 +310,15 @@ public class ReleaseController {
         }
     }
 
-    public static void readDeliveryMan(){
+    public void readDeliveryMan() {
         DeliveryImplDao deliveryImplDao = new DeliveryImplDao();
-        System.out.printf("배송 가능 인원 : %d명 입니다.\n",deliveryImplDao.waitDeliveryMan().size());
+        System.out.printf("배송 가능 인원 : %d명 입니다.\n", deliveryImplDao.waitDeliveryMan().size());
     }
 
-    public static void createWaybill() throws IOException {
+    public void createWaybill() throws IOException {
         System.out.println("배차 아이디 입력 (나가기 : 0) : ");
         int delivery_id = Integer.parseInt(br.readLine());
-        if(delivery_id != 0) {
+        if (delivery_id != 0) {
             Random random = new Random();
             int randomNumber1 = random.nextInt(9000) + 1000;
             int randomNumber2 = random.nextInt(9000) + 1000;
@@ -333,96 +332,96 @@ public class ReleaseController {
         }
     }
 
-    public static void readWaybillId() throws IOException {
+    public void readWaybillId() throws IOException {
         System.out.println("운송장 번호 입력 (나가기 : 0) : ");
         String waybill_id = br.readLine();
-        if(!waybill_id.equals("0")) {
+        if (!waybill_id.equals("0")) {
             WaybillDto findId = waybillService.getId(waybill_id);
-            DeliveryDto deliveryDto = deliveryService.getId(findId.getDelivery_id());
+            DeliveryDto deliveryDto = deliveryService.getId(findId.getDeliveryId());
             System.out.println("운송장 아이디 | 운송장 번호 | 배송 아이디 | 출고 아이디 | 등록 날짜 ㅣ 운송장 수정 날짜");
             System.out.printf("|\t%s\t|\t%d\t|\t%d\t|\t%s\t|\n",
                     findId.getId(),
-                    findId.getDelivery_id(),
-                    deliveryDto.getRelease_id(),
-                    findId.getCreated_at());
+                    findId.getDeliveryId(),
+                    deliveryDto.getReleaseId(),
+                    findId.getCreatedAt());
         }
     }
 
-    public static void readWaybillAll(){
+    public void readWaybillAll() {
         List<WaybillDto> findAll = waybillService.getAll();
         System.out.println("운송장 아이디 | 운송장 번호 | 배송 아이디 | 등록 날짜 |");
         for (WaybillDto waybillDto : findAll) {
             System.out.printf("|\t%s\t|\t%d\t|\t%s\t|\n",
                     waybillDto.getId(),
-                    waybillDto.getDelivery_id(),
-                    waybillDto.getCreated_at());
+                    waybillDto.getDeliveryId(),
+                    waybillDto.getCreatedAt());
         }
     }
 
-    public static void readReleaseReject() {
+    public void readReleaseReject() {
         List<ReleaseDto> releaseReject = releaseService.getAll();
         boolean exist = false;
         System.out.println("출고 아이디 | 상품 코드 | 수령인 이름 | 수령인 주소 | 출고 개수 | 출고 상태 | 요청 사항 | 출고 요청 날짜 ㅣ 출고 거절 날짜");
         for (ReleaseDto dto : releaseReject) {
-            if(dto.getReleaseStatus() == ReleaseStatus.REJECTED){
+            if (dto.getReleaseStatus() == Status.REJECTED) {
                 exist = true;
                 System.out.printf("\t\t%d \t|\t %s \t|\t %s \t|\t %s \t|\t %d \t|\t %s \t|\t %s \t|\t %s \t\n",
                         dto.getId(),
-                        dto.getProduct_id(),
-                        dto.getCustomer_name(),
-                        dto.getCustomer_address(),
+                        dto.getProductId(),
+                        dto.getCustomerName(),
+                        dto.getCustomerAddress(),
                         dto.getAmount(),
                         dto.getReleaseStatus(),
                         dto.getRemarks(),
-                        dto.getUpdated_at());
+                        dto.getUpdatedAt());
             }
         }
-        if(!exist)
+        if (!exist)
             System.out.println("거절 리스트가 비어있습니다.");
     }
 
-    public static void readReleaseApproval() {
+    public void readReleaseApproval() {
         List<ReleaseDto> releaseApproval = releaseService.getAll();
         System.out.println("출고 아이디 | 상품 코드 | 수령인 이름 | 수령인 주소 | 출고 개수 | 출고 상태 | 요청 사항 | 출고 요청 날짜 | 출고 승인 날짜");
 
         boolean exist = false;
         for (ReleaseDto dto : releaseApproval) {
-            if(dto.getReleaseStatus() == ReleaseStatus.APPROVED){
+            if (dto.getReleaseStatus() == Status.APPROVED) {
                 exist = true;
                 System.out.printf("\t\t%d \t|\t %s \t|\t %s \t|\t %s \t|\t %d \t|%s|\t %s \t|\t %s \t|\t %s \t|\n",
                         dto.getId(),
-                        dto.getProduct_id(),
-                        dto.getCustomer_name(),
-                        dto.getCustomer_address(),
+                        dto.getProductId(),
+                        dto.getCustomerName(),
+                        dto.getCustomerAddress(),
                         dto.getAmount(),
                         dto.getReleaseStatus(),
                         dto.getRemarks(),
-                        dto.getCreated_at(),
-                        dto.getUpdated_at());
+                        dto.getCreatedAt(),
+                        dto.getUpdatedAt());
             }
         }
-        if(!exist)
+        if (!exist)
             System.out.println("승인 리스트가 비어있습니다.");
     }
 
-    public static void readReleaseAll() {
+    public void readReleaseAll() {
         List<ReleaseDto> releaseAll = releaseService.getAll();
 
-        if(releaseAll.isEmpty())
+        if (releaseAll.isEmpty())
             System.out.println("출고 리스트가 비어있습니다.");
         else {
             System.out.println("출고 아이디 | 상품 코드 | 수령인 이름 | 수령인 주소 | 출고 개수 | 출고 상태 | 요청 사항 | 출고 요청 날짜 | 출고 승인 및 미승인 날짜");
             for (ReleaseDto dto : releaseAll) {
-                String Approval_date = Optional.ofNullable(dto.getUpdated_at()).orElse("");
+                String Approval_date = Optional.ofNullable(dto.getUpdatedAt()).orElse("");
                 System.out.printf("\t%d \t|\t %s \t|\t %s \t|\t %s \t|\t %d \t|\t %s \t|\t %s \t|\t %s \t|\t %s \t|\n",
                         dto.getId(),
-                        dto.getProduct_id(),
-                        dto.getCustomer_name(),
-                        dto.getCustomer_address(),
+                        dto.getProductId(),
+                        dto.getCustomerName(),
+                        dto.getCustomerAddress(),
                         dto.getAmount(),
                         dto.getReleaseStatus().toString(),
                         dto.getRemarks(),
-                        dto.getCreated_at(),
+                        dto.getCreatedAt(),
                         Approval_date);
             }
         }

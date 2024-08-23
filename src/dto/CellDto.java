@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CellDto {
     private int id;
-    private int section_id;
-    private int total_capacity;
+    private int sectionId;
+    private int totalCapacity;
     private double size;
-    private int available_capacity;
+    private int availableCapacity;
 }

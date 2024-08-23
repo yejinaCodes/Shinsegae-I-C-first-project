@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SectionDto {
     private int id;
-    private int warehouse_id;
+    private int warehouseId;
     private double size;
 }

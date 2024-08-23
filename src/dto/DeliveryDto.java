@@ -10,19 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeliveryDto {
     private int id;
-    private int release_id;
-    private int admin_id;
-    private int warehouse_id;
-    private int user_id;
-    private String created_at;
-    private String updated_at;
-    private String start_date;
-    private String end_date;
+    private int releaseId;
+    private int adminId;
+    private int warehouseId;
+    private int userId;
+    private String createdAt;
+    private String updatedAt;
+    private String startDate;
+    private String endDate;
     private String remarks;
     private DeliveryStatus deliveryStatus;
 
-    public DeliveryDto(int release_id, String remarks){
-        this.release_id = release_id;
+    public DeliveryDto(int releaseId, String remarks){
+        this.releaseId = releaseId;
         this.remarks = remarks;
     }
 }

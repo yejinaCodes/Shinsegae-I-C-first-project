@@ -1,22 +1,18 @@
 package dao.daoImpl;
 
-import common.DeliveryStatus;
-import common.ReleaseStatus;
+import common.Status;
 import config.ConnectionFactory;
 import dao.ReleaseDao;
 import dto.DeliveryDto;
 import dto.ReleaseDto;
-import dto.WaybillDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ReleaseImplDao implements ReleaseDao {
@@ -27,7 +23,7 @@ public class ReleaseImplDao implements ReleaseDao {
     static Connection con = null;
 
     public void createRelease(ReleaseDto releaseDto){
-        if(!productCheck(releaseDto.getProduct_id())) {
+        if(!productCheck(releaseDto.getProductId())) {
             System.out.println("주문코드 잘못 입력 또는 해당 상품이 창고에 존재하지 않습니다.");
             return;
         }
@@ -38,11 +34,11 @@ public class ReleaseImplDao implements ReleaseDao {
             pstmt = con.prepareStatement(query);
 
             pstmt.setInt(1, 1);//user.getId(); -> user의 아이디
-            pstmt.setString(2, releaseDto.getProduct_id());
-            pstmt.setString(3, releaseDto.getCustomer_name());
-            pstmt.setString(4, releaseDto.getCustomer_address());
+            pstmt.setString(2, releaseDto.getProductId());
+            pstmt.setString(3, releaseDto.getCustomerName());
+            pstmt.setString(4, releaseDto.getCustomerAddress());
             pstmt.setInt(5, releaseDto.getAmount());
-            pstmt.setString(6, releaseDto.getReleaseStatus().name());
+            pstmt.setString(6, String.valueOf(releaseDto.getReleaseStatus()));
             pstmt.setString(7, releaseDto.getRemarks());
             LocalDateTime dateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -75,12 +71,12 @@ public class ReleaseImplDao implements ReleaseDao {
                 String customer_name = rs.getString("customer_name");
                 String customer_address = rs.getString("customer_address");
                 int amount = rs.getInt("amount");
-                ReleaseStatus Status = ReleaseStatus.valueOf(rs.getString("status"));
+                Status status = Status.valueOf(rs.getString("status"));
                 String remarks = rs.getString("remarks");
                 String request_date = rs.getString("created_at");
                 String update_date = rs.getString("updated_at");
 
-                ReleaseDto dto = new ReleaseDto(id, user_id, product_id, customer_name, customer_address, amount, Status, remarks, request_date, update_date);
+                ReleaseDto dto = new ReleaseDto(id, user_id, product_id, customer_name, customer_address, amount, status, remarks, request_date, update_date);
                 releaseAll.add(dto);
             }
 
@@ -101,7 +97,7 @@ public class ReleaseImplDao implements ReleaseDao {
         int cal = -2;
         ReleaseDto findDto = findById(id);
 
-        if(findDto.getReleaseStatus() != ReleaseStatus.PENDING){
+        if(findDto.getReleaseStatus() != Status.PENDING){
             return cal;
         }
         con = factory.open();
@@ -110,7 +106,7 @@ public class ReleaseImplDao implements ReleaseDao {
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1,findDto.getProduct_id());
+            pstmt.setString(1,findDto.getProductId());
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
@@ -142,27 +138,27 @@ public class ReleaseImplDao implements ReleaseDao {
             DeliveryImplDao deliveryImplDao = new DeliveryImplDao();
 
             if (select == 1) {
-                pstmt.setString(1, ReleaseStatus.APPROVED.toString());
+                pstmt.setString(1, Status.APPROVED.toString());
             } else if (select == 2) {
-                pstmt.setString(1, ReleaseStatus.REJECTED.toString());
+                pstmt.setString(1, Status.REJECTED.toString());
             } else {
-                if (!findById(id).getReleaseStatus().equals(ReleaseStatus.PENDING)) {
+                if (!findById(id).getReleaseStatus().equals(Status.PENDING)) {
                     List<DeliveryDto> deliveryDtos = deliveryImplDao.findByAll();
                     boolean canCancel = true;
                     for (DeliveryDto deliveryDto : deliveryDtos) {
-                        if (deliveryDto.getRelease_id() == id) {
+                        if (deliveryDto.getReleaseId() == id) {
                             System.out.println("취소 불가");
                             canCancel = false;
                             break;
                         }
                     }
                     if (canCancel) {
-                        pstmt.setString(1, ReleaseStatus.CANCEL.toString());
+                        pstmt.setString(1, Status.CANCEL.toString());
                     } else {
                         return; // 취소 불가 시 더 이상의 작업을 하지 않음
                     }
                 } else {
-                    pstmt.setString(1, ReleaseStatus.CANCEL.toString());
+                    pstmt.setString(1, Status.CANCEL.toString());
                 }
             }
 
@@ -237,7 +233,7 @@ public class ReleaseImplDao implements ReleaseDao {
                         customer_name,
                         customer_address,
                         amount,
-                        ReleaseStatus.valueOf(status),
+                        Status.valueOf(status),
                         remarks,
                         created_at,
                         update_date);
@@ -262,7 +258,7 @@ public class ReleaseImplDao implements ReleaseDao {
 //  }
 //  con = factory.open();
 //
-//  //String query = "SELECT quantity FROM stock s INNER JOIN product p on p.id = ? and s.product_id = p.id";
+//  //String query = "SELECT quantity FROM stock s INNER JOIN product p on p.id = ? and s.productId = p.id";
 //  query1.append("{call stockCheck(?,?,?,?)}");
 //
 //  try {
